@@ -10,8 +10,10 @@ package org.telegram.messenger;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -31,6 +33,7 @@ import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
+import android.util.Log;
 import android.util.SparseArray;
 
 import org.json.JSONArray;
@@ -183,6 +186,10 @@ public class MessagesController implements NotificationCenter.NotificationCenter
     public static final int userPhotosLoaded = 24;
 
     public static final int removeAllMessagesFromDialog = 25;
+
+    //TODO inizializzo il notificationManager
+    private NotificationManager mNotificationManager = (NotificationManager) ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
 
     private static volatile MessagesController Instance = null;
     public static MessagesController getInstance() {
@@ -871,6 +878,7 @@ public class MessagesController implements NotificationCenter.NotificationCenter
         }
     }
 
+    @SuppressLint("StringFormatMatches")
     public void updatePrintingStrings() {
         final HashMap<Long, CharSequence> newPrintingStrings = new HashMap<Long, CharSequence>();
 
@@ -3214,7 +3222,8 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                             }
 
                             if (currentPushMessage != null && readMessages.contains(currentPushMessage.messageOwner.id)) {
-                                NotificationManager mNotificationManager = (NotificationManager) ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
+                                //TODO notificationManager rimosso, ora lo inizializzo a inizio app
+                                //TODO occhio che qui e' ancora 1 e dobbiamo capire un attimo qualcosa...
                                 mNotificationManager.cancel(1);
                                 currentPushMessage = null;
                             }
@@ -4076,7 +4085,7 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                         }
 
                         if (currentPushMessage != null && markAsReadMessages.contains(currentPushMessage.messageOwner.id)) {
-                            NotificationManager mNotificationManager = (NotificationManager)ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
+                            //TODO notificationManager rimosso, ora lo inizializzo a inizio app
                             mNotificationManager.cancel(1);
                             currentPushMessage = null;
                         }
@@ -4332,7 +4341,7 @@ public class MessagesController implements NotificationCenter.NotificationCenter
             String userSoundPath = null;
             String chatSoundPath = null;
 
-            NotificationManager mNotificationManager = (NotificationManager)ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            //TODO notificationManager rimosso, ora lo inizializzo a inizio app
             Intent intent = new Intent(ApplicationLoader.applicationContext, LaunchActivity.class);
             String msg = null;
 
@@ -4528,14 +4537,27 @@ public class MessagesController implements NotificationCenter.NotificationCenter
 
             currentPushMessage = null;
             mBuilder.setContentIntent(contentIntent);
-            mNotificationManager.cancel(1);
+            //TODO uso dialog_id per notifiche multiple
+            //TODO secondo me il cancel non serve a nulla, visto che android sovrascrive notifiche sullo stesso ID
+            //mNotificationManager.cancel((int)dialog_id);
             Notification notification = mBuilder.build();
-            notification.ledARGB = 0xff00ff00;
-            notification.ledOnMS = 1000;
-            notification.ledOffMS = 1000;
-            notification.flags |= Notification.FLAG_SHOW_LIGHTS;
+            //TODO gestire notifiche LED custom
+            if (preferences.getBoolean("custom_led_colors", false)) {
+
+            } else {
+                notification.ledARGB = 0xff00ff00;
+                notification.ledOnMS = 1000;
+                notification.ledOffMS = 1000;
+                notification.flags |= Notification.FLAG_SHOW_LIGHTS;
+            }
             try {
-                mNotificationManager.notify(1, notification);
+                //TODO uso dialog_id per notifiche multiple e predispongo per il setting
+                if (preferences.getBoolean("multiple_notify", true)) {
+                    mNotificationManager.notify((int) dialog_id, notification);
+                } else {
+                    mNotificationManager.notify(1, notification);
+                }
+               // Log.i("xela92", "chat id: "+chat_id+ " - user id: " + user_id + " - dialog id: "+dialog_id);
                 if (preferences.getBoolean("EnablePebbleNotifications", false)) {
                     sendAlertToPebble(msg);
                 }
