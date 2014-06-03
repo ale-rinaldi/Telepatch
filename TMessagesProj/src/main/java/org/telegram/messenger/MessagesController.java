@@ -55,6 +55,16 @@ import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 
+
+/*TODO QUI METTIAMO LE COSE CHE VOGLIAMO IMPLEMENTARE. Poi discutiamo se farle insieme, farle da soli o non farle.
+   ALEX - rimozione notifica quando apro la conversazione da cui e' stata generata.
+   ALEX - classe per la gestione led. Poi creeremo un oggetto che legge il valore dalla conf e imposta il colore del led. - Da valutare
+   ALEX - aggiungere nel changelog il fatto che le notifiche sono sincronizzate tra i device - e cercare di capire come fanno ad esserlo. Attenzione: a volte non lo sono, alcune notifiche rimangono a culo.
+
+
+
+ */
+
 public class MessagesController implements NotificationCenter.NotificationCenterDelegate {
     public ConcurrentHashMap<Integer, TLRPC.Chat> chats = new ConcurrentHashMap<Integer, TLRPC.Chat>(100, 1.0f, 2);
     public ConcurrentHashMap<Integer, TLRPC.EncryptedChat> encryptedChats = new ConcurrentHashMap<Integer, TLRPC.EncryptedChat>(10, 1.0f, 2);
