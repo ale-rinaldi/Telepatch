@@ -198,7 +198,8 @@ public class MessagesController implements NotificationCenter.NotificationCenter
     public static final int removeAllMessagesFromDialog = 25;
 
     //TODO inizializzo il notificationManager
-    private NotificationManager mNotificationManager = (NotificationManager) ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
+    //CAMBIATO IDEA.
+    //private NotificationManager mNotificationManager = (NotificationManager) ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
 
     private static volatile MessagesController Instance = null;
@@ -3233,6 +3234,8 @@ public class MessagesController implements NotificationCenter.NotificationCenter
 
                             if (currentPushMessage != null && readMessages.contains(currentPushMessage.messageOwner.id)) {
                                 //TODO notificationManager rimosso, ora lo inizializzo a inizio app
+                                //CAMBIATO IDEA.
+                                NotificationManager mNotificationManager = (NotificationManager) ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
                                 //TODO occhio che qui e' ancora 1 e dobbiamo capire un attimo qualcosa...
                                 mNotificationManager.cancel(1);
                                 currentPushMessage = null;
@@ -4096,6 +4099,7 @@ public class MessagesController implements NotificationCenter.NotificationCenter
 
                         if (currentPushMessage != null && markAsReadMessages.contains(currentPushMessage.messageOwner.id)) {
                             //TODO notificationManager rimosso, ora lo inizializzo a inizio app
+                            NotificationManager mNotificationManager = (NotificationManager) ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
                             mNotificationManager.cancel(1);
                             currentPushMessage = null;
                         }
@@ -4352,6 +4356,8 @@ public class MessagesController implements NotificationCenter.NotificationCenter
             String chatSoundPath = null;
 
             //TODO notificationManager rimosso, ora lo inizializzo a inizio app
+            //CAMBIATO IDEA.
+            NotificationManager mNotificationManager = (NotificationManager) ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
             Intent intent = new Intent(ApplicationLoader.applicationContext, LaunchActivity.class);
             String msg = null;
 
