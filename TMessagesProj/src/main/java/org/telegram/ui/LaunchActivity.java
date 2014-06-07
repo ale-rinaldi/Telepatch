@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -645,8 +646,11 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
         supportInvalidateOptionsMenu();
         updateActionBar();
         try {
+            //TODO penso che qui si cancelli la notifica quando apri la conversazione - non e' vero
             NotificationManager mNotificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.cancel(1);
+            //mNotificationManager.cancel();
+            mNotificationManager.cancel(getIntent().getExtras().getInt("dialogId", 0));
+            Log.i("xela92", "dialogId : " + getIntent().getExtras().getInt("dialogId", 0));
             MessagesController.getInstance().currentPushMessage = null;
         } catch (Exception e) {
             FileLog.e("tmessages", e);
