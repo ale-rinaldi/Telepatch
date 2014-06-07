@@ -4522,14 +4522,18 @@ public class MessagesController implements NotificationCenter.NotificationCenter
 
             TLRPC.User u = users.get(messageObject.messageOwner.from_id);
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ApplicationLoader.applicationContext)
-                    //aggiunto nome della persona nel titolo
-                    .setContentTitle(u.first_name+ " "+u.last_name)
                     .setSmallIcon(R.drawable.notification)
                     .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText(msg))
-                    .setContentText(msg)
+                            .bigText(messageObject.messageText))
+                    .setContentText(messageObject.messageText)
                     .setAutoCancel(true)
                     .setTicker(msg);
+            if (user_id != 0) {
+                //aggiunto nome della persona nel titolo
+                mBuilder.setContentTitle(u.first_name+ " "+u.last_name);
+            } else {
+                mBuilder.setContentTitle(msg.split(":")[0]);
+            }
 
             if (photoPath != null) {
                 Bitmap img = FileLoader.getInstance().getImageFromMemory(photoPath, null, null, "50_50", false);
