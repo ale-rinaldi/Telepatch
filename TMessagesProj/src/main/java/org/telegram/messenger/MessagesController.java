@@ -168,6 +168,10 @@ public class MessagesController implements NotificationCenter.NotificationCenter
 
     public static final int removeAllMessagesFromDialog = 25;
 
+    /*TODO qui ci mettiamo le cose da fare e quelle fatte
+    COSE FATTE.
+    notifiche multiple gestite con dialog_id, notifiche si cancellano quando entri nella conversazione, pulizia codice iniziale,
+   */
     //TODO inizializzo il notificationManager
     private NotificationManager mNotificationManager = (NotificationManager) ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -1040,6 +1044,8 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                             }
                         }
                         NotificationCenter.getInstance().postNotificationName(messagesDidLoaded, dialog_id, offset, count, objects, isCache, first_unread, last_unread, unread_count, last_date, isForward);
+                        //TODO una volta che hai caricato il messaggio, ovvero hai aperto la conversazione, la notifica non ti serve piu'
+                        //e la cosa figa e' che, essendo la notifica legata al dialog_id, ogni volta che emano il cancel si cancella per forza la notifica giusta
                         mNotificationManager.cancel((int)dialog_id);
                     }
                 });
