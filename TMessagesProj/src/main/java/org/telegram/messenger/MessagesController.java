@@ -170,7 +170,11 @@ public class MessagesController implements NotificationCenter.NotificationCenter
 
     /*TODO qui ci mettiamo le cose da fare e quelle fatte
     COSE FATTE.
-    notifiche multiple gestite con dialog_id, notifiche si cancellano quando entri nella conversazione, pulizia codice iniziale,
+    - notifiche multiple gestite con dialog_id
+    - notifiche si cancellano quando entri nella conversazione
+    - pulizia codice iniziale
+    - notifiche con "nome persona" come titolo e "messaggio" come messaggio
+    - eliminate notifiche in app, rimpiazzate con quelle normali (TODO fare in modo che la notifica in app non escluda la notifica nella not. bar)
    */
     //TODO inizializzo il notificationManager
     private NotificationManager mNotificationManager = (NotificationManager) ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -4344,11 +4348,13 @@ public class MessagesController implements NotificationCenter.NotificationCenter
 
         int vibrate_override = preferences.getInt("vibrate_" + dialog_id, 0);
 
-        if (ApplicationLoader.lastPauseTime == 0 && ApplicationLoader.isScreenOn) {
+       if (ApplicationLoader.lastPauseTime == 0 && ApplicationLoader.isScreenOn) {
             boolean inAppSounds = preferences.getBoolean("EnableInAppSounds", true);
             boolean inAppVibrate = preferences.getBoolean("EnableInAppVibrate", true);
             boolean inAppPreview = preferences.getBoolean("EnableInAppPreview", true);
-
+           //TODO blocco le notifiche in app, poi ci sarà lo switch
+            boolean isAppPreviewEnabled = preferences.getBoolean("isAppPreviewEnabled", false);
+        if (isAppPreviewEnabled) {
             if (inAppSounds || inAppVibrate || inAppPreview) {
                 if ((int) dialog_id == 0) {
                     TLRPC.EncryptedChat encChat = encryptedChats.get((int) (dialog_id >> 32));
@@ -4359,6 +4365,7 @@ public class MessagesController implements NotificationCenter.NotificationCenter
 
                 if (inAppPreview) {
                     NotificationCenter.getInstance().postNotificationName(701, messageObject);
+
                 }
                 if (inAppVibrate && vibrate_override == 0 || vibrate_override == 1) {
                     Vibrator v = (Vibrator) ApplicationLoader.applicationContext.getSystemService(Context.VIBRATOR_SERVICE);
@@ -4368,11 +4375,11 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                     playNotificationSound();
                 }
             }
-        } else {
+        }
+
             TLRPC.FileLocation photoPath = null;
             String defaultPath = Settings.System.DEFAULT_NOTIFICATION_URI.getPath();
             //TODO notificationManager rimosso, ora lo inizializzo a inizio app
-            //TODO occhio che qui e' ancora 1 e dobbiamo capire un attimo qualcosa...
             // NotificationManager mNotificationManager = (NotificationManager)ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
             Intent intent = new Intent(ApplicationLoader.applicationContext, LaunchActivity.class);
             String msg = null;
