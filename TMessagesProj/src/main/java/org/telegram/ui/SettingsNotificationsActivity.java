@@ -14,10 +14,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +58,7 @@ public class SettingsNotificationsActivity extends BaseFragment {
     private int groupVibrateRow;
     private int groupSoundRow;
     private int inappSectionRow;
+    private int inappSwitchRow;
     private int inappSoundRow;
     private int inappVibrateRow;
     private int inappPreviewRow;
@@ -66,6 +69,7 @@ public class SettingsNotificationsActivity extends BaseFragment {
     private int resetSectionRow;
     private int resetNotificationsRow;
     private int rowCount = 0;
+    private boolean inappCheckDisabled = false;
 
     @Override
     public boolean onFragmentCreate() {
@@ -81,6 +85,7 @@ public class SettingsNotificationsActivity extends BaseFragment {
         groupVibrateRow = rowCount++;
         groupSoundRow = rowCount++;
         inappSectionRow = rowCount++;
+        inappSwitchRow = rowCount++;
         inappSoundRow = rowCount++;
         inappVibrateRow = rowCount++;
         inappPreviewRow = rowCount++;
@@ -114,8 +119,15 @@ public class SettingsNotificationsActivity extends BaseFragment {
             listView = (ListView)fragmentView.findViewById(R.id.listView);
             listView.setAdapter(listAdapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                private boolean inAppIsClickable = true;
+                public void setInAppClickable(boolean isClickable) {
+                    inAppIsClickable = isClickable;
+                }
+                private boolean isInAppClickable() {
+                    return inAppIsClickable;
+                }
                 @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)  {
                     if (i == messageAlertRow || i == groupAlertRow) {
                         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -224,26 +236,63 @@ public class SettingsNotificationsActivity extends BaseFragment {
                                 });
                             }
                         }, null, true, RPCRequest.RPCRequestClassGeneric);
-                    } else if (i == inappSoundRow) {
+                        //TODO qua metto lo switch generico per le notifiche in app --> onclick mi fa quanto segue
+                    } else if (i == inappSwitchRow) {
                         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
-                        boolean enabled = preferences.getBoolean("EnableInAppSounds", true);
-                        editor.putBoolean("EnableInAppSounds", !enabled);
+                        boolean enabled = preferences.getBoolean("EnableInAppNotifications", false);
+                        Log.i("xela92", "il click che ho fatto l'ha acceso?  " + !enabled);
+                        editor.putBoolean("EnableInAppNotifications", !enabled);
                         editor.commit();
+                        if (!preferences.getBoolean("EnableInAppNotifications", false)) {
+                                inappCheckDisabled = true;
+                                setInAppClickable(false);
+                                Log.i("xela92", "ora NON sei clickabile");
+                            } else if (preferences.getBoolean("EnableInAppNotifications", false)) {
+                                inappCheckDisabled = false;
+                                setInAppClickable(true);
+                                Log.i("xela92", "Ok ora sei clickabile");
+                        }
+                        if (inappCheckDisabled) {
+                            setInAppClickable(false);
+                        } else if (!inappCheckDisabled) {
+                            setInAppClickable(true);
+                        }
+
+                        listView.invalidateViews();
+                    } else if (i == inappSoundRow) {
+                        if (!isInAppClickable()) {
+                            Log.i("xela92", "non sei clickabile.");
+                        } else {
+                            SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            boolean enabled = preferences.getBoolean("EnableInAppSounds", true);
+                            editor.putBoolean("EnableInAppSounds", !enabled);
+                            editor.commit();
+
+                        }
                         listView.invalidateViews();
                     } else if (i == inappVibrateRow) {
-                        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        boolean enabled = preferences.getBoolean("EnableInAppVibrate", true);
-                        editor.putBoolean("EnableInAppVibrate", !enabled);
-                        editor.commit();
+                        if (!isInAppClickable()) {
+                            Log.i("xela92", "non sei clickabile.");
+                        } else {
+                            SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            boolean enabled = preferences.getBoolean("EnableInAppVibrate", true);
+                            editor.putBoolean("EnableInAppVibrate", !enabled);
+                            editor.commit();
+                        }
                         listView.invalidateViews();
                     } else if (i == inappPreviewRow) {
-                        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        boolean enabled = preferences.getBoolean("EnableInAppPreview", true);
-                        editor.putBoolean("EnableInAppPreview", !enabled);
-                        editor.commit();
+                        if (!isInAppClickable()) {
+                            Log.i("xela92", "non sei clickabile.");
+                        } else {
+                            SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            boolean enabled = preferences.getBoolean("EnableInAppPreview", true);
+                            editor.putBoolean("EnableInAppPreview", !enabled);
+                            editor.commit();
+                        }
                         listView.invalidateViews();
                     } else if (i == contactJoinedRow) {
                         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
@@ -437,17 +486,52 @@ public class SettingsNotificationsActivity extends BaseFragment {
                     }
                     textView.setText(LocaleController.getString("Vibrate", R.string.Vibrate));
                     divider.setVisibility(View.VISIBLE);
+                    //TODO qui metto il nome dell'etichetta dello switch e faccio i controlli sull'in-app
+                } else if (i == inappSwitchRow) {
+                    enabled = preferences.getBoolean("EnableInAppNotifications", false);
+                    textView.setText(LocaleController.getString("InAppSwitch", R.string.InAppSwitch));
+                    if (!preferences.getBoolean("EnableInAppNotifications", false)) {
+                        inappCheckDisabled = true;
+                    } else if (preferences.getBoolean("EnableInAppNotifications", false)){
+                        inappCheckDisabled = false;
+                    }
+                    listView.invalidateViews();
+                    divider.setVisibility(View.VISIBLE);
                 } else if (i == inappSoundRow) {
                     enabled = preferences.getBoolean("EnableInAppSounds", true);
                     textView.setText(LocaleController.getString("InAppSounds", R.string.InAppSounds));
+                    if (inappCheckDisabled) {
+                        Log.i("xela92", "ok disattivo tutto");
+                        checkButton.setVisibility(View.INVISIBLE);
+                        textView.setTextColor(Color.LTGRAY);
+                    } else if (!inappCheckDisabled){
+                        checkButton.setVisibility(View.VISIBLE);
+                        textView.setTextColor(Color.BLACK);
+                    }
                     divider.setVisibility(View.VISIBLE);
                 } else if (i == inappVibrateRow) {
                     enabled = preferences.getBoolean("EnableInAppVibrate", true);
                     textView.setText(LocaleController.getString("InAppVibrate", R.string.InAppVibrate));
+                    if (inappCheckDisabled) {
+                        Log.i("xela92", "ok disattivo tutto");
+                        checkButton.setVisibility(View.INVISIBLE);
+                        textView.setTextColor(Color.LTGRAY);
+                    } else if (!inappCheckDisabled){
+                        checkButton.setVisibility(View.VISIBLE);
+                        textView.setTextColor(Color.BLACK);
+                    }
                     divider.setVisibility(View.VISIBLE);
                 } else if (i == inappPreviewRow) {
                     enabled = preferences.getBoolean("EnableInAppPreview", true);
                     textView.setText(LocaleController.getString("InAppPreview", R.string.InAppPreview));
+                    if (inappCheckDisabled) {
+                        Log.i("xela92", "ok disattivo tutto");
+                        checkButton.setVisibility(View.INVISIBLE);
+                        textView.setTextColor(Color.LTGRAY);
+                    } else if (!inappCheckDisabled) {
+                        checkButton.setVisibility(View.VISIBLE);
+                        textView.setTextColor(Color.BLACK);
+                    }
                     divider.setVisibility(View.INVISIBLE);
                 } else if (i == contactJoinedRow) {
                     enabled = preferences.getBoolean("EnableContactJoined", true);
@@ -508,7 +592,7 @@ public class SettingsNotificationsActivity extends BaseFragment {
             if (i == messageSectionRow || i == groupSectionRow || i == inappSectionRow || i == eventsSectionRow || i == pebbleSectionRow || i == resetSectionRow) {
                 return 0;
             } else if (i == messageAlertRow || i == messagePreviewRow || i == messageVibrateRow ||
-                    i == groupAlertRow || i == groupPreviewRow || i == groupVibrateRow ||
+                    i == groupAlertRow || i == groupPreviewRow || i == groupVibrateRow || i == inappSwitchRow ||
                     i == inappSoundRow || i == inappVibrateRow || i == inappPreviewRow ||
                     i == contactJoinedRow ||
                     i == pebbleAlertRow || i == notificationsServiceRow) {
