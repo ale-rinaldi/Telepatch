@@ -5,7 +5,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true">
 
-    <org.telegram.ui.Views.BackupImageView
+    <org.telegram.telepatch.ui.Views.BackupImageView
             android:layout_height="48dp"
             android:layout_width="48dp"
             android:id="@+id/chat_avatar_image"/>

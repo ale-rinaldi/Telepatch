@@ -1,0 +1,417 @@
+/*
+ * This is the source code of Telegram for Android v. 1.3.2.
+ * It is licensed under GNU GPL v. 2 or later.
+ * You should have received a copy of the license in this archive (see LICENSE).
+ *
+ * Copyright Nikolai Kudashov, 2013.
+ */
+
+package org.telegram.telepatch.ui;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.text.Html;
+import android.util.AttributeSet;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import org.telegram.telepatch.PhoneFormat.PhoneFormat;
+import org.telegram.telepatch.messenger.LocaleController;
+import org.telegram.telepatch.messenger.TLObject;
+import org.telegram.telepatch.messenger.TLRPC;
+import org.telegram.telepatch.messenger.ConnectionsManager;
+import org.telegram.telepatch.messenger.ContactsController;
+import org.telegram.telepatch.messenger.FileLog;
+import org.telegram.telepatch.messenger.MessagesController;
+import org.telegram.telepatch.messenger.MessagesStorage;
+import org.telegram.telepatch.messenger.NotificationCenter;
+import org.telegram.telepatch.messenger.R;
+import org.telegram.telepatch.messenger.RPCRequest;
+import org.telegram.telepatch.messenger.UserConfig;
+import org.telegram.telepatch.messenger.Utilities;
+import org.telegram.telepatch.ui.Views.SlideView;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class LoginActivitySmsView extends SlideView implements NotificationCenter.NotificationCenterDelegate {
+    private String phoneHash;
+    private String requestPhone;
+    private String registered;
+    private EditText codeField;
+    private TextView confirmTextView;
+    private TextView timeText;
+    private Bundle currentParams;
+
+    private Timer timeTimer;
+    private final Integer timerSync = 1;
+    private volatile int time = 60000;
+    private double lastCurrentTime;
+    private boolean waitingForSms = false;
+
+    public LoginActivitySmsView(Context context) {
+        super(context);
+    }
+
+    public LoginActivitySmsView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public LoginActivitySmsView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+
+        confirmTextView = (TextView)findViewById(R.id.login_sms_confirm_text);
+        codeField = (EditText)findViewById(R.id.login_sms_code_field);
+        codeField.setHint(LocaleController.getString("Code", R.string.Code));
+        timeText = (TextView)findViewById(R.id.login_time_text);
+        TextView wrongNumber = (TextView) findViewById(R.id.wrong_number);
+        wrongNumber.setText(LocaleController.getString("WrongNumber", R.string.WrongNumber));
+
+        wrongNumber.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+                delegate.setPage(0, true, null, true);
+            }
+        });
+
+        codeField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_NEXT) {
+                    if (delegate != null) {
+                        delegate.onNextAction();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public String getHeaderName() {
+        return LocaleController.getString("YourCode", R.string.YourCode);
+    }
+
+    @Override
+    public void setParams(Bundle params) {
+        if (params == null) {
+            return;
+        }
+        codeField.setText("");
+        Utilities.setWaitingForSms(true);
+        NotificationCenter.getInstance().addObserver(this, 998);
+        currentParams = params;
+        waitingForSms = true;
+        String phone = params.getString("phone");
+        requestPhone = params.getString("phoneFormated");
+        phoneHash = params.getString("phoneHash");
+        registered = params.getString("registered");
+        time = params.getInt("calltime");
+
+        if (phone == null) {
+            return;
+        }
+
+        String number = PhoneFormat.getInstance().format(phone);
+        confirmTextView.setText(Html.fromHtml(String.format(LocaleController.getString("SentSmsCode", R.string.SentSmsCode) + " <b>%s</b>", number)));
+
+        Utilities.showKeyboard(codeField);
+        codeField.requestFocus();
+
+        try {
+            synchronized(timerSync) {
+                if (timeTimer != null) {
+                    timeTimer.cancel();
+                    timeTimer = null;
+                }
+            }
+        } catch (Exception e) {
+            FileLog.e("tmessages", e);
+        }
+        timeText.setText(String.format("%s 1:00", LocaleController.getString("CallText", R.string.CallText)));
+        lastCurrentTime = System.currentTimeMillis();
+        timeTimer = new Timer();
+        timeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                double currentTime = System.currentTimeMillis();
+                double diff = currentTime - lastCurrentTime;
+                time -= diff;
+                lastCurrentTime = currentTime;
+                Utilities.RunOnUIThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (time >= 1000) {
+                            int minutes = time / 1000 / 60;
+                            int seconds = time / 1000 - minutes * 60;
+                            timeText.setText(String.format("%s %d:%02d", LocaleController.getString("CallText", R.string.CallText), minutes, seconds));
+                        } else {
+                            timeText.setText(LocaleController.getString("Calling", R.string.Calling));
+                            synchronized(timerSync) {
+                                if (timeTimer != null) {
+                                    timeTimer.cancel();
+                                    timeTimer = null;
+                                }
+                            }
+                            TLRPC.TL_auth_sendCall req = new TLRPC.TL_auth_sendCall();
+                            req.phone_number = requestPhone;
+                            req.phone_code_hash = phoneHash;
+                            ConnectionsManager.getInstance().performRpc(req, new RPCRequest.RPCRequestDelegate() {
+                                @Override
+                                public void run(TLObject response, TLRPC.TL_error error) {
+                                }
+                            }, null, true, RPCRequest.RPCRequestClassGeneric | RPCRequest.RPCRequestClassFailOnServerErrors);
+                        }
+                    }
+                });
+            }
+        }, 0, 1000);
+    }
+
+    @Override
+    public void onNextPressed() {
+        waitingForSms = false;
+        Utilities.setWaitingForSms(false);
+        NotificationCenter.getInstance().removeObserver(this, 998);
+        final TLRPC.TL_auth_signIn req = new TLRPC.TL_auth_signIn();
+        req.phone_number = requestPhone;
+        req.phone_code = codeField.getText().toString();
+        req.phone_code_hash = phoneHash;
+        try {
+            synchronized(timerSync) {
+                if (timeTimer != null) {
+                    timeTimer.cancel();
+                    timeTimer = null;
+                }
+            }
+        } catch (Exception e) {
+            FileLog.e("tmessages", e);
+        }
+        if (delegate != null) {
+            delegate.needShowProgress();
+        }
+        ConnectionsManager.getInstance().performRpc(req, new RPCRequest.RPCRequestDelegate() {
+            @Override
+            public void run(TLObject response, TLRPC.TL_error error) {
+                if (delegate != null) {
+                    delegate.needHideProgress();
+                }
+                if (error == null) {
+                    final TLRPC.TL_auth_authorization res = (TLRPC.TL_auth_authorization)response;
+                    Utilities.RunOnUIThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (delegate == null) {
+                                return;
+                            }
+                            try {
+                                synchronized(timerSync) {
+                                    if (timeTimer != null) {
+                                        timeTimer.cancel();
+                                        timeTimer = null;
+                                    }
+                                }
+                            } catch (Exception e) {
+                                FileLog.e("tmessages", e);
+                            }
+                            UserConfig.clearConfig();
+                            MessagesStorage.getInstance().cleanUp();
+                            MessagesController.getInstance().cleanUp();
+                            ConnectionsManager.getInstance().cleanUp();
+                            UserConfig.currentUser = res.user;
+                            UserConfig.clientActivated = true;
+                            UserConfig.clientUserId = res.user.id;
+                            UserConfig.saveConfig(true);
+                            ArrayList<TLRPC.User> users = new ArrayList<TLRPC.User>();
+                            users.add(UserConfig.currentUser);
+                            MessagesStorage.getInstance().putUsersAndChats(users, null, true, true);
+                            MessagesController.getInstance().users.put(res.user.id, res.user);
+                            ContactsController.getInstance().checkAppAccount();
+                            if (delegate != null) {
+                                delegate.needFinishActivity();
+                            }
+                            ConnectionsManager.getInstance().initPushConnection();
+                        }
+                    });
+                } else {
+                    if (error.text.contains("PHONE_NUMBER_UNOCCUPIED") && registered == null) {
+                        Utilities.RunOnUIThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Bundle params = new Bundle();
+                                params.putString("phoneFormated", requestPhone);
+                                params.putString("phoneHash", phoneHash);
+                                params.putString("code", req.phone_code);
+                                delegate.setPage(2, true, params, false);
+                                try {
+                                    synchronized(timerSync) {
+                                        if (timeTimer != null) {
+                                            timeTimer.cancel();
+                                            timeTimer = null;
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    FileLog.e("tmessages", e);
+                                }
+                            }
+                        });
+                    } else {
+                        if (timeTimer == null) {
+                            timeTimer = new Timer();
+                            timeTimer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    double currentTime = System.currentTimeMillis();
+                                    double diff = currentTime - lastCurrentTime;
+                                    time -= diff;
+                                    lastCurrentTime = currentTime;
+                                    Utilities.RunOnUIThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (time >= 1000) {
+                                                int minutes = time / 1000 / 60;
+                                                int seconds = time / 1000 - minutes * 60;
+                                                timeText.setText(String.format("%s %d:%02d", LocaleController.getString("CallText", R.string.CallText), minutes, seconds));
+                                            } else {
+                                                timeText.setText(LocaleController.getString("Calling", R.string.Calling));
+                                                synchronized(timerSync) {
+                                                    if (timeTimer != null) {
+                                                        timeTimer.cancel();
+                                                        timeTimer = null;
+                                                    }
+                                                }
+                                                TLRPC.TL_auth_sendCall req = new TLRPC.TL_auth_sendCall();
+                                                req.phone_number = requestPhone;
+                                                req.phone_code_hash = phoneHash;
+                                                ConnectionsManager.getInstance().performRpc(req, new RPCRequest.RPCRequestDelegate() {
+                                                    @Override
+                                                    public void run(TLObject response, TLRPC.TL_error error) {
+                                                    }
+                                                }, null, true, RPCRequest.RPCRequestClassGeneric | RPCRequest.RPCRequestClassFailOnServerErrors);
+                                            }
+                                        }
+                                    });
+                                }
+                            }, 0, 1000);
+                        }
+                        if (delegate != null) {
+                            if (error.text.contains("PHONE_NUMBER_INVALID")) {
+                                delegate.needShowAlert(LocaleController.getString("InvalidPhoneNumber", R.string.InvalidPhoneNumber));
+                            } else if (error.text.contains("PHONE_CODE_EMPTY") || error.text.contains("PHONE_CODE_INVALID")) {
+                                delegate.needShowAlert(LocaleController.getString("InvalidCode", R.string.InvalidCode));
+                            } else if (error.text.contains("PHONE_CODE_EXPIRED")) {
+                                delegate.needShowAlert(LocaleController.getString("CodeExpired", R.string.CodeExpired));
+                            } else {
+                                delegate.needShowAlert(error.text);
+                            }
+                        }
+                    }
+                }
+            }
+        }, null, true, RPCRequest.RPCRequestClassGeneric | RPCRequest.RPCRequestClassFailOnServerErrors);
+    }
+
+    @Override
+    public void onBackPressed() {
+        try {
+            synchronized(timerSync) {
+                if (timeTimer != null) {
+                    timeTimer.cancel();
+                    timeTimer = null;
+                }
+            }
+        } catch (Exception e) {
+            FileLog.e("tmessages", e);
+        }
+        currentParams = null;
+        Utilities.setWaitingForSms(false);
+        NotificationCenter.getInstance().removeObserver(this, 998);
+        waitingForSms = false;
+    }
+
+    @Override
+    public void onDestroyActivity() {
+        super.onDestroyActivity();
+        Utilities.setWaitingForSms(false);
+        NotificationCenter.getInstance().removeObserver(this, 998);
+        try {
+            synchronized(timerSync) {
+                if (timeTimer != null) {
+                    timeTimer.cancel();
+                    timeTimer = null;
+                }
+            }
+        } catch (Exception e) {
+            FileLog.e("tmessages", e);
+        }
+        waitingForSms = false;
+    }
+
+    @Override
+    public void onShow() {
+        super.onShow();
+        if (codeField != null) {
+            codeField.requestFocus();
+            codeField.setSelection(codeField.length());
+        }
+    }
+
+    @Override
+    public void didReceivedNotification(int id, final Object... args) {
+        if (id == 998) {
+            Utilities.RunOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (!waitingForSms) {
+                        return;
+                    }
+                    if (codeField != null) {
+                        codeField.setText("" + args[0]);
+                        onNextPressed();
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void saveStateParams(Bundle bundle) {
+        String code = codeField.getText().toString();
+        if (code != null && code.length() != 0) {
+            bundle.putString("smsview_code", code);
+        }
+        if (currentParams != null) {
+            bundle.putBundle("smsview_params", currentParams);
+        }
+        if (time != 0) {
+            bundle.putInt("time", time);
+        }
+    }
+
+    @Override
+    public void restoreStateParams(Bundle bundle) {
+        currentParams = bundle.getBundle("smsview_params");
+        if (currentParams != null) {
+            setParams(currentParams);
+        }
+        String code = bundle.getString("smsview_code");
+        if (code != null) {
+            codeField.setText(code);
+        }
+        Integer t = bundle.getInt("time");
+        if (t != 0) {
+            time = t;
+        }
+    }
+}

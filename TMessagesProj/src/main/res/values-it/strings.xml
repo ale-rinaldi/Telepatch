@@ -230,6 +230,7 @@
     <string name="GroupNotifications">NOTIFICHE DI GRUPPO</string>
     <string name="Sound">Suoni</string>
     <string name="InAppNotifications">NOTIFICHE IN-APP</string>
+    <string name="InAppSwitch">Abilita notifiche fluttuanti in-app</string>
     <string name="InAppSounds">Suoni in-app</string>
     <string name="InAppVibrate">Vibrazione in-app</string>
     <string name="Vibrate">Vibrazione</string>
@@ -362,7 +363,7 @@
     <string name="DeleteChatQuestion">Vuoi eliminare questa chat?</string>
 
     <!--Intro view-->
-    <string name="Page1Title">Telegram</string>
+    <string name="Page1Title">Telepatch (Telegram) </string>
     <string name="Page2Title">Veloce</string>
     <string name="Page3Title">Gratuito</string>
     <string name="Page4Title">Sicuro</string>
