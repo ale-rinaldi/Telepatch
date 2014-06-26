@@ -19,7 +19,7 @@
         android:background="@drawable/location_panel"
         android:id="@+id/location_bottom_view">
 
-        <org.telegram.telepatch.ui.Views.BackupImageView
+        <org.telepatch.ui.Views.BackupImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:contentDescription=""

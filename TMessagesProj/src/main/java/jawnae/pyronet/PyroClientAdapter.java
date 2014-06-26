@@ -18,8 +18,8 @@
 
 package jawnae.pyronet;
 
-import org.telegram.telepatch.messenger.BuildVars;
-import org.telegram.telepatch.messenger.FileLog;
+import org.telepatch.messenger.BuildVars;
+import org.telepatch.messenger.FileLog;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

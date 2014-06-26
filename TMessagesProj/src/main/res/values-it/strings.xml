@@ -273,6 +273,7 @@
     <string name="WiFiOnly">solo tramite WiFi</string>
     <string name="SortFirstName">Nome</string>
     <string name="SortLastName">Cognome</string>
+    <string name="QuickReplyLabel">Risposta Rapida da notifica</string>
 
     <!--media view-->
     <string name="NoMedia">Nessun media condiviso</string>
@@ -316,6 +317,7 @@
     <string name="OpenPhoto">Apri foto</string>
     <string name="Set">Imposta</string>
     <string name="OK">OK</string>
+    <string name="reply">Rispondi</string>
 
     <!--messages-->
     <string name="ActionKickUser">un1 ha rimosso un2</string>

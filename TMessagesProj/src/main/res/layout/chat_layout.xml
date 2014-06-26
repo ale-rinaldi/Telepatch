@@ -1,4 +1,4 @@
-<org.telegram.telepatch.ui.Views.SizeNotifierRelativeLayout
+<org.telepatch.ui.Views.SizeNotifierRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +10,7 @@
         android:id="@+id/background_image"
         android:scaleType="centerCrop"/>
 
-    <org.telegram.telepatch.ui.Views.FrameLayoutFixed
+    <org.telepatch.ui.Views.FrameLayoutFixed
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
         android:paddingBottom="48dp">
@@ -33,9 +33,9 @@
             layout="@layout/encrypted_chat_placeholder"
             android:layout_gravity="center"/>
 
-    </org.telegram.telepatch.ui.Views.FrameLayoutFixed>
+    </org.telepatch.ui.Views.FrameLayoutFixed>
 
-    <org.telegram.telepatch.ui.Views.LayoutListView
+    <org.telepatch.ui.Views.LayoutListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/chat_list_view"
@@ -162,7 +162,7 @@
             android:textCursorDrawable="@null"
             android:textColor="#000000"/>
 
-        <org.telegram.telepatch.ui.Views.FrameLayoutFixed
+        <org.telepatch.ui.Views.FrameLayoutFixed
             android:layout_height="48dp"
             android:layout_width="fill_parent"
             android:layout_marginTop="2dp"
@@ -224,7 +224,7 @@
 
             </LinearLayout>
 
-        </org.telegram.telepatch.ui.Views.FrameLayoutFixed>
+        </org.telepatch.ui.Views.FrameLayoutFixed>
 
         <ImageButton
             android:layout_width="48dp"
@@ -293,4 +293,4 @@
         android:layout_marginBottom="4dp"
         android:id="@+id/pagedown_button"/>
 
-</org.telegram.telepatch.ui.Views.SizeNotifierRelativeLayout>
+</org.telepatch.ui.Views.SizeNotifierRelativeLayout>

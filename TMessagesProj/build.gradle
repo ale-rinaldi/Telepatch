@@ -20,6 +20,7 @@ dependencies {
     compile 'com.android.support:support-v4:19.0.+'
     compile 'com.google.android.gms:play-services:4.1.+'
     compile 'net.hockeyapp.android:HockeySDK:3.0.1'
+    compile 'com.android.support:appcompat-v7:19.+'
 }
 
 android {
@@ -27,11 +28,11 @@ android {
     buildToolsVersion '19.1.0'
     aaptOptions.useAaptPngCruncher = true
     lintOptions {
-            checkReleaseBuilds false
-            // Or, if you prefer, you can continue to check for errors in release builds,
-            // but continue the build even when errors are found:
-            abortOnError false
-        }
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
     signingConfigs {
         debug {
             keyAlias 'xela92'
@@ -81,9 +82,9 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 19
-        //VERSIONE IN LAVORAZIONE: 1.5.8
-        versionCode 256
-        versionName '1.5.7'
+        //VERSIONE IN LAVORAZIONE: 1.5.9
+        versionCode 258
+        versionName '1.5.9'
     }
     productFlavors {
     }

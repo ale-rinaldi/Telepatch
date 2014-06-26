@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.telegram.telepatch.messenger"
-    android:installLocation="auto">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="org.telepatch.messenger"
+    android:installLocation="auto" >
 
-    <supports-screens android:anyDensity="true"
-                      android:smallScreens="true"
-                      android:normalScreens="true"
-                      android:largeScreens="true"
-                      android:resizeable="true"
-                      android:xlargeScreens="true"/>
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
 
-    <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
-    <uses-feature android:name="android.hardware.telephony" android:required="false" />
-    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-feature android:name="android.hardware.wifi" android:required="false" />
-    <uses-feature android:name="android.hardware.screen.PORTRAIT" android:required="false" />
-    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.screen.PORTRAIT"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -24,114 +40,149 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
-    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
+        android:name="org.telepatch.ui.ApplicationLoader"
         android:allowBackup="false"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/AppName"
-        android:theme="@style/Theme.TMessages.Start"
-        android:name="org.telegram.telepatch.ui.ApplicationLoader"
-        android:hardwareAccelerated="true"
-        android:largeHeap="true">
-
+        android:largeHeap="true"
+        android:theme="@style/Theme.TMessages.Start" >
         <activity
-            android:name="org.telegram.telepatch.ui.LaunchActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:name="org.telepatch.ui.LaunchActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:hardwareAccelerated="true"
             android:launchMode="singleTask"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="image/*"/>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="video/*"/>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="video/*" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND_MULTIPLE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="image/*"/>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="image/*" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="text/plain"/>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="text/plain" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="*/*"/>
+                <action android:name="android.intent.action.SEND" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="*/*" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND_MULTIPLE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="*/*"/>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="*/*" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="vnd.android.cursor.item/vnd.org.telegram.telepatch.messenger.android.profile"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="vnd.android.cursor.item/vnd.org.telepatch.messenger.android.profile" />
             </intent-filter>
         </activity>
         <activity
-            android:name="org.telegram.telepatch.ui.IntroActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            >
+            android:name="org.telepatch.ui.PopupMainActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:label="@string/AppName"
+            android:theme="@style/Theme.FloatingWindow.Popup"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            tools:ignore="ExportedActivity">
+
+            </activity>
+        <activity
+            android:name="org.telepatch.ui.IntroActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" >
         </activity>
 
-        <receiver android:name="org.telegram.telepatch.messenger.SmsListener">
+
+
+        <receiver android:name=".SmsListener" >
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
-        <service android:name="org.telegram.telepatch.messenger.AuthenticatorService"
-            android:exported="true">
+        <service
+            android:name=".AuthenticatorService"
+            android:exported="true" >
             <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator"/>
+                <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
-            <meta-data android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/auth"/>
-        </service>
 
-        <service android:name="org.telegram.telepatch.messenger.ContactsSyncAdapterService"
-            android:exported="true">
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/auth" />
+        </service>
+        <service
+            android:name=".ContactsSyncAdapterService"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
-            <meta-data android:name="android.content.SyncAdapter"
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
                 android:resource="@xml/sync_contacts" />
-            <meta-data android:name="android.provider.CONTACTS_STRUCTURE"
+            <meta-data
+                android:name="android.provider.CONTACTS_STRUCTURE"
                 android:resource="@xml/contacts" />
         </service>
+        <service
+            android:name=".NotificationsService"
+            android:enabled="true" />
 
-        <service android:name="org.telegram.telepatch.messenger.NotificationsService" android:enabled="true"/>
-
-        <receiver android:name="org.telegram.telepatch.messenger.AppStartReceiver" android:enabled="true">
+        <receiver
+            android:name=".AppStartReceiver"
+            android:enabled="true" >
             <intent-filter>
-                <action android:name="org.telegram.telepatch.start" />
+                <action android:name="org.telepatch.start" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>

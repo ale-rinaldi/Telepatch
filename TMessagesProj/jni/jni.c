@@ -30,7 +30,7 @@ void JNI_OnUnload(JavaVM *vm, void *reserved) {
     gifOnJNIUnload(vm, reserved);
 }
 
-JNIEXPORT jbyteArray Java_org_telegram_telepatch_messenger_Utilities_aesIgeEncryption(JNIEnv *env, jclass class, jbyteArray _what, jbyteArray _key, jbyteArray _iv, jboolean encrypt, jboolean changeIv, jint l) {
+JNIEXPORT jbyteArray Java_org_telepatch_messenger_Utilities_aesIgeEncryption(JNIEnv *env, jclass class, jbyteArray _what, jbyteArray _key, jbyteArray _iv, jboolean encrypt, jboolean changeIv, jint l) {
     unsigned char *what = (unsigned char *)(*env)->GetByteArrayElements(env, _what, NULL);
     unsigned char *key = (unsigned char *)(*env)->GetByteArrayElements(env, _key, NULL);
     unsigned char *__iv = (unsigned char *)(*env)->GetByteArrayElements(env, _iv, NULL);
@@ -63,7 +63,7 @@ JNIEXPORT jbyteArray Java_org_telegram_telepatch_messenger_Utilities_aesIgeEncry
     return _what;
 }
 
-JNIEXPORT void Java_org_telegram_telepatch_messenger_Utilities_aesIgeEncryption2(JNIEnv *env, jclass class, jobject _what, jbyteArray _key, jbyteArray _iv, jboolean encrypt, jboolean changeIv, jint l) {
+JNIEXPORT void Java_org_telepatch_messenger_Utilities_aesIgeEncryption2(JNIEnv *env, jclass class, jobject _what, jbyteArray _key, jbyteArray _iv, jboolean encrypt, jboolean changeIv, jint l) {
     jbyte *what = (*env)->GetDirectBufferAddress(env, _what);
     unsigned char *key = (unsigned char *)(*env)->GetByteArrayElements(env, _key, NULL);
     unsigned char *__iv = (unsigned char *)(*env)->GetByteArrayElements(env, _iv, NULL);
@@ -102,7 +102,7 @@ uint64_t gcd(uint64_t a, uint64_t b){
     return b == 0 ? a : b;
 }
 
-JNIEXPORT jlong Java_org_telegram_telepatch_messenger_Utilities_doPQNative(JNIEnv* env, jclass class, jlong _what) {
+JNIEXPORT jlong Java_org_telepatch_messenger_Utilities_doPQNative(JNIEnv* env, jclass class, jlong _what) {
     uint64_t what = _what;
     int it = 0, i, j;
     uint64_t g = 0;

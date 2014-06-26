@@ -10,7 +10,7 @@
     android:layout_gravity="top"
     android:gravity="right">
 
-    <org.telegram.telepatch.ui.Views.FrameLayoutFixed
+    <org.telepatch.ui.Views.FrameLayoutFixed
         android:layout_height="wrap_content"
         android:layout_width="140dp"
         android:layout_marginRight="10dp"
@@ -41,7 +41,7 @@
             android:id="@+id/chat_view_action_progress"
             android:max="100"/>
 
-    </org.telegram.telepatch.ui.Views.FrameLayoutFixed>
+    </org.telepatch.ui.Views.FrameLayoutFixed>
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
         android:textStyle="bold"
         android:layout_gravity="center"/>
 
-    <org.telegram.telepatch.ui.Views.FrameLayoutFixed
+    <org.telepatch.ui.Views.FrameLayoutFixed
         android:layout_height="78dp"
         android:layout_width="wrap_content"
         android:paddingTop="9dp"
@@ -70,13 +70,13 @@
         android:layout_gravity="top|right"
         android:id="@+id/chat_bubble_layout">
 
-        <org.telegram.telepatch.ui.Views.FrameLayoutFixed
+        <org.telepatch.ui.Views.FrameLayoutFixed
             android:layout_height="69dp"
             android:layout_width="wrap_content"
             android:layout_gravity="top|right"
             android:id="@+id/shared_layout">
 
-            <org.telegram.telepatch.ui.Views.BackupImageView
+            <org.telepatch.ui.Views.BackupImageView
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:background="#408ed057"
@@ -84,7 +84,7 @@
                 android:scaleType="center"
                 android:id="@+id/contact_avatar"/>
 
-            <org.telegram.telepatch.ui.Views.TightTextView
+            <org.telepatch.ui.Views.TightTextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:scrollHorizontally="true"
@@ -99,7 +99,7 @@
                 android:id="@+id/chat_user_group_name"
                 android:layout_marginLeft="50dp"/>
 
-            <org.telegram.telepatch.ui.Views.TightTextView
+            <org.telepatch.ui.Views.TightTextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="50dp"
@@ -147,8 +147,8 @@
 
             </LinearLayout>
 
-        </org.telegram.telepatch.ui.Views.FrameLayoutFixed>
+        </org.telepatch.ui.Views.FrameLayoutFixed>
 
-    </org.telegram.telepatch.ui.Views.FrameLayoutFixed>
+    </org.telepatch.ui.Views.FrameLayoutFixed>
 
 </LinearLayout>
