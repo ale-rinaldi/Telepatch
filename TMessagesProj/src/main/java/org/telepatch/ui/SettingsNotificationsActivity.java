@@ -69,6 +69,7 @@ public class SettingsNotificationsActivity extends BaseFragment {
     private int resetSectionRow;
     private int resetNotificationsRow;
     private int messageQuickReply;
+    private int messageMultipleNotification;
     private int rowCount = 0;
     private boolean inappCheckDisabled = false;
 
@@ -76,6 +77,7 @@ public class SettingsNotificationsActivity extends BaseFragment {
     public boolean onFragmentCreate() {
         notificationsServiceRow = rowCount++;
         messageSectionRow = rowCount++;
+        messageMultipleNotification = rowCount++;
         messageQuickReply = rowCount++;
         messageAlertRow = rowCount++;
         messagePreviewRow = rowCount++;
@@ -143,7 +145,16 @@ public class SettingsNotificationsActivity extends BaseFragment {
                         }
                         editor.commit();
                         listView.invalidateViews();
-                        //TODO qui metto i toggle della quickReply
+                        //TODO qui metto il toggle delle notifiche multiple
+                    } else if (i == messageMultipleNotification) {
+                        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        boolean enabled;
+                        enabled = preferences.getBoolean("multiple_notify", true);
+                        editor.putBoolean("multiple_notify", !enabled);
+                        editor.commit();
+                        listView.invalidateViews();
+                        //TODO qui metto il toggle della quickReply
                     } else if (i == messageQuickReply) {
                       SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
                       SharedPreferences.Editor editor = preferences.edit();
@@ -481,6 +492,11 @@ public class SettingsNotificationsActivity extends BaseFragment {
                     }
                     textView.setText(LocaleController.getString("Alert", R.string.Alert));
                     divider.setVisibility(View.VISIBLE);
+                    //TODO qui metto le multiple notifications nell'adapter
+                } else if (i == messageMultipleNotification) {
+                    enabled = preferences.getBoolean("multiple_notify", true);
+                    textView.setText(R.string.multiple_notify);
+                    divider.setVisibility(View.VISIBLE);
                     //TODO qui metto le quickReply nell'adapter
                 } else if (i == messageQuickReply) {
                     enabled = preferences.getBoolean("QuickReplyEnabled", true);
@@ -607,7 +623,7 @@ public class SettingsNotificationsActivity extends BaseFragment {
         public int getItemViewType(int i) {
             if (i == messageSectionRow || i == groupSectionRow || i == inappSectionRow || i == eventsSectionRow || i == pebbleSectionRow || i == resetSectionRow) {
                 return 0;
-            } else if (i == messageQuickReply || i == messageAlertRow || i == messagePreviewRow || i == messageVibrateRow ||
+            } else if (i == messageMultipleNotification || i == messageQuickReply || i == messageAlertRow || i == messagePreviewRow || i == messageVibrateRow ||
                     i == groupAlertRow || i == groupPreviewRow || i == groupVibrateRow || i == inappSwitchRow ||
                     i == inappSoundRow || i == inappVibrateRow || i == inappPreviewRow ||
                     i == contactJoinedRow ||

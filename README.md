@@ -1,20 +1,19 @@
-## A fork of the original Telegram client, fine-tuned by its users
+## Telegram messenger for Android
 
 [Telegram](http://telegram.org) is a messaging app with a focus on speed and security. It’s superfast, simple and free.
 
-We are Ale&Ale'x, we love Telegram and we use it everyday. But we are annoyed of some stupid limitations that the original client has.
-So, Telepatch is just... Telegram client, with some improvements to make it better for everyday use. Here are the main goals:
-- Multiple expandable notifications showing all the received messages
-  (currently, the official client shows only one notification even if you received 100 messages in 30 conversations)
-- Customizable vibration pattern
-- Customizable LED color
-- Whatever you will suggest us
+This repo contains official [Telegram App for Android](https://play.google.com/store/apps/details?id=org.telegram.messenger) source code.
 
-### Status
+### API, Protocol documentation
 
-The GIT fork has just been created, and no releases are currently available.
+Documentation for Telegram API is available here: http://core.telegram.org/api
 
+Documentation for MTproto protocol is available here: http://core.telegram.org/mtproto
 
-### ETAs
+### Usage
 
-At the moment, Telepatch is an experiment for us. We don't know when it will be really available. Maybe soon, maybe late, maybe never.
+Import the root folder into your IDE (tested on Android Studio), then run project.
+
+### Localization
+
+We moved all translations to https://www.transifex.com/projects/p/telegram/. Please use it.

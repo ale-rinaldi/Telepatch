@@ -4563,7 +4563,7 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                                 quickIntent.setAction("com.tmessages.openchat" + Math.random() + Integer.MAX_VALUE);
                             }
                             PendingIntent quickPendingIntent = PendingIntent.getActivity(ApplicationLoader.applicationContext, 0, quickIntent, PendingIntent.FLAG_ONE_SHOT);
-                            mBuilder.addAction(R.drawable.telepatch_mini, "Rispondi", quickPendingIntent);
+                            mBuilder.addAction(R.drawable.telepatch_mini, ApplicationLoader.applicationContext.getResources().getString(R.string.reply), quickPendingIntent);
                         }
 
                 if (photoPath != null) {

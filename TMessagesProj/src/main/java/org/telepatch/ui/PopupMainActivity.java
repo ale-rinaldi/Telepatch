@@ -56,6 +56,7 @@ public class PopupMainActivity extends LaunchActivity {
             PhotoViewer.getInstance().closePhoto(true);
         } else {
             finish();
+            overridePendingTransition(android.R.anim.fade_in, 0);
         }
     }
 

@@ -316,6 +316,7 @@
     <string name="Set">Set</string>
     <string name="OK">OK</string>
     <string name="reply">Reply</string>
+    <string name="multiple_notify">Multiple Notifications for different contacts messages</string>
 
     <!-- messages -->
     <string name="ActionKickUser">un1 removed un2</string>
