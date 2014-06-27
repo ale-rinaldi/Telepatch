@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,7 +27,10 @@ import org.telepatch.messenger.FileLog;
 import org.telepatch.messenger.LocaleController;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.Utilities;
+import org.telepatch.ui.Adapters.BaseFragmentAdapter;
 import org.telepatch.ui.Views.ActionBar.ActionBarLayer;
+import org.telepatch.ui.Views.ActionBar.ActionBarMenu;
+import org.telepatch.ui.Views.ActionBar.ActionBarMenuItem;
 import org.telepatch.ui.Views.BackupImageView;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
 
@@ -43,7 +45,8 @@ import java.util.HashMap;
 public class DocumentSelectActivity extends BaseFragment {
 
     public static abstract interface DocumentSelectActivityDelegate {
-        public void didSelectFile(DocumentSelectActivity activity, String path, String name, String ext, long size);
+        public void didSelectFile(DocumentSelectActivity activity, String path);
+        public void startDocumentSelectActivity();
     }
 
     private ListView listView;
@@ -134,9 +137,16 @@ public class DocumentSelectActivity extends BaseFragment {
                 public void onItemClick(int id) {
                     if (id == -1) {
                         finishFragment();
+                    } else if (id == 1) {
+                        if (delegate != null) {
+                            delegate.startDocumentSelectActivity();
+                        }
+                        finishFragment(false);
                     }
                 }
             });
+            ActionBarMenu menu = actionBarLayer.createMenu();
+            ActionBarMenuItem item = menu.addItem(1, R.drawable.ic_ab_other);
 
             fragmentView = inflater.inflate(R.layout.document_select_layout, container, false);
             listAdapter = new ListAdapter(getParentActivity());
@@ -176,7 +186,7 @@ public class DocumentSelectActivity extends BaseFragment {
                             return;
                         }
                         if (delegate != null) {
-                            delegate.didSelectFile(DocumentSelectActivity.this, file.getAbsolutePath(), item.title, item.ext, file.length());
+                            delegate.didSelectFile(DocumentSelectActivity.this, file.getAbsolutePath());
                         }
                     }
                 }
@@ -290,7 +300,10 @@ public class DocumentSelectActivity extends BaseFragment {
         return true;
     }
 
-    private void showErrorBox(String error){
+    private void showErrorBox(String error) {
+        if (getParentActivity() == null) {
+            return;
+        }
         new AlertDialog.Builder(getParentActivity())
                 .setTitle(LocaleController.getString("AppName", R.string.AppName))
                 .setMessage(error)
@@ -374,7 +387,7 @@ public class DocumentSelectActivity extends BaseFragment {
         return LocaleController.formatString("FreeOfTotal", R.string.FreeOfTotal, Utilities.formatFileSize(free), Utilities.formatFileSize(total));
     }
 
-    private class ListAdapter extends BaseAdapter {
+    private class ListAdapter extends BaseFragmentAdapter {
         private Context mContext;
 
         public ListAdapter(Context context) {

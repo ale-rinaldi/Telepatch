@@ -20,7 +20,6 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -32,6 +31,7 @@ import org.telepatch.messenger.MessagesController;
 import org.telepatch.messenger.NotificationCenter;
 import org.telepatch.messenger.R;
 import org.telepatch.objects.PhotoObject;
+import org.telepatch.ui.Adapters.BaseFragmentAdapter;
 import org.telepatch.ui.Views.ActionBar.ActionBarLayer;
 import org.telepatch.ui.Views.BackupImageView;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
@@ -347,7 +347,7 @@ public class MediaActivity extends BaseFragment implements NotificationCenter.No
         }
     }
 
-    private class ListAdapter extends BaseAdapter {
+    private class ListAdapter extends BaseFragmentAdapter {
         private Context mContext;
 
         public ListAdapter(Context context) {

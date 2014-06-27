@@ -111,6 +111,7 @@
     <string name="SlideToCancel">SLIDE TO CANCEL</string>
     <string name="SaveToDownloads">Save to downloads</string>
     <string name="ApplyLocalizationFile">Apply localization file</string>
+    <string name="UnsupportedAttachment">Unsupported attachment</string>
 
     <!-- notification -->
     <string name="EncryptedChatRequested">Secret chat requested</string>
@@ -272,6 +273,7 @@
     <string name="SortFirstName">First name</string>
     <string name="SortLastName">Last name</string>
     <string name="QuickReplyLabel">Quick Reply from notification</string>
+    <string name="LedColor">LED Color</string>
 
     <!-- media view -->
     <string name="NoMedia">No shared media yet</string>

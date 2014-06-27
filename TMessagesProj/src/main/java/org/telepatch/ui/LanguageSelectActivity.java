@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,6 +24,7 @@ import org.telepatch.messenger.FileLog;
 import org.telepatch.messenger.LocaleController;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.Utilities;
+import org.telepatch.ui.Adapters.BaseFragmentAdapter;
 import org.telepatch.ui.Views.ActionBar.ActionBarLayer;
 import org.telepatch.ui.Views.ActionBar.ActionBarMenu;
 import org.telepatch.ui.Views.ActionBar.ActionBarMenuItem;
@@ -35,11 +35,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class LanguageSelectActivity extends BaseFragment {
-    private BaseAdapter listAdapter;
+    private BaseFragmentAdapter listAdapter;
     private ListView listView;
     private boolean searchWas;
     private boolean searching;
-    private BaseAdapter searchListViewAdapter;
+    private BaseFragmentAdapter searchListViewAdapter;
     private TextView emptyTextView;
 
     private Timer searchTimer;
@@ -143,7 +143,7 @@ public class LanguageSelectActivity extends BaseFragment {
                             localeInfo = LocaleController.getInstance().sortedLanguages.get(i);
                         }
                     }
-                    if (localeInfo == null || localeInfo.pathToFile == null) {
+                    if (localeInfo == null || localeInfo.pathToFile == null || getParentActivity() == null) {
                         return false;
                     }
                     final LocaleController.LocaleInfo finalLocaleInfo = localeInfo;
@@ -232,7 +232,7 @@ public class LanguageSelectActivity extends BaseFragment {
     }
 
     private void processSearch(final String query) {
-        Utilities.globalQueue.postRunnable(new Runnable() {
+        Utilities.searchQueue.postRunnable(new Runnable() {
             @Override
             public void run() {
 
@@ -265,7 +265,7 @@ public class LanguageSelectActivity extends BaseFragment {
         });
     }
 
-    private class SearchAdapter extends BaseAdapter {
+    private class SearchAdapter extends BaseFragmentAdapter {
         private Context mContext;
 
         public SearchAdapter(Context context) {
@@ -341,7 +341,7 @@ public class LanguageSelectActivity extends BaseFragment {
         }
     }
 
-    private class ListAdapter extends BaseAdapter {
+    private class ListAdapter extends BaseFragmentAdapter {
         private Context mContext;
 
         public ListAdapter(Context context) {

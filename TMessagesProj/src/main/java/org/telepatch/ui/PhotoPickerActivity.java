@@ -18,11 +18,11 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import org.telepatch.messenger.LocaleController;
 import org.telepatch.messenger.MediaController;
@@ -32,6 +32,7 @@ import org.telepatch.messenger.R;
 import org.telepatch.messenger.TLRPC;
 import org.telepatch.messenger.Utilities;
 import org.telepatch.objects.MessageObject;
+import org.telepatch.ui.Adapters.BaseFragmentAdapter;
 import org.telepatch.ui.Views.ActionBar.ActionBarLayer;
 import org.telepatch.ui.Views.ActionBar.ActionBarMenu;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
@@ -107,7 +108,7 @@ public class PhotoPickerActivity extends BaseFragment implements NotificationCen
                         }
                     } else if (id == 1) {
                         if (delegate != null) {
-                            finishFragment();
+                            finishFragment(false);
                             delegate.startPhotoSelectActivity();
                         }
                     }
@@ -441,7 +442,7 @@ public class PhotoPickerActivity extends BaseFragment implements NotificationCen
         }
     }
 
-    private class ListAdapter extends BaseAdapter {
+    private class ListAdapter extends BaseFragmentAdapter {
         private Context mContext;
 
         public ListAdapter(Context context) {

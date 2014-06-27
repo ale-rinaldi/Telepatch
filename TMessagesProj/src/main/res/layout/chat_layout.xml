@@ -4,11 +4,14 @@
     android:layout_height="match_parent"
     android:id="@+id/chat_layout">
 
+<!--
+ TODO rimosso dagli autori di Telegram ufficiale. Verificare.
     <ImageView
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
         android:id="@+id/background_image"
         android:scaleType="centerCrop"/>
+-->
 
     <org.telepatch.ui.Views.FrameLayoutFixed
         android:layout_height="fill_parent"

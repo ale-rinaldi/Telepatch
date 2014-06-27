@@ -16,9 +16,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 
 import org.telepatch.PhoneFormat.PhoneFormat;
 import org.telepatch.messenger.LocaleController;
@@ -30,11 +30,11 @@ import org.telepatch.messenger.NotificationCenter;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.RPCRequest;
 import org.telepatch.messenger.Utilities;
+import org.telepatch.ui.Adapters.BaseFragmentAdapter;
 import org.telepatch.ui.Cells.ChatOrUserCell;
 import org.telepatch.ui.Views.ActionBar.ActionBarLayer;
 import org.telepatch.ui.Views.ActionBar.ActionBarMenu;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -120,7 +120,7 @@ public class SettingsBlockedUsers extends BaseFragment implements NotificationCe
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    if (i >= blockedContacts.size()) {
+                    if (i >= blockedContacts.size() || getParentActivity() == null) {
                         return true;
                     }
                     selectedUserId = blockedContacts.get(i).user_id;
@@ -276,7 +276,7 @@ public class SettingsBlockedUsers extends BaseFragment implements NotificationCe
         }, null, true, RPCRequest.RPCRequestClassGeneric);
     }
 
-    private class ListAdapter extends BaseAdapter {
+    private class ListAdapter extends BaseFragmentAdapter {
         private Context mContext;
 
         public ListAdapter(Context context) {

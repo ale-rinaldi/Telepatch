@@ -43,6 +43,7 @@ import org.telepatch.ui.Views.ActionBar.ActionBarActivity;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
 import org.telepatch.ui.Views.NotificationView;
 
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -52,12 +53,11 @@ import java.util.Map;
 public class LaunchActivity extends ActionBarActivity implements NotificationCenter.NotificationCenterDelegate, MessagesActivity.MessagesActivityDelegate {
     private boolean finished = false;
     private NotificationView notificationView;
-    private Uri photoPath = null;
     private String videoPath = null;
     private String sendingText = null;
-    private String documentPath = null;
-    private ArrayList<Uri> imagesPathArray = null;
-    private ArrayList<String> documentsPathArray = null;
+    private ArrayList<Uri> photoPathsArray = null;
+    private ArrayList<String> documentsPathsArray = null;
+    private ArrayList<String> documentsOriginalPathsArray = null;
     private ArrayList<TLRPC.User> contactsToSend = null;
     private int currentConnectionState;
 
@@ -66,9 +66,7 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
         setUpWindow();
         ApplicationLoader.postInitApplication();
 
-
-
-        if (!UserConfig.clientActivated) {
+        if (!UserConfig.isClientActivated()) {
             Intent intent = getIntent();
             if (intent != null && intent.getAction() != null && (Intent.ACTION_SEND.equals(intent.getAction()) || intent.getAction().equals(Intent.ACTION_SEND_MULTIPLE))) {
                 super.onCreateFinish(savedInstanceState);
@@ -105,7 +103,7 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
         NotificationCenter.getInstance().addObserver(this, 703);
 
         if (fragmentsStack.isEmpty()) {
-            if (!UserConfig.clientActivated) {
+            if (!UserConfig.isClientActivated()) {
                 addFragmentToStack(new LoginActivity());
             } else {
                 addFragmentToStack(new MessagesActivity(null));
@@ -168,15 +166,14 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
         Integer push_enc_id = 0;
         Integer open_settings = 0;
 
-        photoPath = null;
+        photoPathsArray = null;
         videoPath = null;
         sendingText = null;
-        documentPath = null;
-        imagesPathArray = null;
-        documentsPathArray = null;
+        documentsPathsArray = null;
+        documentsOriginalPathsArray = null;
+        contactsToSend = null;
 
         if ((intent.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0) {
-
             if (intent != null && intent.getAction() != null && !restore) {
                 if (Intent.ACTION_SEND.equals(intent.getAction())) {
                     boolean error = false;
@@ -279,19 +276,10 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
                         Uri uri = (Uri) parcelable;
                         if (uri != null && type != null && type.startsWith("image/")) {
                             String tempPath = Utilities.getPath(uri);
-                            boolean isGif = false;
-                            if (tempPath != null && tempPath.endsWith(".gif")) {
-                                isGif = true;
-                                documentPath = tempPath;
-                            } else if (tempPath == null) {
-                                isGif = MediaController.isGif(uri);
-                                if (isGif) {
-                                    documentPath = MediaController.copyDocumentToCache(uri);
-                                }
+                            if (photoPathsArray == null) {
+                                photoPathsArray = new ArrayList<Uri>();
                             }
-                            if (!isGif || documentPath == null) {
-                                photoPath = uri;
-                            }
+                            photoPathsArray.add(uri);
                         } else {
                             path = Utilities.getPath(uri);
                             if (path != null) {
@@ -301,7 +289,12 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
                                 if (type != null && type.startsWith("video/")) {
                                     videoPath = path;
                                 } else {
-                                    documentPath = path;
+                                    if (documentsPathsArray == null) {
+                                        documentsPathsArray = new ArrayList<String>();
+                                        documentsOriginalPathsArray = new ArrayList<String>();
+                                    }
+                                    documentsPathsArray.add(path);
+                                    documentsOriginalPathsArray.add(uri.toString());
                                 }
                             } else {
                                 error = true;
@@ -323,32 +316,10 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
                                         parcelable = Uri.parse(parcelable.toString());
                                     }
                                     Uri uri = (Uri) parcelable;
-                                    String tempPath = Utilities.getPath(uri);
-
-                                    boolean isGif = false;
-                                    if (tempPath != null && tempPath.endsWith(".gif")) {
-                                        isGif = true;
-                                    } else if (tempPath == null) {
-                                        isGif = MediaController.isGif(uri);
-                                        if (isGif) {
-                                            tempPath = MediaController.copyDocumentToCache(uri);
-                                        }
+                                    if (photoPathsArray == null) {
+                                        photoPathsArray = new ArrayList<Uri>();
                                     }
-                                    if (isGif && tempPath != null) {
-                                        if (documentsPathArray == null) {
-                                            documentsPathArray = new ArrayList<String>();
-                                        }
-                                        try {
-                                            documentsPathArray.add(tempPath);
-                                        } catch (Exception e) {
-                                            FileLog.e("tmessages", e);
-                                        }
-                                    } else {
-                                        if (imagesPathArray == null) {
-                                            imagesPathArray = new ArrayList<Uri>();
-                                        }
-                                        imagesPathArray.add(uri);
-                                    }
+                                    photoPathsArray.add(uri);
                                 }
                             } else {
                                 for (Parcelable parcelable : uris) {
@@ -356,14 +327,20 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
                                         parcelable = Uri.parse(parcelable.toString());
                                     }
                                     String path = Utilities.getPath((Uri) parcelable);
+                                    String originalPath = parcelable.toString();
+                                    if (originalPath == null) {
+                                        originalPath = path;
+                                    }
                                     if (path != null) {
                                         if (path.startsWith("file:")) {
                                             path = path.replace("file://", "");
                                         }
-                                        if (documentsPathArray == null) {
-                                            documentsPathArray = new ArrayList<String>();
+                                        if (documentsPathsArray == null) {
+                                            documentsPathsArray = new ArrayList<String>();
+                                            documentsOriginalPathsArray = new ArrayList<String>();
                                         }
-                                        documentsPathArray.add(path);
+                                        documentsPathsArray.add(path);
+                                        documentsOriginalPathsArray.add(originalPath);
                                     }
                                 }
                             }
@@ -423,7 +400,7 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
         }
 
         if (push_user_id != 0) {
-            if (push_user_id == UserConfig.clientUserId) {
+            if (push_user_id == UserConfig.getClientUserId()) {
                 open_settings = 1;
             } else {
                 Bundle args = new Bundle();
@@ -448,7 +425,7 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
                 pushOpened = true;
             }
         }
-        if (videoPath != null || photoPath != null || sendingText != null || documentPath != null || documentsPathArray != null || imagesPathArray != null || contactsToSend != null) {
+        if (videoPath != null || photoPathsArray != null || sendingText != null || documentsPathsArray != null || contactsToSend != null) {
             NotificationCenter.getInstance().postNotificationName(MessagesController.closeChats);
             Bundle args = new Bundle();
             args.putBoolean("onlySelect", true);
@@ -494,37 +471,29 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
             }
             ChatActivity fragment = new ChatActivity(args);
             presentFragment(fragment, true);
-            if (photoPath != null) {
-                fragment.processSendingPhoto(null, photoPath);
-            }
             if (videoPath != null) {
                 fragment.processSendingVideo(videoPath);
             }
             if (sendingText != null) {
                 fragment.processSendingText(sendingText);
             }
-            if (documentPath != null) {
-                fragment.processSendingDocument(documentPath);
+            if (photoPathsArray != null) {
+                fragment.processSendingPhotos(null, photoPathsArray);
             }
-            if (imagesPathArray != null) {
-                fragment.processSendingPhotos(null, imagesPathArray);
-            }
-            if (documentsPathArray != null) {
-                for (String path : documentsPathArray) {
-                    fragment.processSendingDocument(path);
-                }
+            if (documentsPathsArray != null) {
+                fragment.processSendingDocuments(documentsPathsArray, documentsOriginalPathsArray);
             }
             if (contactsToSend != null && !contactsToSend.isEmpty()) {
                 for (TLRPC.User user : contactsToSend) {
                     MessagesController.getInstance().sendMessage(user, dialog_id);
                 }
             }
-            photoPath = null;
+
+            photoPathsArray = null;
             videoPath = null;
             sendingText = null;
-            documentPath = null;
-            imagesPathArray = null;
-            documentsPathArray = null;
+            documentsPathsArray = null;
+            documentsOriginalPathsArray = null;
             contactsToSend = null;
         }
     }
@@ -541,7 +510,7 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
     @Override
     protected void onPause() {
         super.onPause();
-        ApplicationLoader.lastPauseTime = System.currentTimeMillis();
+        ConnectionsManager.setAppPaused(true);
         if (notificationView != null) {
             notificationView.hide(false);
         }
@@ -565,7 +534,7 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
         }
         Utilities.checkForCrashes(this);
         Utilities.checkForUpdates(this);
-        ApplicationLoader.resetLastPauseTime();
+        ConnectionsManager.setAppPaused(false);
         actionBar.setBackOverlayVisible(currentConnectionState != 0);
         try {
             NotificationManager mNotificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -608,7 +577,7 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
             int rotation = manager.getDefaultDisplay().getRotation();
 
             int height = Utilities.dp(48);
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            if (!Utilities.isTablet(this) && getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 height = Utilities.dp(40);
             }
             notificationView.applyOrientationPaddings(rotation == Surface.ROTATION_270 || rotation == Surface.ROTATION_90, height);

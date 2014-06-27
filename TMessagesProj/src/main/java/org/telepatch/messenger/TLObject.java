@@ -9,6 +9,8 @@
 package org.telepatch.messenger;
 
 public class TLObject {
+    public boolean disableFree = false;
+
     public TLObject () {
 
     }
