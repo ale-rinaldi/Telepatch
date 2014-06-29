@@ -171,15 +171,6 @@ public class MessagesController implements NotificationCenter.NotificationCenter
     public static final int userPhotosLoaded = 24;
 
     public static final int removeAllMessagesFromDialog = 25;
-
-    /*TODO qui ci mettiamo le cose da fare e quelle fatte
-    COSE FATTE.
-    - notifiche multiple gestite con dialog_id
-    - notifiche si cancellano quando entri nella conversazione
-    - pulizia codice iniziale
-    - notifiche con "nome persona" come titolo e "messaggio" come messaggio
-    - eliminate notifiche in app, rimpiazzate con quelle normali (TODO fare in modo che la notifica in app non escluda la notifica nella not. bar)
-   */
     //TODO inizializzo il notificationManager
     private NotificationManager mNotificationManager = (NotificationManager) ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -3336,12 +3327,8 @@ public class MessagesController implements NotificationCenter.NotificationCenter
 
                             if (currentPushMessage != null && readMessages.contains(currentPushMessage.messageOwner.id)) {
                                 //NotificationManager mNotificationManager = (NotificationManager) ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
-                                //TODO notificationManager rimosso, ora lo inizializzo a inizio app
-                                //TODO occhio che qui e' ancora 1 e dobbiamo capire un attimo qualcosa...
-                                //TODO sto facendo una prova.
+                                //TODO notificationManager rimosso, ora lo inizializzo a inizio ap
                                 mNotificationManager.cancel((int) currentPushMessage.messageOwner.dialog_id);
-                                Log.i("xela92", "dialog_id dell'owner: "+(int)currentPushMessage.messageOwner.dialog_id);
-
                                 currentPushMessage = null;
                             }
                         }
@@ -4199,10 +4186,7 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                         if (currentPushMessage != null && markAsReadMessages.contains(currentPushMessage.messageOwner.id)) {
                             //NotificationManager mNotificationManager = (NotificationManager)ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
                             //TODO notificationManager rimosso, ora lo inizializzo a inizio app
-                            //TODO occhio che qui e' ancora 1 e dobbiamo capire un attimo qualcosa...
-                            //TODO la stessa prova di sopra
                             mNotificationManager.cancel((int) currentPushMessage.messageOwner.dialog_id);
-                            Log.i("xela92", "dialog_id dell'owner: "+(int)currentPushMessage.messageOwner.dialog_id);
                             currentPushMessage = null;
                         }
                     }
@@ -4425,7 +4409,7 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                 // NotificationManager mNotificationManager = (NotificationManager)ApplicationLoader.applicationContext.getSystemService(Context.NOTIFICATION_SERVICE);
                 Intent intent = new Intent(ApplicationLoader.applicationContext, LaunchActivity.class);
                 String msg = null;
-
+                //se non e' notifica di sistema
                 if ((int) dialog_id != 0) {
                     if (chat_id != 0) {
                         intent.putExtra("chatId", chat_id);
@@ -4437,6 +4421,7 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                     if (user.photo != null && user.photo.photo_small != null && user.photo.photo_small.volume_id != 0 && user.photo.photo_small.local_id != 0) {
                         photoPath = user.photo.photo_small;
                     }
+                 //se e' un messaggio da utente singolo
                 if (chat_id == 0 && user_id != 0) {
                     if (preferences.getBoolean("EnablePreviewAll", true)) {
                         if (messageObject.messageOwner instanceof TLRPC.TL_messageService) {
@@ -4451,15 +4436,29 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                         } else {
                             if (messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaEmpty) {
                                 if (messageObject.messageOwner.message != null && messageObject.messageOwner.message.length() != 0) {
-                                    msg = LocaleController.formatString("NotificationMessageText", R.string.NotificationMessageText, Utilities.formatName(user.first_name, user.last_name), messageObject.messageOwner.message);
+                                    msg = LocaleController.formatString("NotificationMessageText", R.string.NotificationMessageText, messageObject.messageOwner.message);
                                 } else {
                                     msg = LocaleController.formatString("NotificationMessageNoText", R.string.NotificationMessageNoText, Utilities.formatName(user.first_name, user.last_name));
                                 }
+} else if (messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaPhoto) {
+                                    msg = LocaleController.formatString("NotificationMessagePhoto", R.string.NotificationMessagePhoto, Utilities.formatName(user.first_name, user.last_name));
+                                } else if (messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaVideo) {
+                                    msg = LocaleController.formatString("NotificationMessageVideo", R.string.NotificationMessageVideo, Utilities.formatName(user.first_name, user.last_name));
+                                } else if (messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaContact) {
+                                    msg = LocaleController.formatString("NotificationMessageContact", R.string.NotificationMessageContact, Utilities.formatName(user.first_name, user.last_name));
+                                } else if (messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaGeo) {
+                                    msg = LocaleController.formatString("NotificationMessageMap", R.string.NotificationMessageMap, Utilities.formatName(user.first_name, user.last_name));
+                                } else if (messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaDocument) {
+                                    msg = LocaleController.formatString("NotificationMessageDocument", R.string.NotificationMessageDocument, Utilities.formatName(user.first_name, user.last_name));
+                                } else if (messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaAudio) {
+                                    msg = LocaleController.formatString("NotificationMessageAudio", R.string.NotificationMessageAudio, Utilities.formatName(user.first_name, user.last_name));
+                                }
                             }
+                        } else {
+                            msg = LocaleController.formatString("NotificationMessageNoText", R.string.NotificationMessageNoText, Utilities.formatName(user.first_name, user.last_name));
                         }
-                    }
 
-
+                    //altrimenti messaggio di gruppo
                   } else if (chat_id != 0) {
                                 if (preferences.getBoolean("EnablePreviewGroup", true)) {
                                     if (messageObject.messageOwner instanceof TLRPC.TL_messageService) {
@@ -4472,7 +4471,8 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                                                     return;
 //TODO FINE NUOVO CODICE
                                                 }
-                                            }
+  msg = LocaleController.formatString("NotificationGroupAddMember", R.string.NotificationGroupAddMember, Utilities.formatName(user.first_name, user.last_name), chat.title, Utilities.formatName(u2.first_name, u2.last_name));
+                                    }
                                         } else if (messageObject.messageOwner.action instanceof TLRPC.TL_messageActionChatEditTitle) {
                                             msg = LocaleController.formatString("NotificationEditedGroupName", R.string.NotificationEditedGroupName, Utilities.formatName(user.first_name, user.last_name), messageObject.messageOwner.action.title);
                                         } else if (messageObject.messageOwner.action instanceof TLRPC.TL_messageActionChatEditPhoto || messageObject.messageOwner.action instanceof TLRPC.TL_messageActionChatDeletePhoto) {
@@ -4486,8 +4486,18 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                                                 TLRPC.User u2 = users.get(messageObject.messageOwner.action.user_id);
                                                 if (u2 == null) {
                                                     return;
+                                                }
 //TODO FINE NUOVO CODICE
-
+                                        msg = LocaleController.formatString("NotificationGroupKickMember", R.string.NotificationGroupKickMember, Utilities.formatName(user.first_name, user.last_name), chat.title, Utilities.formatName(u2.first_name, u2.last_name));
+                                    }
+                                }
+                            } else {
+                                if (messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaEmpty) {
+                                    if (messageObject.messageOwner.message != null && messageObject.messageOwner.message.length() != 0) {
+                                        msg = LocaleController.formatString("NotificationMessageGroupText", R.string.NotificationMessageGroupText, Utilities.formatName(user.first_name, user.last_name), chat.title, messageObject.messageOwner.message);
+                                    } else {
+                                        msg = LocaleController.formatString("NotificationMessageGroupNoText", R.string.NotificationMessageGroupNoText, Utilities.formatName(user.first_name, user.last_name), chat.title);
+							}
                                                 } else if (messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaPhoto) {
                                                     msg = LocaleController.formatString("NotificationMessageGroupPhoto", R.string.NotificationMessageGroupPhoto, Utilities.formatName(user.first_name, user.last_name), chat.title);
                                                 } else if (messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaVideo) {
@@ -4503,9 +4513,8 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                                                 }
                                             }
                                         } else {
-                                            msg = LocaleController.formatString("NotificationMessageGroupNoText", R.string.NotificationMessageGroupNoText, Utilities.formatName(user.first_name, user.last_name), chat.title);
-                                        }
-                                    }
+                                    msg = LocaleController.formatString("NotificationMessageGroupNoText", R.string.NotificationMessageGroupNoText, Utilities.formatName(user.first_name, user.last_name), chat.title);
+                                }
                                 } else {
                                     msg = LocaleController.getString("YouHaveNewMessage", R.string.YouHaveNewMessage);
                                     int enc_id = (int) (dialog_id >> 32);
@@ -4514,7 +4523,7 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                                 if (msg == null) {
                                     return;
                                 }
-                            }
+
 
             boolean needVibrate = false;
             String choosenSoundPath = null;
@@ -4548,13 +4557,11 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                 TLRPC.User u = users.get(messageObject.messageOwner.from_id);
 
             String name = Utilities.formatName(user.first_name, user.last_name);
+
             if ((int)dialog_id == 0) {
                 name = LocaleController.getString("AppName", R.string.AppName);
             }
-            String msgShort = msg.replace(name + ": ", "").replace(name + " ", "");
-
                 intent.setAction("com.tmessages.openchat" + Math.random() + Integer.MAX_VALUE);
-                //TODO creare condizione di controllo dell'attivazione del quickReply
 
                 intent.setFlags(32768);
 
@@ -4566,8 +4573,8 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(ApplicationLoader.applicationContext)
                         .setContentTitle(name)
                         .setSmallIcon(R.drawable.notification)
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(msgShort))
-                        .setContentText(msgShort)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+                        .setContentText(msg)
                         .setAutoCancel(true)
                         .setTicker(msg);
 
@@ -4605,6 +4612,7 @@ public class MessagesController implements NotificationCenter.NotificationCenter
 
                 currentPushMessage = null;
                 mBuilder.setContentIntent(contentIntent);
+                /*
                 //TODO Gestione nome nel titolo delle notifiche invece che "Telegram"
                 if (user_id != 0) {
                     //aggiunto nome della persona nel titolo
@@ -4612,6 +4620,7 @@ public class MessagesController implements NotificationCenter.NotificationCenter
                 } else {
                     mBuilder.setContentTitle(msg.split(":")[0]);
                 }
+                */
                 //TODO uso dialog_id per notifiche multiple
                 //TODO secondo me il cancel non serve a nulla, visto che android sovrascrive notifiche sullo stesso ID
                 mNotificationManager.cancel((int) dialog_id);
@@ -4988,60 +4997,64 @@ public class MessagesController implements NotificationCenter.NotificationCenter
         return null;
     }
 
-    public void processAcceptedSecretChat(final TLRPC.EncryptedChat encryptedChat) {
-        BigInteger p = new BigInteger(1, MessagesStorage.secretPBytes);
-        BigInteger i_authKey = new BigInteger(1, encryptedChat.g_a_or_b);
 
-        if (!Utilities.isGoodGaAndGb(i_authKey, p)) {
-            declineSecretChat(encryptedChat.id);
-            return;
+
+    public void processAcceptedSecretChat(final TLRPC.EncryptedChat encryptedChat){
+        BigInteger p=new BigInteger(1,MessagesStorage.secretPBytes);
+        BigInteger i_authKey=new BigInteger(1,encryptedChat.g_a_or_b);
+
+        if(!Utilities.isGoodGaAndGb(i_authKey,p)){
+        declineSecretChat(encryptedChat.id);
+        return;
         }
 
-        i_authKey = i_authKey.modPow(new BigInteger(1, encryptedChat.a_or_b), p);
+        i_authKey=i_authKey.modPow(new BigInteger(1,encryptedChat.a_or_b),p);
 
-        byte[] authKey = i_authKey.toByteArray();
-        if (authKey.length > 256) {
-            byte[] correctedAuth = new byte[256];
-            System.arraycopy(authKey, authKey.length - 256, correctedAuth, 0, 256);
-            authKey = correctedAuth;
-        } else if (authKey.length < 256) {
-            byte[] correctedAuth = new byte[256];
-            System.arraycopy(authKey, 0, correctedAuth, 256 - authKey.length, authKey.length);
-            for (int a = 0; a < 256 - authKey.length; a++) {
-                authKey[a] = 0;
-            }
-            authKey = correctedAuth;
+        byte[]authKey=i_authKey.toByteArray();
+        if(authKey.length>256){
+        byte[]correctedAuth=new byte[256];
+        System.arraycopy(authKey,authKey.length-256,correctedAuth,0,256);
+        authKey=correctedAuth;
+        }else if(authKey.length<256){
+        byte[]correctedAuth=new byte[256];
+        System.arraycopy(authKey,0,correctedAuth,256-authKey.length,authKey.length);
+        for(int a=0;a<256-authKey.length;a++){
+        authKey[a]=0;
         }
-        byte[] authKeyHash = Utilities.computeSHA1(authKey);
-        byte[] authKeyId = new byte[8];
-        System.arraycopy(authKeyHash, authKeyHash.length - 8, authKeyId, 0, 8);
-        long fingerprint = Utilities.bytesToLong(authKeyId);
-        if (encryptedChat.key_fingerprint == fingerprint) {
-            encryptedChat.auth_key = authKey;
-            MessagesStorage.getInstance().updateEncryptedChat(encryptedChat);
-            Utilities.RunOnUIThread(new Runnable() {
-                @Override
-                public void run() {
-                    encryptedChats.put(encryptedChat.id, encryptedChat);
-                    NotificationCenter.getInstance().postNotificationName(encryptedChatUpdated, encryptedChat);
-                }
-            });
-        } else {
-            final TLRPC.TL_encryptedChatDiscarded newChat = new TLRPC.TL_encryptedChatDiscarded();
-            newChat.id = encryptedChat.id;
-            newChat.user_id = encryptedChat.user_id;
-            newChat.auth_key = encryptedChat.auth_key;
-            MessagesStorage.getInstance().updateEncryptedChat(newChat);
-            Utilities.RunOnUIThread(new Runnable() {
-                @Override
-                public void run() {
-                    encryptedChats.put(newChat.id, newChat);
-                    NotificationCenter.getInstance().postNotificationName(encryptedChatUpdated, newChat);
-                }
-            });
-            declineSecretChat(encryptedChat.id);
+        authKey=correctedAuth;
         }
-    }
+        byte[]authKeyHash=Utilities.computeSHA1(authKey);
+        byte[]authKeyId=new byte[8];
+        System.arraycopy(authKeyHash,authKeyHash.length-8,authKeyId,0,8);
+        long fingerprint=Utilities.bytesToLong(authKeyId);
+        if(encryptedChat.key_fingerprint==fingerprint){
+        encryptedChat.auth_key=authKey;
+        MessagesStorage.getInstance().updateEncryptedChat(encryptedChat);
+        Utilities.RunOnUIThread(new Runnable(){
+@Override
+public void run(){
+        encryptedChats.put(encryptedChat.id,encryptedChat);
+        NotificationCenter.getInstance().postNotificationName(encryptedChatUpdated,encryptedChat);
+        }
+        });
+        }else{
+final TLRPC.TL_encryptedChatDiscarded newChat=new TLRPC.TL_encryptedChatDiscarded();
+        newChat.id=encryptedChat.id;
+        newChat.user_id=encryptedChat.user_id;
+        newChat.auth_key=encryptedChat.auth_key;
+        MessagesStorage.getInstance().updateEncryptedChat(newChat);
+        Utilities.RunOnUIThread(new Runnable(){
+@Override
+public void run(){
+        encryptedChats.put(newChat.id,newChat);
+        NotificationCenter.getInstance().postNotificationName(encryptedChatUpdated,newChat);
+        }
+        });
+        declineSecretChat(encryptedChat.id);
+        }
+        }
+
+
 
     public void declineSecretChat(int chat_id) {
         TLRPC.TL_messages_discardEncryption req = new TLRPC.TL_messages_discardEncryption();
