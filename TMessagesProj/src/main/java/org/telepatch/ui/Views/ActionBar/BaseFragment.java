@@ -210,7 +210,7 @@ public class BaseFragment {
             FileLog.e("tmessages", e);
         }
         visibleDialog = builder.show();
-        visibleDialog.setCanceledOnTouchOutside(true);
+        visibleDialog.setCanceledOnTouchOutside(false);
         visibleDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {

@@ -143,6 +143,9 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
                             SettingsWallpapersActivity settings = new SettingsWallpapersActivity();
                             addFragmentToStack(settings);
                             settings.restoreSelfArgs(savedInstanceState);
+                        } else if (fragmentName.equals("sg")) {
+                            Intent sg = new Intent(getApplicationContext(), sgActivity.class);
+                            startActivity(sg);
                         }
                     }
                 }
@@ -155,6 +158,7 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
 
         PhotoViewer.getInstance().setParentActivity(this);
     }
+    //TODO questo metodo deve restare vuoto, viene Overridato da PopupMainActivity se necessario.
     public void setUpWindow() {
 
     }

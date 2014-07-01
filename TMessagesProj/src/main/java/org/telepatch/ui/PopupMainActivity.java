@@ -21,6 +21,7 @@ public class PopupMainActivity extends LaunchActivity {
     public void setUpWindow() {
 
         // Creates the layout for the window and the look of it
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
@@ -55,8 +56,8 @@ public class PopupMainActivity extends LaunchActivity {
         if (PhotoViewer.getInstance().isVisible()) {
             PhotoViewer.getInstance().closePhoto(true);
         } else {
+            overridePendingTransition(android.R.anim.fade_out, 0);
             finish();
-            overridePendingTransition(android.R.anim.fade_in, 0);
         }
     }
 

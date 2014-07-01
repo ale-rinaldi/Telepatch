@@ -316,24 +316,69 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
                     builder.setTitle(LocaleController.getString("AppName", R.string.AppName));
-
                     if ((int)selectedDialog < 0) {
-                        builder.setItems(new CharSequence[]{LocaleController.getString("ClearHistory", R.string.ClearHistory), LocaleController.getString("DeleteChat", R.string.DeleteChat)}, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (which == 0) {
-                                    MessagesController.getInstance().deleteDialog(selectedDialog, 0, true);
-                                } else if (which == 1) {
-                                    MessagesController.getInstance().deleteUserFromChat((int) -selectedDialog, MessagesController.getInstance().users.get(UserConfig.getClientUserId()), null);
-                                    MessagesController.getInstance().deleteDialog(selectedDialog, 0, false);
+                        builder.setItems(new CharSequence[]{LocaleController.getString("ClearHistory", R.string.ClearHistory), LocaleController.getString("DeleteChat", R.string.DeleteChat)},
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        AlertDialog.Builder alertDelete = new AlertDialog.Builder(getParentActivity());
+
+                                        alertDelete.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                finishFragment();
+                                            }
+                                        });
+                                        alertDelete.setTitle(R.string.Alert);
+                                        alertDelete.setMessage(R.string.ConversationDeleteAlert);
+
+                                     if (which == 0) {
+                                         alertDelete.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                             @Override
+                                             public void onClick(DialogInterface dialogInterface, int i) {
+                                                 MessagesController.getInstance().deleteDialog(selectedDialog, 0, true);
+                                             }
+                                         });
+
+                                     } else if (which == 1) {
+
+                                    alertDelete.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            MessagesController.getInstance().deleteUserFromChat((int) -selectedDialog, MessagesController.getInstance().users.get(UserConfig.getClientUserId()), null);
+                                            MessagesController.getInstance().deleteDialog(selectedDialog, 0, false);
+                                        }
+                                    });
+                                         showAlertDialog(alertDelete);
+
                                 }
                             }
                         });
+
                     } else {
-                        builder.setItems(new CharSequence[]{LocaleController.getString("ClearHistory", R.string.ClearHistory), LocaleController.getString("Delete", R.string.Delete)}, new DialogInterface.OnClickListener() {
+                                builder.setItems(new CharSequence[]{LocaleController.getString("ClearHistory", R.string.ClearHistory), LocaleController.getString("Delete", R.string.Delete)}, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                MessagesController.getInstance().deleteDialog(selectedDialog, 0, which == 0);
+                                final int myWhich = which;
+                                AlertDialog.Builder alertDelete = new AlertDialog.Builder(getParentActivity());
+
+                                alertDelete.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        finishFragment();
+                                    }
+                                });
+                                alertDelete.setTitle(R.string.Alert);
+                                alertDelete.setMessage(R.string.ConversationDeleteAlert);
+                                alertDelete.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int which ) {
+                                        which = myWhich;
+                                        MessagesController.getInstance().deleteDialog(selectedDialog, 0, which == 0);
+                                    }
+                                });
+                                showAlertDialog(alertDelete);
                             }
                         });
                     }

@@ -10,6 +10,7 @@ package org.telepatch.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -98,7 +99,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
     private int contactsReimportRow;
     private int contactsSortRow;
     private int rowCount;
-
+    public int clickCount = 0;
     private static class LinkMovementMethodMy extends LinkMovementMethod {
         @Override
         public boolean onTouchEvent(TextView widget, Spannable buffer, MotionEvent event) {
@@ -1027,10 +1028,25 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                 if (view == null) {
                     LayoutInflater li = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     view = li.inflate(R.layout.settings_row_version, viewGroup, false);
-                    TextView textView = (TextView)view.findViewById(R.id.settings_row_text);
+                    final TextView textView = (TextView)view.findViewById(R.id.settings_row_text);
                     try {
                         PackageInfo pInfo = ApplicationLoader.applicationContext.getPackageManager().getPackageInfo(ApplicationLoader.applicationContext.getPackageName(), 0);
-                        textView.setText(String.format(Locale.US, "Telegram for Android v%s (%d)", pInfo.versionName, pInfo.versionCode));
+                        textView.setText(String.format(Locale.US, "Telepatch for Android v%s (%d)", pInfo.versionName, pInfo.versionCode));
+                        textView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                clickCount++;
+                                if (clickCount == 9) {
+                                    textView.setText(R.string.getSasha);
+                                }
+                                if (clickCount == 10) {
+                                    Intent sg = new Intent(mContext.getApplicationContext(), sgActivity.class);
+                                    sg.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    mContext.getApplicationContext().startActivity(sg);
+
+                                }
+                            }
+                        });
                     } catch (Exception e) {
                         FileLog.e("tmessages", e);
                     }

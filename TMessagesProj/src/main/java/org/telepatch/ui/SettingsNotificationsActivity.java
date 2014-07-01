@@ -14,7 +14,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -29,20 +28,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import org.telepatch.messenger.LocaleController;
-import org.telepatch.messenger.TLObject;
-import org.telepatch.messenger.TLRPC;
 import org.telepatch.messenger.ConnectionsManager;
 import org.telepatch.messenger.FileLog;
+import org.telepatch.messenger.LocaleController;
 import org.telepatch.messenger.MessagesController;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.RPCRequest;
+import org.telepatch.messenger.TLObject;
+import org.telepatch.messenger.TLRPC;
 import org.telepatch.messenger.Utilities;
 import org.telepatch.ui.Adapters.BaseFragmentAdapter;
-import org.telepatch.ui.Views.ColorPickerView;
 import org.telepatch.ui.Views.ActionBar.ActionBarLayer;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
+import org.telepatch.ui.Views.ColorPickerView;
 
 
 public class SettingsNotificationsActivity extends BaseFragment {
@@ -75,8 +73,8 @@ public class SettingsNotificationsActivity extends BaseFragment {
     private int resetNotificationsRow;
     private int messageQuickReply;
     private int messageMultipleNotification;
+    private boolean inAppSoundStatus, inAppVibrateStatus, inAppPreviewStatus;
     private int rowCount = 0;
-    private boolean inappCheckDisabled = false;
 
     @Override
     public boolean onFragmentCreate() {
@@ -127,16 +125,10 @@ public class SettingsNotificationsActivity extends BaseFragment {
 
             fragmentView = inflater.inflate(R.layout.settings_layout, container, false);
             final ListAdapter listAdapter = new ListAdapter(getParentActivity());
-            listView = (ListView)fragmentView.findViewById(R.id.listView);
+            listView = (ListView) fragmentView.findViewById(R.id.listView);
             listView.setAdapter(listAdapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                private boolean inAppIsClickable = true;
-                public void setInAppClickable(boolean isClickable) {
-                    inAppIsClickable = isClickable;
-                }
-                private boolean isInAppClickable() {
-                    return inAppIsClickable;
-                }
+
                 @Override
 
                 public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
@@ -164,13 +156,13 @@ public class SettingsNotificationsActivity extends BaseFragment {
                         listView.invalidateViews();
                         //TODO qui metto il toggle della quickReply
                     } else if (i == messageQuickReply) {
-                      SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
-                      SharedPreferences.Editor editor = preferences.edit();
-                      boolean enabled;
-                      enabled = preferences.getBoolean("QuickReplyEnabled", true);
-                      editor.putBoolean("QuickReplyEnabled", !enabled);
-                      editor.commit();
-                      listView.invalidateViews();
+                        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        boolean enabled;
+                        enabled = preferences.getBoolean("QuickReplyEnabled", true);
+                        editor.putBoolean("QuickReplyEnabled", !enabled);
+                        editor.commit();
+                        listView.invalidateViews();
                     } else if (i == messagePreviewRow || i == groupPreviewRow) {
                         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -274,39 +266,19 @@ public class SettingsNotificationsActivity extends BaseFragment {
                         Log.i("xela92", "il click che ho fatto l'ha acceso?  " + !enabled);
                         editor.putBoolean("EnableInAppNotifications", !enabled);
                         editor.commit();
-                        if (!preferences.getBoolean("EnableInAppNotifications", false)) {
-                                inappCheckDisabled = true;
-                                setInAppClickable(false);
-                                Log.i("xela92", "ora NON sei clickabile");
-                            } else if (preferences.getBoolean("EnableInAppNotifications", false)) {
-                                inappCheckDisabled = false;
-                                setInAppClickable(true);
-                                Log.i("xela92", "Ok ora sei clickabile");
-                        }
-                        if (inappCheckDisabled) {
-                            setInAppClickable(false);
-                        } else if (!inappCheckDisabled) {
-                            setInAppClickable(true);
-                        }
-
                         listView.invalidateViews();
                     } else if (i == inappSoundRow) {
-                        if (!isInAppClickable()) {
-                            Log.i("xela92", "non sei clickabile.");
-                        } else {
-                            SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+                        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+                        if (preferences.getBoolean("EnableInAppNotifications", false) == true) {
                             SharedPreferences.Editor editor = preferences.edit();
                             boolean enabled = preferences.getBoolean("EnableInAppSounds", true);
                             editor.putBoolean("EnableInAppSounds", !enabled);
                             editor.commit();
-
                         }
                         listView.invalidateViews();
                     } else if (i == inappVibrateRow) {
-                        if (!isInAppClickable()) {
-                            Log.i("xela92", "non sei clickabile.");
-                        } else {
-                            SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+                        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+                        if (preferences.getBoolean("EnableInAppNotifications", false) == true) {
                             SharedPreferences.Editor editor = preferences.edit();
                             boolean enabled = preferences.getBoolean("EnableInAppVibrate", true);
                             editor.putBoolean("EnableInAppVibrate", !enabled);
@@ -314,10 +286,8 @@ public class SettingsNotificationsActivity extends BaseFragment {
                         }
                         listView.invalidateViews();
                     } else if (i == inappPreviewRow) {
-                        if (!isInAppClickable()) {
-                            Log.i("xela92", "non sei clickabile.");
-                        } else {
-                            SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+                        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+                        if (preferences.getBoolean("EnableInAppNotifications", false) == true) {
                             SharedPreferences.Editor editor = preferences.edit();
                             boolean enabled = preferences.getBoolean("EnableInAppPreview", true);
                             editor.putBoolean("EnableInAppPreview", !enabled);
@@ -373,9 +343,9 @@ public class SettingsNotificationsActivity extends BaseFragment {
                             return;
                         }
 
-                        LayoutInflater li = (LayoutInflater)getParentActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        LayoutInflater li = (LayoutInflater) getParentActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         view = li.inflate(R.layout.settings_color_dialog_layout, null, false);
-                        final ColorPickerView colorPickerView = (ColorPickerView)view.findViewById(R.id.color_picker);
+                        final ColorPickerView colorPickerView = (ColorPickerView) view.findViewById(R.id.color_picker);
 
                         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
                         if (i == messageLedRow) {
@@ -420,7 +390,7 @@ public class SettingsNotificationsActivity extends BaseFragment {
                 }
             });
         } else {
-            ViewGroup parent = (ViewGroup)fragmentView.getParent();
+            ViewGroup parent = (ViewGroup) fragmentView.getParent();
             if (parent != null) {
                 parent.removeView(fragmentView);
             }
@@ -436,7 +406,7 @@ public class SettingsNotificationsActivity extends BaseFragment {
             if (ringtone != null) {
                 Ringtone rng = RingtoneManager.getRingtone(getParentActivity(), ringtone);
                 if (rng != null) {
-                    if(ringtone.equals(Settings.System.DEFAULT_NOTIFICATION_URI)) {
+                    if (ringtone.equals(Settings.System.DEFAULT_NOTIFICATION_URI)) {
                         name = LocaleController.getString("Default", R.string.Default);
                     } else {
                         name = rng.getTitle(getParentActivity());
@@ -512,10 +482,10 @@ public class SettingsNotificationsActivity extends BaseFragment {
             int type = getItemViewType(i);
             if (type == 0) {
                 if (view == null) {
-                    LayoutInflater li = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    LayoutInflater li = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     view = li.inflate(R.layout.settings_section_layout, viewGroup, false);
                 }
-                TextView textView = (TextView)view.findViewById(R.id.settings_section_text);
+                TextView textView = (TextView) view.findViewById(R.id.settings_section_text);
                 if (i == messageSectionRow) {
                     textView.setText(LocaleController.getString("MessageNotifications", R.string.MessageNotifications));
                 } else if (i == groupSectionRow) {
@@ -529,15 +499,16 @@ public class SettingsNotificationsActivity extends BaseFragment {
                 } else if (i == resetSectionRow) {
                     textView.setText(LocaleController.getString("Reset", R.string.Reset));
                 }
-            } if (type == 1) {
+            }
+            if (type == 1) {
                 if (view == null) {
-                    LayoutInflater li = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    LayoutInflater li = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     view = li.inflate(R.layout.settings_row_check_notify_layout, viewGroup, false);
                 }
-                TextView textView = (TextView)view.findViewById(R.id.settings_row_text);
+                TextView textView = (TextView) view.findViewById(R.id.settings_row_text);
                 View divider = view.findViewById(R.id.settings_row_divider);
 
-                ImageView checkButton = (ImageView)view.findViewById(R.id.settings_row_check_button);
+                ImageView checkButton = (ImageView) view.findViewById(R.id.settings_row_check_button);
                 SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
                 boolean enabled = false;
                 boolean enabledAll = preferences.getBoolean("EnableAll", true);
@@ -580,49 +551,36 @@ public class SettingsNotificationsActivity extends BaseFragment {
                     //TODO qui metto il nome dell'etichetta dello switch e faccio i controlli sull'in-app
                 } else if (i == inappSwitchRow) {
                     enabled = preferences.getBoolean("EnableInAppNotifications", false);
+                    //quando il check e' attivo, le in app sono disattive e viceversa
                     textView.setText(LocaleController.getString("InAppSwitch", R.string.InAppSwitch));
-                    if (!preferences.getBoolean("EnableInAppNotifications", false)) {
-                        inappCheckDisabled = true;
-                    } else if (preferences.getBoolean("EnableInAppNotifications", false)){
-                        inappCheckDisabled = false;
-                    }
                     listView.invalidateViews();
                     divider.setVisibility(View.VISIBLE);
                 } else if (i == inappSoundRow) {
-                    enabled = preferences.getBoolean("EnableInAppSounds", true);
-                    textView.setText(LocaleController.getString("InAppSounds", R.string.InAppSounds));
-                    if (inappCheckDisabled) {
-                        Log.i("xela92", "ok disattivo tutto");
-                        checkButton.setVisibility(View.INVISIBLE);
-                        textView.setTextColor(Color.LTGRAY);
-                    } else if (!inappCheckDisabled){
-                        checkButton.setVisibility(View.VISIBLE);
-                        textView.setTextColor(Color.BLACK);
+                    if (preferences.getBoolean("EnableInAppNotifications", false) == false) {
+                      enabled = false;
+                    } else {
+                        enabled = preferences.getBoolean("EnableInAppSounds", true);
                     }
+                    textView.setText(LocaleController.getString("InAppSounds", R.string.InAppSounds));
+                    listView.invalidateViews();
                     divider.setVisibility(View.VISIBLE);
                 } else if (i == inappVibrateRow) {
-                    enabled = preferences.getBoolean("EnableInAppVibrate", true);
-                    textView.setText(LocaleController.getString("InAppVibrate", R.string.InAppVibrate));
-                    if (inappCheckDisabled) {
-                        Log.i("xela92", "ok disattivo tutto");
-                        checkButton.setVisibility(View.INVISIBLE);
-                        textView.setTextColor(Color.LTGRAY);
-                    } else if (!inappCheckDisabled){
-                        checkButton.setVisibility(View.VISIBLE);
-                        textView.setTextColor(Color.BLACK);
+                    if (preferences.getBoolean("EnableInAppNotifications", false) == false) {
+                        enabled = false;
+                    } else {
+                        enabled = preferences.getBoolean("EnableInAppVibrate", true);
                     }
+                    textView.setText(LocaleController.getString("InAppVibrate", R.string.InAppVibrate));
+                    listView.invalidateViews();
                     divider.setVisibility(View.VISIBLE);
                 } else if (i == inappPreviewRow) {
-                    enabled = preferences.getBoolean("EnableInAppPreview", true);
-                    textView.setText(LocaleController.getString("InAppPreview", R.string.InAppPreview));
-                    if (inappCheckDisabled) {
-                        Log.i("xela92", "ok disattivo tutto");
-                        checkButton.setVisibility(View.INVISIBLE);
-                        textView.setTextColor(Color.LTGRAY);
-                    } else if (!inappCheckDisabled) {
-                        checkButton.setVisibility(View.VISIBLE);
-                        textView.setTextColor(Color.BLACK);
+                    if (preferences.getBoolean("EnableInAppNotifications", false) == false) {
+                        enabled = false;
+                    } else {
+                        enabled = preferences.getBoolean("EnableInAppPreview", true);
                     }
+                    textView.setText(LocaleController.getString("InAppPreview", R.string.InAppPreview));
+                    listView.invalidateViews();
                     divider.setVisibility(View.INVISIBLE);
                 } else if (i == contactJoinedRow) {
                     enabled = preferences.getBoolean("EnableContactJoined", true);
@@ -644,11 +602,11 @@ public class SettingsNotificationsActivity extends BaseFragment {
                 }
             } else if (type == 2) {
                 if (view == null) {
-                    LayoutInflater li = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    LayoutInflater li = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     view = li.inflate(R.layout.settings_row_detail_layout, viewGroup, false);
                 }
-                TextView textView = (TextView)view.findViewById(R.id.settings_row_text);
-                TextView textViewDetail = (TextView)view.findViewById(R.id.settings_row_text_detail);
+                TextView textView = (TextView) view.findViewById(R.id.settings_row_text);
+                TextView textViewDetail = (TextView) view.findViewById(R.id.settings_row_text_detail);
                 View divider = view.findViewById(R.id.settings_row_divider);
                 SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
                 boolean enabledAll = preferences.getBoolean("EnableAll", true);
@@ -675,10 +633,10 @@ public class SettingsNotificationsActivity extends BaseFragment {
                 }
             } else if (type == 3) {
                 if (view == null) {
-                    LayoutInflater li = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    LayoutInflater li = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     view = li.inflate(R.layout.settings_row_color_layout, viewGroup, false);
                 }
-                TextView textView = (TextView)view.findViewById(R.id.settings_row_text);
+                TextView textView = (TextView) view.findViewById(R.id.settings_row_text);
                 View colorView = view.findViewById(R.id.settings_color);
                 View divider = view.findViewById(R.id.settings_row_divider);
                 textView.setText(LocaleController.getString("LedColor", R.string.LedColor));

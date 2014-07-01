@@ -88,7 +88,6 @@ import org.telepatch.ui.Views.ActionBar.ActionBarMenu;
 import org.telepatch.ui.Views.ActionBar.ActionBarMenuItem;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
 import org.telepatch.ui.Views.BackupImageView;
-import org.telepatch.ui.Views.ActionBar.BaseFragment;
 import org.telepatch.ui.Views.EmojiView;
 import org.telepatch.ui.Views.ImageReceiver;
 import org.telepatch.ui.Views.LayoutListView;
@@ -117,7 +116,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
     private TLRPC.User currentUser;
     private TLRPC.EncryptedChat currentEncryptedChat;
     private ChatAdapter chatAdapter;
-    private EditText messsageEditText;
+    private EditText messageEditText;
     private ImageButton sendButton;
     private PopupWindow emojiPopup;
     private ImageView emojiButton;
@@ -210,6 +209,8 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
     private final static int attach_document = 9;
     private final static int attach_location = 10;
     private final static int chat_menu_avatar = 11;
+
+    public boolean deleteAnswer;
 
     public ChatActivity(Bundle args) {
         super(args);
@@ -546,7 +547,10 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                                 }
                             }
                         }
-                        MessagesController.getInstance().deleteMessages(ids, random_ids, currentEncryptedChat);
+
+                        //MessagesController.getInstance().deleteMessages(ids, random_ids, currentEncryptedChat);
+                        //TODO qui utilizzo un mio metodo per cancellare i messaggi, cosi' prima mostro un alert
+                        deleteMessages(ids, random_ids, currentEncryptedChat);
                         actionBarLayer.hideActionMode();
                     } else if (id == forward) {
                         Bundle args = new Bundle();
@@ -785,8 +789,8 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                 }
             });
 
-            messsageEditText = (EditText)fragmentView.findViewById(R.id.chat_text_edit);
-            messsageEditText.setHint(LocaleController.getString("TypeMessage", R.string.TypeMessage));
+            messageEditText = (EditText)fragmentView.findViewById(R.id.chat_text_edit);
+            messageEditText.setHint(LocaleController.getString("TypeMessage", R.string.TypeMessage));
             slideText = fragmentView.findViewById(R.id.slideText);
             TextView textView = (TextView)fragmentView.findViewById(R.id.slideToCancelTextView);
             textView.setText(LocaleController.getString("SlideToCancel", R.string.SlideToCancel));
@@ -835,7 +839,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                 }
             });
 
-            messsageEditText.setOnKeyListener(new View.OnKeyListener() {
+            messageEditText.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View view, int i, KeyEvent keyEvent) {
                     if (i == 4 && !keyboardVisible && emojiPopup != null && emojiPopup.isShowing()) {
@@ -851,7 +855,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                 }
             });
 
-            messsageEditText.setOnClickListener(new View.OnClickListener() {
+            messageEditText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (emojiPopup != null && emojiPopup.isShowing()) {
@@ -860,7 +864,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                 }
             });
 
-            messsageEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            messageEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
                 @Override
                 public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                     if (i == EditorInfo.IME_ACTION_SEND) {
@@ -902,12 +906,12 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                             recordingAudio = false;
                             updateAudioRecordIntefrace();
                         }
-                        if(android.os.Build.VERSION.SDK_INT > 13) {
+                        if (android.os.Build.VERSION.SDK_INT > 13) {
                             x = x + audioSendButton.getX();
-                            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)slideText.getLayoutParams();
+                            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) slideText.getLayoutParams();
                             if (startedDraggingX != -1) {
                                 float dist = (x - startedDraggingX);
-                                params.leftMargin = Utilities.dp(30) + (int)dist;
+                                params.leftMargin = Utilities.dp(30) + (int) dist;
                                 slideText.setLayoutParams(params);
                                 float alpha = 1.0f + dist / distCanMove;
                                 if (alpha > 1) {
@@ -950,7 +954,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
 
             checkSendButton();
 
-            messsageEditText.addTextChangedListener(new TextWatcher() {
+            messageEditText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
@@ -982,7 +986,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                     int j = arrayOfImageSpan.length;
                     while (true) {
                         if (i >= j) {
-                            Emoji.replaceEmoji(editable, messsageEditText.getPaint().getFontMetricsInt(), Utilities.dp(20));
+                            Emoji.replaceEmoji(editable, messageEditText.getPaint().getFontMetricsInt(), Utilities.dp(20));
                             return;
                         }
                         editable.removeSpan(arrayOfImageSpan[i]);
@@ -1004,10 +1008,14 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             MessagesController.getInstance().deleteDialog(dialog_id, 0, false);
+                        }
+                    });
+                    builder.setNegativeButton(LocaleController.getString("Cancel", R.string.Cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
                             finishFragment();
                         }
                     });
-                    builder.setNegativeButton(LocaleController.getString("Cancel", R.string.Cancel), null);
                     showAlertDialog(builder);
                 }
             });
@@ -1019,7 +1027,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                         processRowSelect(view);
                         return;
                     }
-                    createMenu(view, true);
+                    //createMenu(view, true);
                 }
             });
 
@@ -1053,7 +1061,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
     }
 
     private void checkSendButton() {
-        String message = getTrimmedString(messsageEditText.getText().toString());
+        String message = getTrimmedString(messageEditText.getText().toString());
         if (message.length() > 0) {
             sendButton.setVisibility(View.VISIBLE);
             audioSendButton.setVisibility(View.INVISIBLE);
@@ -1145,8 +1153,8 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
     }
 
     private void sendMessage() {
-        if (processSendingText(messsageEditText.getText().toString())) {
-            messsageEditText.setText("");
+        if (processSendingText(messageEditText.getText().toString())) {
+            messageEditText.setText("");
             lastTypingTimeSend = 0;
             chatListView.post(new Runnable() {
                 @Override
@@ -2394,8 +2402,8 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                 }
             }
         } else if (id == MessagesController.closeChats) {
-            if (messsageEditText != null && messsageEditText.isFocused()) {
-                Utilities.hideKeyboard(messsageEditText);
+            if (messageEditText != null && messageEditText.isFocused()) {
+                Utilities.hideKeyboard(messageEditText);
             }
             removeSelfFromStack();
         } else if (id == MessagesController.messagesReaded) {
@@ -2736,15 +2744,15 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
         emojiView = new EmojiView(getParentActivity());
         emojiView.setListener(new EmojiView.Listener() {
             public void onBackspace() {
-                messsageEditText.dispatchKeyEvent(new KeyEvent(0, 67));
+                messageEditText.dispatchKeyEvent(new KeyEvent(0, 67));
             }
 
             public void onEmojiSelected(String paramAnonymousString) {
-                int i = messsageEditText.getSelectionEnd();
-                CharSequence localCharSequence = Emoji.replaceEmoji(paramAnonymousString, messsageEditText.getPaint().getFontMetricsInt(), Utilities.dp(20));
-                messsageEditText.setText(messsageEditText.getText().insert(i, localCharSequence));
+                int i = messageEditText.getSelectionEnd();
+                CharSequence localCharSequence = Emoji.replaceEmoji(paramAnonymousString, messageEditText.getPaint().getFontMetricsInt(), Utilities.dp(20));
+                messageEditText.setText(messageEditText.getText().insert(i, localCharSequence));
                 int j = i + localCharSequence.length();
-                messsageEditText.setSelection(j, j);
+                messageEditText.setSelection(j, j);
             }
         });
         emojiPopup = new PopupWindow(emojiView);
@@ -2841,16 +2849,16 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
             editor.remove("dialog_" + dialog_id);
             editor.commit();
             ignoreTextChange = true;
-            messsageEditText.setText(lastMessageText);
-            messsageEditText.setSelection(messsageEditText.getText().length());
+            messageEditText.setText(lastMessageText);
+            messageEditText.setSelection(messageEditText.getText().length());
             ignoreTextChange = false;
         }
-        if (messsageEditText != null) {
-            messsageEditText.postDelayed(new Runnable() {
+        if (messageEditText != null) {
+            messageEditText.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (messsageEditText != null) {
-                        messsageEditText.requestFocus();
+                    if (messageEditText != null) {
+                        messageEditText.requestFocus();
                     }
                 }
             }, 400);
@@ -2913,10 +2921,10 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
         paused = true;
         MessagesController.getInstance().openned_dialog_id = 0;
 
-        if (messsageEditText != null && messsageEditText.length() != 0) {
+        if (messageEditText != null && messageEditText.length() != 0) {
             SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("dialog_" + dialog_id, messsageEditText.getText().toString());
+            editor.putString("dialog_" + dialog_id, messageEditText.getText().toString());
             editor.commit();
         }
 
@@ -3087,6 +3095,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                             if (i == 0) {
                                 processSelectedOption(0);
                             } else if (i == 1) {
+
                                 processSelectedOption(1);
                             }
                         } else if (type == 1) {
@@ -3220,14 +3229,14 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                     if (selectedObject.messageOwner instanceof TLRPC.TL_messageForwarded) {
                         MessagesController.getInstance().sendMessage(selectedObject, dialog_id);
                     } else {
-                        TLRPC.TL_photo photo = (TLRPC.TL_photo)selectedObject.messageOwner.media.photo;
+                        TLRPC.TL_photo photo = (TLRPC.TL_photo) selectedObject.messageOwner.media.photo;
                         MessagesController.getInstance().sendMessage(photo, selectedObject.messageOwner.attachPath, dialog_id);
                     }
                 } else if (selectedObject.type == 3) {
                     if (selectedObject.messageOwner instanceof TLRPC.TL_messageForwarded) {
                         MessagesController.getInstance().sendMessage(selectedObject, dialog_id);
                     } else {
-                        TLRPC.TL_video video = (TLRPC.TL_video)selectedObject.messageOwner.media.video;
+                        TLRPC.TL_video video = (TLRPC.TL_video) selectedObject.messageOwner.media.video;
                         video.path = selectedObject.messageOwner.attachPath;
                         MessagesController.getInstance().sendMessage(video, video.path, dialog_id);
                     }
@@ -3235,11 +3244,11 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                     TLRPC.User user = MessagesController.getInstance().users.get(selectedObject.messageOwner.media.user_id);
                     MessagesController.getInstance().sendMessage(user, dialog_id);
                 } else if (selectedObject.type == 8 || selectedObject.type == 9) {
-                    TLRPC.TL_document document = (TLRPC.TL_document)selectedObject.messageOwner.media.document;
+                    TLRPC.TL_document document = (TLRPC.TL_document) selectedObject.messageOwner.media.document;
                     document.path = selectedObject.messageOwner.attachPath;
                     MessagesController.getInstance().sendMessage(document, document.path, dialog_id);
                 } else if (selectedObject.type == 2) {
-                    TLRPC.TL_audio audio = (TLRPC.TL_audio)selectedObject.messageOwner.media.audio;
+                    TLRPC.TL_audio audio = (TLRPC.TL_audio) selectedObject.messageOwner.media.audio;
                     audio.path = selectedObject.messageOwner.attachPath;
                     MessagesController.getInstance().sendMessage(audio, dialog_id);
                 }
@@ -3250,50 +3259,77 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                     random_ids = new ArrayList<Long>();
                     random_ids.add(selectedObject.messageOwner.random_id);
                 }
-                MessagesController.getInstance().deleteMessages(arr, random_ids, currentEncryptedChat);
+                //MessagesController.getInstance().deleteMessages(arr, random_ids, currentEncryptedChat);
+                //TODO qui utilizzo un mio metodo per cancellare i messaggi, cosi' prima mostro un alert
+                deleteMessages(arr, random_ids, currentEncryptedChat);
                 chatListView.setSelection(messages.size() + 1);
-            }
-        } else if (option == 1) {
-            if (selectedObject != null) {
-                ArrayList<Integer> ids = new ArrayList<Integer>();
-                ids.add(selectedObject.messageOwner.id);
-                removeUnreadPlane(true);
-                ArrayList<Long> random_ids = null;
-                if (currentEncryptedChat != null && selectedObject.messageOwner.random_id != 0 && selectedObject.type != 10) {
-                    random_ids = new ArrayList<Long>();
-                    random_ids.add(selectedObject.messageOwner.random_id);
-                }
-                MessagesController.getInstance().deleteMessages(ids, random_ids, currentEncryptedChat);
-                selectedObject = null;
-            }
-        } else if (option == 2) {
-            if (selectedObject != null) {
-                forwaringMessage = selectedObject;
-                selectedObject = null;
 
-                Bundle args = new Bundle();
-                args.putBoolean("onlySelect", true);
-                args.putBoolean("serverOnly", true);
-                args.putString("selectAlertString", LocaleController.getString("ForwardMessagesTo", R.string.ForwardMessagesTo));
-                MessagesActivity fragment = new MessagesActivity(args);
-                fragment.setDelegate(this);
-                presentFragment(fragment);
-            }
-        } else if (option == 3) {
-            if (selectedObject != null) {
-                if(android.os.Build.VERSION.SDK_INT < 11) {
-                    android.text.ClipboardManager clipboard = (android.text.ClipboardManager)ApplicationLoader.applicationContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                    clipboard.setText(selectedObject.messageText);
-                } else {
-                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager)ApplicationLoader.applicationContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                    android.content.ClipData clip = android.content.ClipData.newPlainText("label", selectedObject.messageText);
-                    clipboard.setPrimaryClip(clip);
+            } else if (option == 1) {
+                if (selectedObject != null) {
+                    ArrayList<Integer> ids = new ArrayList<Integer>();
+                    ids.add(selectedObject.messageOwner.id);
+                    removeUnreadPlane(true);
+                    ArrayList<Long> random_ids = null;
+                    if (currentEncryptedChat != null && selectedObject.messageOwner.random_id != 0 && selectedObject.type != 10) {
+                        random_ids = new ArrayList<Long>();
+                        random_ids.add(selectedObject.messageOwner.random_id);
+                    }
+                    //TODO qui utilizzo un mio metodo per cancellare i messaggi, cosi' prima mostro un alert
+                    deleteMessages(ids, random_ids, currentEncryptedChat);
+                    //MessagesController.getInstance().deleteMessages(ids, random_ids, currentEncryptedChat);
+                    selectedObject = null;
                 }
-                selectedObject = null;
+            } else if (option == 2) {
+                if (selectedObject != null) {
+                    forwaringMessage = selectedObject;
+                    selectedObject = null;
+
+                    Bundle args = new Bundle();
+                    args.putBoolean("onlySelect", true);
+                    args.putBoolean("serverOnly", true);
+                    args.putString("selectAlertString", LocaleController.getString("ForwardMessagesTo", R.string.ForwardMessagesTo));
+                    MessagesActivity fragment = new MessagesActivity(args);
+                    fragment.setDelegate(this);
+                    presentFragment(fragment);
+                }
+            } else if (option == 3) {
+                if (selectedObject != null) {
+                    if (android.os.Build.VERSION.SDK_INT < 11) {
+                        android.text.ClipboardManager clipboard = (android.text.ClipboardManager) ApplicationLoader.applicationContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                        clipboard.setText(selectedObject.messageText);
+                    } else {
+                        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) ApplicationLoader.applicationContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                        android.content.ClipData clip = android.content.ClipData.newPlainText("label", selectedObject.messageText);
+                        clipboard.setPrimaryClip(clip);
+                    }
+                    selectedObject = null;
+                }
             }
         }
     }
 
+    public void deleteMessages(ArrayList<Integer> ids, ArrayList<Long> random_ids, TLRPC.EncryptedChat currentEncryptedChat) {
+        final ArrayList<Integer> finalIds = ids;
+        final ArrayList<Long> finalRandomIds = random_ids;
+        final TLRPC.EncryptedChat finalCurrentEncryptedChat = currentEncryptedChat;
+        AlertDialog.Builder alertDelete = new AlertDialog.Builder(getParentActivity());
+        alertDelete.setTitle(R.string.Alert);
+        alertDelete.setMessage(R.string.MessagesDeleteAlert);
+        alertDelete.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                MessagesController.getInstance().deleteMessages(finalIds, finalRandomIds, finalCurrentEncryptedChat);
+            }
+        });
+        alertDelete.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                       updateVisibleRows();
+                        }
+                });
+        showAlertDialog(alertDelete);
+
+    }
     @Override
     public void didSelectFile(DocumentSelectActivity activity, String path) {
         activity.finishFragment();
@@ -3387,6 +3423,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
         }
         return true;
     }
+
 
     public boolean isGoogleMapsInstalled() {
         try {
