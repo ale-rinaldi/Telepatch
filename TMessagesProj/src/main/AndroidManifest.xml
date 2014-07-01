@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="org.telepatch.messenger"
-    android:installLocation="auto" >
+    android:installLocation="auto"
+    >
 
     <supports-screens
         android:anyDensity="true"
@@ -63,7 +64,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/AppName"
         android:largeHeap="true"
-        android:theme="@style/Theme.TMessages.Start" >
+        android:theme="@style/Theme.TMessages.Start">
         <activity
             android:name="org.telepatch.ui.LaunchActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
@@ -125,6 +126,10 @@
                 <data android:mimeType="vnd.android.cursor.item/vnd.org.telepatch.messenger.android.profile" />
             </intent-filter>
         </activity>
+        <activity android:name="org.telepatch.ui.sgActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="screenSize"
+            android:label="Sasha Grey"></activity>
         <activity
             android:name="org.telepatch.ui.PopupMainActivity"
             android:clearTaskOnLaunch="true"
