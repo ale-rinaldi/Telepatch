@@ -1045,6 +1045,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                                     mContext.getApplicationContext().startActivity(sg);
 
                                 }
+                                clickCount = 0;
                             }
                         });
                     } catch (Exception e) {

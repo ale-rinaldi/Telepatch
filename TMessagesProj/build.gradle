@@ -82,9 +82,9 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 19
-        //VERSIONE IN LAVORAZIONE: 1.6.5
-        versionCode 260
-        versionName '1.6.1'
+        //VERSIONE IN LAVORAZIONE: 1.6.9
+        versionCode 264
+        versionName '1.6.8'
     }
     productFlavors {
     }

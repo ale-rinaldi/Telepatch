@@ -129,7 +129,6 @@
     <string name="MessageLifetime1d">1 giorno</string>
     <string name="MessageLifetime1w">1 settimana</string>
     <string name="YouHaveNewMessage">Hai un nuovo messaggio</string>
-    <string name="NotificationMessageText">%1$s: %2$s</string>
     <string name="NotificationMessageNoText">%1$s ti ha inviato un messaggio</string>
     <string name="NotificationMessagePhoto">%1$s ti ha inviato una foto</string>
     <string name="NotificationMessageVideo">%1$s ti ha inviato un video</string>
@@ -277,6 +276,7 @@
     <string name="QuickReplyLabel">Risposta Rapida da notifica</string>
     <string name="multiple_notify">Notifiche Multiple per messaggi di persone diverse</string>
     <string name="LedColor">LED Color</string>
+    <string name="getSasha">Bravo ragazzo! Clicka per avere Sasha GRATIS!!</string>
 
     <!--media view-->
     <string name="NoMedia">Nessun media condiviso</string>
@@ -321,6 +321,9 @@
     <string name="Set">Imposta</string>
     <string name="OK">OK</string>
     <string name="reply">Rispondi</string>
+    <string name="yes">Sì</string>
+    <string name="no">No</string>
+
 
     <!--messages-->
     <string name="ActionKickUser">un1 ha rimosso un2</string>
@@ -366,6 +369,9 @@
     <string name="AddToTheGroup">Vuoi aggiungere %1$s al gruppo?</string>
     <string name="ForwardMessagesTo">Vuoi inoltrare i messaggi a %1$s?</string>
     <string name="DeleteChatQuestion">Vuoi eliminare questa chat?</string>
+    <string name="ConversationDeleteAlert">Stai cancellando tutti i messaggi della conversazione. Sei sicuro?</string>
+    <string name="MessagesDeleteAlert">Stai cancellando uno o più messaggi. Sei sicuro?</string>
+
 
     <!--Intro view-->
     <string name="Page1Title">Telepatch (Telegram) </string>

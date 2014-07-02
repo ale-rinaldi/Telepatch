@@ -127,7 +127,7 @@
     <string name="MessageLifetime1d">1 day</string>
     <string name="MessageLifetime1w">1 week</string>
     <string name="YouHaveNewMessage">You have a new message</string>
-    <string name="NotificationMessageText">%1$s: %2$s</string>
+    <string name="NotificationMessageText">%1$s</string>
     <string name="NotificationMessageNoText">%1$s sent you a message</string>
     <string name="NotificationMessagePhoto">%1$s sent you a photo</string>
     <string name="NotificationMessageVideo">%1$s sent you a video</string>
@@ -273,6 +273,7 @@
     <string name="SortFirstName">First name</string>
     <string name="SortLastName">Last name</string>
     <string name="QuickReplyLabel">Quick Reply from notification</string>
+    <string name="multiple_notify">Multiple Notifications for different contacts messages</string>
     <string name="LedColor">LED Color</string>
 
     <!-- media view -->
@@ -318,7 +319,8 @@
     <string name="Set">Set</string>
     <string name="OK">OK</string>
     <string name="reply">Reply</string>
-    <string name="multiple_notify">Multiple Notifications for different contacts messages</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!-- messages -->
     <string name="ActionKickUser">un1 removed un2</string>
@@ -347,6 +349,7 @@
     <string name="FromYou">You</string>
     <string name="ActionTakeScreenshootYou">You took a screenshot!</string>
     <string name="ActionTakeScreenshoot">un1 took a screenshot!</string>
+    <string name="getSasha">Good boy! Get Sasha FOR FREE now!</string>
 
     <!-- Alert messages -->
     <string name="InvalidPhoneNumber">Invalid phone number</string>
@@ -364,6 +367,8 @@
     <string name="AddToTheGroup">Add %1$s to the group?</string>
     <string name="ForwardMessagesTo">Forward messages to %1$s?</string>
     <string name="DeleteChatQuestion">Delete this chat?</string>
+    <string name="ConversationDeleteAlert">You\'re deleting all messages in conversation. Are you sure?</string>
+    <string name="MessagesDeleteAlert">You\'re deleting one or more messages. Are you sure?</string>
 
     <!-- Intro view -->
     <string name="Page1Title">Telepatch (Telegram)</string>

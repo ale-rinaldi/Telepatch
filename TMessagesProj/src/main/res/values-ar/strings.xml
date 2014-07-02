@@ -129,7 +129,6 @@
     <string name="MessageLifetime1d">يوم</string>
     <string name="MessageLifetime1w">أسبوع</string>
     <string name="YouHaveNewMessage">لديك رسالة جديدة</string>
-    <string name="NotificationMessageText">%1$s: %2$s</string>
     <string name="NotificationMessageNoText">%1$s قام بإرسال رسالة لك</string>
     <string name="NotificationMessagePhoto">%1$s قام بإرسال صورة لك</string>
     <string name="NotificationMessageVideo">%1$s قام بإرسال مقطع مرئي لك</string>

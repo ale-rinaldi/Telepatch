@@ -129,7 +129,6 @@
     <string name="MessageLifetime1d">1 dia</string>
     <string name="MessageLifetime1w">1 semana</string>
     <string name="YouHaveNewMessage">Tem uma nova mensagem</string>
-    <string name="NotificationMessageText">%1$s: %2$s</string>
     <string name="NotificationMessageNoText">%1$s enviou uma mensagem</string>
     <string name="NotificationMessagePhoto">%1$s enviou uma foto</string>
     <string name="NotificationMessageVideo">%1$s enviou um vídeo</string>
