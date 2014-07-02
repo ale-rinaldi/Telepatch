@@ -1027,6 +1027,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                         processRowSelect(view);
                         return;
                     }
+                    //TODO qui elimino il menu del single click sul messaggio
                     //createMenu(view, true);
                 }
             });
@@ -3259,9 +3260,8 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
                     random_ids = new ArrayList<Long>();
                     random_ids.add(selectedObject.messageOwner.random_id);
                 }
-                //MessagesController.getInstance().deleteMessages(arr, random_ids, currentEncryptedChat);
-                //TODO qui utilizzo un mio metodo per cancellare i messaggi, cosi' prima mostro un alert
-                deleteMessages(arr, random_ids, currentEncryptedChat);
+                //qui cancella il messaggio non inviato per reinviarlo (funzione riprova)
+                MessagesController.getInstance().deleteMessages(arr, random_ids, currentEncryptedChat);
                 chatListView.setSelection(messages.size() + 1);
 
             } else if (option == 1) {
@@ -3414,8 +3414,8 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
         if (actionBarLayer.isActionModeShowed()) {
             selectedMessagesIds.clear();
             selectedMessagesCanCopyIds.clear();
-            actionBarLayer.hideActionMode();
             updateVisibleRows();
+            actionBarLayer.hideActionMode();
             return false;
         } else if (emojiPopup != null && emojiPopup.isShowing()) {
             hideEmojiPopup();

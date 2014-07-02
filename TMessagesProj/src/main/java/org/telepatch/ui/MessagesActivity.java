@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -332,7 +333,6 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
                                         });
                                         alertDelete.setTitle(R.string.Alert);
                                         alertDelete.setMessage(R.string.ConversationDeleteAlert);
-
                                      if (which == 0) {
                                          alertDelete.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                              @Override
