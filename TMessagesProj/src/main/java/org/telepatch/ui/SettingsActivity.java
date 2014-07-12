@@ -1031,7 +1031,6 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                     final TextView textView = (TextView)view.findViewById(R.id.settings_row_text);
                     try {
                         PackageInfo pInfo = ApplicationLoader.applicationContext.getPackageManager().getPackageInfo(ApplicationLoader.applicationContext.getPackageName(), 0);
-                        textView.setText(String.format(Locale.US, "Telepatch for Android v%s (%d)", pInfo.versionName, pInfo.versionCode));
                         textView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -1044,14 +1043,11 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                                     sg.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     mContext.getApplicationContext().startActivity(sg);
                                     clickCount = 0;
-
                                 }
 
                             }
                         });
-                        if (clickCount == 0) {
-                            textView.setText(String.format(Locale.US, "Telepatch for Android v%s (%d)", pInfo.versionName, pInfo.versionCode));
-                        }
+                        textView.setText(String.format(Locale.US, "Telepatch for Android v%s (%d)", pInfo.versionName, pInfo.versionCode));
                     } catch (Exception e) {
                         FileLog.e("tmessages", e);
                     }
