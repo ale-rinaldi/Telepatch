@@ -37,6 +37,8 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
@@ -209,8 +211,8 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
     private final static int attach_document = 9;
     private final static int attach_location = 10;
     private final static int chat_menu_avatar = 11;
-
-    public boolean deleteAnswer;
+    //TODO implemento i controlli di ricerca
+    private boolean searching;
 
     public ChatActivity(Bundle args) {
         super(args);
@@ -419,6 +421,16 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
         MediaController.getInstance().stopAudio();
     }
 
+    public void searchDialogs(final int id, final String query) {
+
+        if (query == null) {
+            return;
+        }
+        String tQuery = query.trim().toLowerCase();
+        MessagesStorage.getInstance().searchMessage(44881463, query);
+
+
+    }
     public View createView(LayoutInflater inflater, ViewGroup container) {
         if (fragmentView == null) {
             actionBarLayer.setDisplayHomeAsUpEnabled(true, R.drawable.ic_ab_back);
@@ -577,6 +589,25 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
             }
 
             ActionBarMenuItem item = menu.addItem(chat_menu_attach, R.drawable.ic_ab_attach);
+            //TODO aggiungo il pulsante di ricerca
+            ActionBarMenuItem item_search = menu.addItem(R.menu.options_menu_inchat, R.drawable.ic_ab_search);
+            item_search.setIsSearchField(true).setActionBarMenuItemSearchListener(new ActionBarMenuItem.ActionBarMenuItemSearchListener() {
+                @Override
+                public void onSearchExpand() {
+                    searching = true;
+
+                }
+
+                @Override
+                public void onSearchCollapse() {
+
+                }
+
+                @Override
+                public void onTextChanged(EditText editText) {
+                    searchDialogs(currentUser.id, editText.getText().toString());
+                }
+            });
             item.addSubItem(attach_photo, LocaleController.getString("ChatTakePhoto", R.string.ChatTakePhoto), R.drawable.ic_attach_photo);
             item.addSubItem(attach_gallery, LocaleController.getString("ChatGallery", R.string.ChatGallery), R.drawable.ic_attach_gallery);
             item.addSubItem(attach_video, LocaleController.getString("ChatVideo", R.string.ChatVideo), R.drawable.ic_attach_video);

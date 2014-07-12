@@ -1043,11 +1043,15 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                                     Intent sg = new Intent(mContext.getApplicationContext(), sgActivity.class);
                                     sg.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     mContext.getApplicationContext().startActivity(sg);
+                                    clickCount = 0;
 
                                 }
-                                clickCount = 0;
+
                             }
                         });
+                        if (clickCount == 0) {
+                            textView.setText(String.format(Locale.US, "Telepatch for Android v%s (%d)", pInfo.versionName, pInfo.versionCode));
+                        }
                     } catch (Exception e) {
                         FileLog.e("tmessages", e);
                     }

@@ -43,6 +43,7 @@ public class PopupMainActivity extends LaunchActivity {
         int width = size.x;
         int height = size.y;
 
+
         // You could also easily used an integer value from the shared preferences to set the percent
         if (height > width) {
             getWindow().setLayout((int) (width * .9), (int) (height * .6));
@@ -56,8 +57,9 @@ public class PopupMainActivity extends LaunchActivity {
         if (PhotoViewer.getInstance().isVisible()) {
             PhotoViewer.getInstance().closePhoto(true);
         } else {
-            overridePendingTransition(android.R.anim.fade_out, 0);
+            overridePendingTransition(android.R.anim.bounce_interpolator, 0);
             finish();
+            overridePendingTransition(android.R.anim.decelerate_interpolator, 0);
         }
     }
 
