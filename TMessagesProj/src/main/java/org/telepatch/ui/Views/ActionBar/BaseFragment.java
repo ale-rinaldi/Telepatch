@@ -8,9 +8,13 @@
 
 package org.telepatch.ui.Views.ActionBar;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +22,9 @@ import android.view.ViewGroup;
 
 import org.telepatch.messenger.ConnectionsManager;
 import org.telepatch.messenger.FileLog;
+import org.telepatch.messenger.LocaleController;
 import org.telepatch.messenger.R;
+import org.telepatch.ui.ApplicationLoader;
 
 public class BaseFragment {
     private boolean isFinished = false;
@@ -29,7 +35,6 @@ public class BaseFragment {
     protected Bundle arguments;
     private AlertDialog visibleDialog = null;
     protected boolean swipeBackEnabled = true;
-
     public BaseFragment() {
         classGuid = ConnectionsManager.getInstance().generateClassGuid();
     }
@@ -63,7 +68,21 @@ public class BaseFragment {
                 }
                 actionBarLayer = parentActivity.getInternalActionBar().createLayer();
                 actionBarLayer.parentFragment = this;
-                actionBarLayer.setBackgroundResource(R.color.header);
+                SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+                int theme = preferences.getInt("theme", 0);
+                int theme_selected = R.color.theme_default;
+                if (theme == 0) {
+                   theme_selected = R.color.theme_default;
+                } else if (theme == 1) {
+                    theme_selected = R.color.theme_red;
+                } else if (theme == 2) {
+                    theme_selected = R.color.theme_green;
+                } else if (theme == 3) {
+                    theme_selected = R.color.theme_fucsia;
+                } else if (theme == 4) {
+                    theme_selected = R.color.theme_yellow;
+                }
+                actionBarLayer.setBackgroundResource(theme_selected);
                 actionBarLayer.setItemsBackground(R.drawable.bar_selector);
             }
         }

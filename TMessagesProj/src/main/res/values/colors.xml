@@ -6,4 +6,9 @@
     <color name="settings_background_color">#ffffffff</color>
     <color name="divider">#dcdcdc</color>
     <color name="header">#ff54759e</color>
+    <color name="theme_red">#a20000</color>
+    <color name="theme_default">#ff54759e</color>
+    <color name="theme_green">#ff33e233</color>
+    <color name="theme_fucsia">#ffea148c</color>
+    <color name="theme_yellow">#ffffff33</color>
 </resources>

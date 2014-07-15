@@ -427,7 +427,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
             return;
         }
         String tQuery = query.trim().toLowerCase();
-        MessagesStorage.getInstance().searchMessage(44881463, query);
+        MessagesController.getInstance().searchMessage(tQuery, dialog_id);
 
 
     }
@@ -590,7 +590,7 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
 
             ActionBarMenuItem item = menu.addItem(chat_menu_attach, R.drawable.ic_ab_attach);
             //TODO aggiungo il pulsante di ricerca
-            /*ActionBarMenuItem item_search = menu.addItem(R.menu.options_menu_inchat, R.drawable.ic_ab_search);
+            ActionBarMenuItem item_search = menu.addItem(R.menu.options_menu_inchat, R.drawable.ic_ab_search);
             item_search.setIsSearchField(true).setActionBarMenuItemSearchListener(new ActionBarMenuItem.ActionBarMenuItemSearchListener() {
                 @Override
                 public void onSearchExpand() {
@@ -600,15 +600,14 @@ public class ChatActivity extends BaseFragment implements SizeNotifierRelativeLa
 
                 @Override
                 public void onSearchCollapse() {
-
+                    searching = false;
                 }
 
                 @Override
                 public void onTextChanged(EditText editText) {
-                    searchDialogs(currentUser.id, editText.getText().toString());
+                        searchDialogs((int)dialog_id, editText.getText().toString());
                 }
             });
-            */
             item.addSubItem(attach_photo, LocaleController.getString("ChatTakePhoto", R.string.ChatTakePhoto), R.drawable.ic_attach_photo);
             item.addSubItem(attach_gallery, LocaleController.getString("ChatGallery", R.string.ChatGallery), R.drawable.ic_attach_gallery);
             item.addSubItem(attach_video, LocaleController.getString("ChatVideo", R.string.ChatVideo), R.drawable.ic_attach_video);

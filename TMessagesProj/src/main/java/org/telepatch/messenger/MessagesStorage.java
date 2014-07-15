@@ -9,11 +9,13 @@
 package org.telepatch.messenger;
 
 import android.text.Html;
+import android.util.Log;
 import android.util.SparseArray;
 
 import org.telepatch.PhoneFormat.PhoneFormat;
 import org.telepatch.SQLite.SQLiteCursor;
 import org.telepatch.SQLite.SQLiteDatabase;
+import org.telepatch.SQLite.SQLiteException;
 import org.telepatch.SQLite.SQLitePreparedStatement;
 import org.telepatch.objects.MessageObject;
 import org.telepatch.ui.ApplicationLoader;
@@ -780,6 +782,33 @@ public class MessagesStorage {
             }
         });
     }
+    public void searchMessage(final int uid, final String query) {
+        storageQueue.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                if (query.length() == 0) {
+                    return;
+                }
+                try {
+                    SQLiteCursor cursor = database.queryFinalized("SELECT m.mid, m.data FROM messages as m WHERE m.uid = " + uid);
+                    ArrayList<String> messages = new ArrayList<String>();
+                    while (cursor.next()) {
+                        byte[] userData = cursor.byteArrayValue(1);
+                        if (userData != null) {
+                            SerializedData data = new SerializedData(userData);
+                            TLRPC.Message msg = (TLRPC.Message) TLClassStore.Instance().TLdeserialize(data, data.readInt32());
+                            messages.add(msg.message);
+                        }
+                        if (messages != null) {
+                            Log.i("xela92", "messaggi: " + messages.get(0) + messages.get(1) + messages.get(2));
+                        }
+                    }
+                } catch (Exception e) {
+                    FileLog.e("tmessages", e);
+                }
+            }
+        });
+    }
 
     public void searchDialogs(final Integer token, final String query, final boolean needEncrypted) {
         storageQueue.postRunnable(new Runnable() {
@@ -788,6 +817,7 @@ public class MessagesStorage {
                 try {
                     ArrayList<TLRPC.User> encUsers = new ArrayList<TLRPC.User>();
                     String q = query.trim().toLowerCase();
+
                     if (q.length() == 0) {
                         NotificationCenter.getInstance().postNotificationName(MessagesController.reloadSearchResults, token, new ArrayList<TLObject>(), new ArrayList<CharSequence>(), new ArrayList<CharSequence>());
                         return;

@@ -23,10 +23,15 @@
         <item name="android:actionBarItemBackground">@drawable/bar_selector</item>
     </style>
 
+    <style name="Theme.TMessages.Red" parent="@android:style/Theme.Holo.Light">
+        <item name="android:colorBackground">@android:color/holo_red_dark</item>
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
     <!--ACTION BAR-->
 
     <style name="ActionBar.Transparent.TMessages.Start" parent="android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@color/header</item>
+        <item name="android:background">@color/chat_background_color</item>
         <item name="android:logo">@drawable/transparent</item>
         <item name="android:title">""</item>
     </style>

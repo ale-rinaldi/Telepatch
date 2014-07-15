@@ -112,6 +112,7 @@
     <string name="SaveToDownloads">Save to downloads</string>
     <string name="ApplyLocalizationFile">Apply localization file</string>
     <string name="UnsupportedAttachment">Unsupported attachment</string>
+    <string name="search_title">Find</string>
 
     <!-- notification -->
     <string name="EncryptedChatRequested">Secret chat requested</string>
@@ -275,6 +276,7 @@
     <string name="QuickReplyLabel">Quick Reply from notification</string>
     <string name="multiple_notify">Multiple Notifications for different contacts messages</string>
     <string name="LedColor">LED Color</string>
+    <string name="themeChooser">Theme</string>
 
     <!-- media view -->
     <string name="NoMedia">No shared media yet</string>

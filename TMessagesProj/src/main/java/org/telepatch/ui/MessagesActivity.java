@@ -164,7 +164,7 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
                     }
                 }
             });
-            
+
             if (onlySelect) {
                 actionBarLayer.setDisplayHomeAsUpEnabled(true, R.drawable.ic_ab_back);
                 actionBarLayer.setTitle(LocaleController.getString("SelectChat", R.string.SelectChat));

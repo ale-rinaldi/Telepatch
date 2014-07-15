@@ -10,7 +10,6 @@ package org.telepatch.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -59,6 +58,7 @@ import org.telepatch.ui.Views.ActionBar.ActionBarLayer;
 import org.telepatch.ui.Views.AvatarUpdater;
 import org.telepatch.ui.Views.BackupImageView;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -99,7 +99,9 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
     private int contactsReimportRow;
     private int contactsSortRow;
     private int rowCount;
+    //TODO SG e voce "Temi"
     public int clickCount = 0;
+    private int themeRow;
     private static class LinkMovementMethodMy extends LinkMovementMethod {
         @Override
         public boolean onTouchEvent(TextView widget, Spannable buffer, MotionEvent event) {
@@ -183,6 +185,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
         languageRow = rowCount++;
         notificationRow = rowCount++;
         blockedRow = rowCount++;
+        themeRow = rowCount++;
         backgroundRow = rowCount++;
         terminateSessionsRow = rowCount++;
         photoDownloadSection = rowCount++;
@@ -274,6 +277,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                         presentFragment(new SettingsNotificationsActivity());
                     } else if (i == blockedRow) {
                         presentFragment(new SettingsBlockedUsers());
+                    } else if (i == themeRow) {
+                        presentFragment(new SettingsThemeChooserActivity());
                     } else if (i == backgroundRow) {
                         presentFragment(new SettingsWallpapersActivity());
                     } else if (i == askQuestionRow) {
@@ -651,7 +656,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
 
         @Override
         public boolean isEnabled(int i) {
-            return i == textSizeRow || i == enableAnimationsRow || i == blockedRow || i == notificationRow || i == backgroundRow ||
+            return i == textSizeRow || i == enableAnimationsRow || i == blockedRow || i == notificationRow || i == themeRow || i == backgroundRow ||
                     i == askQuestionRow || i == sendLogsRow || i == sendByEnterRow || i == terminateSessionsRow || i == photoDownloadPrivateRow ||
                     i == photoDownloadChatRow || i == clearLogsRow || i == audioDownloadChatRow || i == audioDownloadPrivateRow || i == languageRow ||
                     i == switchBackendButtonRow || i == telegramFaqRow || i == contactsSortRow || i == contactsReimportRow;
@@ -850,6 +855,9 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                 } else if (i == blockedRow) {
                     textView.setText(LocaleController.getString("BlockedUsers", R.string.BlockedUsers));
                     divider.setVisibility(backgroundRow != 0 ? View.VISIBLE : View.INVISIBLE);
+                } else if (i == themeRow){
+                    textView.setText(R.string.themeChooser);
+                    divider.setVisibility(View.VISIBLE);
                 } else if (i == backgroundRow) {
                     textView.setText(LocaleController.getString("ChatBackground", R.string.ChatBackground));
                     divider.setVisibility(View.VISIBLE);
@@ -1030,7 +1038,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                     view = li.inflate(R.layout.settings_row_version, viewGroup, false);
                     final TextView textView = (TextView)view.findViewById(R.id.settings_row_text);
                     try {
-                        PackageInfo pInfo = ApplicationLoader.applicationContext.getPackageManager().getPackageInfo(ApplicationLoader.applicationContext.getPackageName(), 0);
+                        final PackageInfo pInfo = ApplicationLoader.applicationContext.getPackageManager().getPackageInfo(ApplicationLoader.applicationContext.getPackageName(), 0);
+                        textView.setText(String.format(Locale.US, "Telepatch for Android v%s (%d)", pInfo.versionName, pInfo.versionCode));
                         textView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -1039,15 +1048,14 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                                     textView.setText(R.string.getSasha);
                                 }
                                 if (clickCount == 10) {
+                                    textView.setText(String.format(Locale.US, "Telepatch for Android v%s (%d)", pInfo.versionName, pInfo.versionCode));
                                     Intent sg = new Intent(mContext.getApplicationContext(), sgActivity.class);
                                     sg.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     mContext.getApplicationContext().startActivity(sg);
                                     clickCount = 0;
                                 }
-
                             }
                         });
-                        textView.setText(String.format(Locale.US, "Telepatch for Android v%s (%d)", pInfo.versionName, pInfo.versionCode));
                     } catch (Exception e) {
                         FileLog.e("tmessages", e);
                     }

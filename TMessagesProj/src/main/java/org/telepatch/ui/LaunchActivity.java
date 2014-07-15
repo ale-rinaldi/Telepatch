@@ -19,7 +19,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.ContactsContract;
-import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,7 +30,6 @@ import org.telepatch.PhoneFormat.PhoneFormat;
 import org.telepatch.messenger.ConnectionsManager;
 import org.telepatch.messenger.FileLog;
 import org.telepatch.messenger.LocaleController;
-import org.telepatch.messenger.MediaController;
 import org.telepatch.messenger.MessagesController;
 import org.telepatch.messenger.NotificationCenter;
 import org.telepatch.messenger.R;
@@ -143,9 +141,9 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
                             SettingsWallpapersActivity settings = new SettingsWallpapersActivity();
                             addFragmentToStack(settings);
                             settings.restoreSelfArgs(savedInstanceState);
-                        } else if (fragmentName.equals("sg")) {
-                            Intent sg = new Intent(getApplicationContext(), sgActivity.class);
-                            startActivity(sg);
+                        } else if (fragmentName.equals("theme_chooser")) {
+                            SettingsThemeChooserActivity chooser = new SettingsThemeChooserActivity();
+                            addFragmentToStack(chooser);
                         }
                     }
                 }
@@ -681,6 +679,8 @@ public class LaunchActivity extends ActionBarActivity implements NotificationCen
                 } else if (lastFragment instanceof ChatProfileActivity && args != null) {
                     outState.putBundle("args", args);
                     outState.putString("fragment", "chat_profile");
+                } else if (lastFragment instanceof SettingsThemeChooserActivity) {
+                    outState.putString("fragment", "theme_chooser");
                 }
                 lastFragment.saveSelfArgs(outState);
             }
