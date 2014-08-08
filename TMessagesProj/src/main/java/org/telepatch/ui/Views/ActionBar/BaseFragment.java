@@ -8,13 +8,10 @@
 
 package org.telepatch.ui.Views.ActionBar;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +19,11 @@ import android.view.ViewGroup;
 
 import org.telepatch.messenger.ConnectionsManager;
 import org.telepatch.messenger.FileLog;
-import org.telepatch.messenger.LocaleController;
 import org.telepatch.messenger.R;
 import org.telepatch.ui.ApplicationLoader;
 
 public class BaseFragment {
+    private int MODE_PRIVATE = 0;
     private boolean isFinished = false;
     protected View fragmentView;
     private ActionBarActivity parentActivity;
@@ -68,11 +65,12 @@ public class BaseFragment {
                 }
                 actionBarLayer = parentActivity.getInternalActionBar().createLayer();
                 actionBarLayer.parentFragment = this;
-                SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+                //TODO gestione dei temi
+                SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", MODE_PRIVATE);
                 int theme = preferences.getInt("theme", 0);
                 int theme_selected = R.color.theme_default;
                 if (theme == 0) {
-                   theme_selected = R.color.theme_default;
+                    theme_selected = R.color.theme_default;
                 } else if (theme == 1) {
                     theme_selected = R.color.theme_red;
                 } else if (theme == 2) {
@@ -81,12 +79,25 @@ public class BaseFragment {
                     theme_selected = R.color.theme_fucsia;
                 } else if (theme == 4) {
                     theme_selected = R.color.theme_yellow;
+                } else if (theme == 5) {
+                    theme_selected = R.color.theme_violet;
+                } else if (theme == 6) {
+                    theme_selected = R.color.theme_blue;
+                } else if (theme == 7) {
+                    theme_selected = R.color.theme_purple;
+                } else if (theme == 8) {
+                    theme_selected = R.color.theme_material_green;
                 }
-                actionBarLayer.setBackgroundResource(theme_selected);
-                actionBarLayer.setItemsBackground(R.drawable.bar_selector);
+
+
+                    actionBarLayer.setBackgroundResource(theme_selected);
+
+
+                    actionBarLayer.setItemsBackground(R.drawable.bar_selector);
+                }
             }
         }
-    }
+
 
     public void finishFragment() {
         finishFragment(true);
@@ -119,7 +130,6 @@ public class BaseFragment {
     }
 
     public void onResume() {
-
     }
 
     public void onPause() {

@@ -12,25 +12,26 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.telepatch.messenger.LocaleController;
-import org.telepatch.messenger.TLObject;
-import org.telepatch.messenger.TLRPC;
-import org.telepatch.messenger.ContactsController;
+import org.telepatch.android.AndroidUtilities;
+import org.telepatch.android.ContactsController;
 import org.telepatch.messenger.FileLog;
-import org.telepatch.messenger.MessagesController;
-import org.telepatch.messenger.MessagesStorage;
+import org.telepatch.android.LocaleController;
+import org.telepatch.android.MessagesController;
+import org.telepatch.android.MessagesStorage;
 import org.telepatch.messenger.NotificationCenter;
 import org.telepatch.messenger.R;
+import org.telepatch.messenger.TLObject;
+import org.telepatch.messenger.TLRPC;
 import org.telepatch.messenger.UserConfig;
 import org.telepatch.messenger.Utilities;
 import org.telepatch.ui.Adapters.BaseFragmentAdapter;
@@ -74,8 +75,10 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
     private final static int messages_list_menu_contacts = 4;
     private final static int messages_list_menu_settings = 5;
 
+
+
     public static interface MessagesActivityDelegate {
-        public abstract void didSelectDialog(MessagesActivity fragment, long dialog_id);
+        public abstract void didSelectDialog(MessagesActivity fragment, long dialog_id, boolean param);
     }
 
     public MessagesActivity(Bundle args) {
@@ -214,6 +217,8 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
             searchWas = false;
 
             fragmentView = inflater.inflate(R.layout.messages_list, container, false);
+            //TODO qui imposto il colore di sfondo della lista messaggi
+            //fragmentView.setBackgroundResource(R.color.theme_red);
 
             messagesListViewAdapter = new MessagesAdapter(getParentActivity());
 
@@ -278,7 +283,7 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
                         }
                     }
                     if (onlySelect) {
-                        didSelectResult(dialog_id, true);
+                        didSelectResult(dialog_id, true, false);
                     } else {
                         Bundle args = new Bundle();
                         int lower_part = (int)dialog_id;
@@ -334,33 +339,28 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
                                         });
                                         alertDelete.setTitle(R.string.Alert);
                                         alertDelete.setMessage(R.string.ConversationDeleteAlert);
-                                     if (which == 0) {
-                                         alertDelete.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                             @Override
-                                             public void onClick(DialogInterface dialogInterface, int i) {
-                                                 MessagesController.getInstance().deleteDialog(selectedDialog, 0, true);
-                                             }
-                                         });
+                                        final int final_which = which;
+							            alertDelete.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    if (final_which == 0) {
+                                                        MessagesController.getInstance().deleteDialog(selectedDialog, 0, true);
+                                                    } else if (final_which == 1) {
+                                                        MessagesController.getInstance().deleteUserFromChat((int) -selectedDialog, MessagesController.getInstance().users.get(UserConfig.getClientUserId()), null);
+                                                        MessagesController.getInstance().deleteDialog(selectedDialog, 0, false);
+                                                    }
+                                                }
+                                            });
+                                            showAlertDialog(alertDelete);
 
-                                     } else if (which == 1) {
-
-                                    alertDelete.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                            MessagesController.getInstance().deleteUserFromChat((int) -selectedDialog, MessagesController.getInstance().users.get(UserConfig.getClientUserId()), null);
-                                            MessagesController.getInstance().deleteDialog(selectedDialog, 0, false);
-                                        }
-                                    });
-                                         showAlertDialog(alertDelete);
-
-                                }
-                            }
-                        });
+                                    }
+                                });
 
                     } else {
-                                builder.setItems(new CharSequence[]{LocaleController.getString("ClearHistory", R.string.ClearHistory), LocaleController.getString("Delete", R.string.Delete)}, new DialogInterface.OnClickListener() {
+                        builder.setItems(new CharSequence[]{LocaleController.getString("ClearHistory", R.string.ClearHistory), LocaleController.getString("Delete", R.string.Delete)}, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
                                 final int myWhich = which;
                                 AlertDialog.Builder alertDelete = new AlertDialog.Builder(getParentActivity());
 
@@ -380,6 +380,7 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
                                     }
                                 });
                                 showAlertDialog(alertDelete);
+
                             }
                         });
                     }
@@ -393,7 +394,7 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
                 @Override
                 public void onScrollStateChanged(AbsListView absListView, int i) {
                     if (i == SCROLL_STATE_TOUCH_SCROLL && searching && searchWas) {
-                        Utilities.hideKeyboard(getParentActivity().getCurrentFocus());
+                        AndroidUtilities.hideKeyboard(getParentActivity().getCurrentFocus());
                     }
                 }
 
@@ -409,11 +410,6 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
                     }
                 }
             });
-
-            if (MessagesController.getInstance().loadingDialogs) {
-                progressView.setVisibility(View.VISIBLE);
-            }
-
         } else {
             ViewGroup parent = (ViewGroup)fragmentView.getParent();
             if (parent != null) {
@@ -431,6 +427,7 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
             messagesListViewAdapter.notifyDataSetChanged();
         }
     }
+
 
     @Override
     @SuppressWarnings("unchecked")
@@ -499,7 +496,7 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
         this.delegate = delegate;
     }
 
-    private void didSelectResult(final long dialog_id, boolean useAlert) {
+    private void didSelectResult(final long dialog_id, boolean useAlert, final boolean param) {
         if (useAlert && selectAlertString != null) {
             if (getParentActivity() == null) {
                 return;
@@ -530,17 +527,32 @@ public class MessagesActivity extends BaseFragment implements NotificationCenter
                 }
                 builder.setMessage(LocaleController.formatStringSimple(selectAlertString, Utilities.formatName(user.first_name, user.last_name)));
             }
+            CheckBox checkBox = null;
+            /*if (delegate instanceof ChatActivity) {
+                checkBox = new CheckBox(getParentActivity());
+                checkBox.setText(LocaleController.getString("ForwardFromMyName", R.string.ForwardFromMyName));
+                checkBox.setChecked(false);
+                builder.setView(checkBox);
+            }*/
+            final CheckBox checkBoxFinal = checkBox;
             builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    didSelectResult(dialog_id, false);
+                    didSelectResult(dialog_id, false, checkBoxFinal != null && checkBoxFinal.isChecked());
                 }
             });
             builder.setNegativeButton(R.string.Cancel, null);
             showAlertDialog(builder);
+            if (checkBox != null) {
+                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)checkBox.getLayoutParams();
+                if (layoutParams != null) {
+                    layoutParams.rightMargin = layoutParams.leftMargin = AndroidUtilities.dp(10);
+                    checkBox.setLayoutParams(layoutParams);
+                }
+            }
         } else {
             if (delegate != null) {
-                delegate.didSelectDialog(MessagesActivity.this, dialog_id);
+                delegate.didSelectDialog(MessagesActivity.this, dialog_id, param);
                 delegate = null;
             } else {
                 finishFragment();

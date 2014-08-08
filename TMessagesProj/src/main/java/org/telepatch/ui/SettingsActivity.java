@@ -34,18 +34,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import org.telepatch.android.AndroidUtilities;
+import org.telepatch.android.ContactsController;
 import org.telepatch.PhoneFormat.PhoneFormat;
 import org.telepatch.messenger.BuildVars;
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.SerializedData;
 import org.telepatch.messenger.TLClassStore;
 import org.telepatch.messenger.TLObject;
 import org.telepatch.messenger.TLRPC;
 import org.telepatch.messenger.ConnectionsManager;
 import org.telepatch.messenger.FileLog;
-import org.telepatch.messenger.MessagesController;
-import org.telepatch.messenger.MessagesStorage;
+import org.telepatch.android.MessagesController;
+import org.telepatch.android.MessagesStorage;
 import org.telepatch.messenger.NotificationCenter;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.RPCRequest;
@@ -102,6 +103,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
     //TODO SG e voce "Temi"
     public int clickCount = 0;
     private int themeRow;
+    private int pwdRow;
     private static class LinkMovementMethodMy extends LinkMovementMethod {
         @Override
         public boolean onTouchEvent(TextView widget, Spannable buffer, MotionEvent event) {
@@ -170,7 +172,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                             });
                         }
                     }
-                }, null, true, RPCRequest.RPCRequestClassGeneric);
+                });
             }
         };
         NotificationCenter.getInstance().addObserver(this, MessagesController.updateInterfaces);
@@ -186,6 +188,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
         notificationRow = rowCount++;
         blockedRow = rowCount++;
         themeRow = rowCount++;
+        pwdRow = rowCount++;
         backgroundRow = rowCount++;
         terminateSessionsRow = rowCount++;
         photoDownloadSection = rowCount++;
@@ -249,7 +252,26 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                         }
                         AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
                         builder.setTitle(LocaleController.getString("TextSize", R.string.TextSize));
-                        builder.setItems(new CharSequence[]{String.format("%d", 12), String.format("%d", 13), String.format("%d", 14), String.format("%d", 15), String.format("%d", 16), String.format("%d", 17), String.format("%d", 18), String.format("%d", 19), String.format("%d", 20), String.format("%d", 21), String.format("%d", 22), String.format("%d", 23), String.format("%d", 24)}, new DialogInterface.OnClickListener() {
+                        builder.setItems(new CharSequence[] {
+                                String.format("%d", 12),
+                                String.format("%d", 13),
+                                String.format("%d", 14),
+                                String.format("%d", 15),
+                                String.format("%d", 16),
+                                String.format("%d", 17),
+                                String.format("%d", 18),
+                                String.format("%d", 19),
+                                String.format("%d", 20),
+                                String.format("%d", 21),
+                                String.format("%d", 22),
+                                String.format("%d", 23),
+                                String.format("%d", 24),
+                                String.format("%d", 25),
+                                String.format("%d", 26),
+                                String.format("%d", 27),
+                                String.format("%d", 28),
+                                String.format("%d", 29),
+                                String.format("%d", 30)}, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
@@ -276,9 +298,11 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                     } else if (i == notificationRow) {
                         presentFragment(new SettingsNotificationsActivity());
                     } else if (i == blockedRow) {
-                        presentFragment(new SettingsBlockedUsers());
+                        presentFragment(new SettingsBlockedUsersActivity());
                     } else if (i == themeRow) {
                         presentFragment(new SettingsThemeChooserActivity());
+                    } else if (i == pwdRow) {
+                        presentFragment(new SettingsPasswordActivity());
                     } else if (i == backgroundRow) {
                         presentFragment(new SettingsWallpapersActivity());
                     } else if (i == askQuestionRow) {
@@ -288,7 +312,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                         final TextView message = new TextView(getParentActivity());
                         message.setText(Html.fromHtml(LocaleController.getString("AskAQuestionInfo", R.string.AskAQuestionInfo)));
                         message.setTextSize(18);
-                        message.setPadding(Utilities.dp(8), Utilities.dp(5), Utilities.dp(8), Utilities.dp(6));
+                        message.setPadding(AndroidUtilities.dp(8), AndroidUtilities.dp(5), AndroidUtilities.dp(8), AndroidUtilities.dp(6));
                         message.setMovementMethod(new LinkMovementMethodMy());
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
@@ -319,7 +343,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                             return;
                         }
                         AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
-                        builder.setMessage(LocaleController.getString("AreYouSure", R.string.AreYouSure));
+                        builder.setMessage(LocaleController.getString("AreYouSureSessions", R.string.AreYouSureSessions));
                         builder.setTitle(LocaleController.getString("AppName", R.string.AppName));
                         builder.setPositiveButton(LocaleController.getString("OK", R.string.OK), new DialogInterface.OnClickListener() {
                             @Override
@@ -349,7 +373,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                                         MessagesController.getInstance().registerForPush(UserConfig.pushString);
                                         ConnectionsManager.getInstance().initPushConnection();
                                     }
-                                }, null, true, RPCRequest.RPCRequestClassGeneric);
+                                });
                             }
                         });
                         builder.setNegativeButton(LocaleController.getString("Cancel", R.string.Cancel), null);
@@ -466,7 +490,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                         avatarImage.getLocationInWindow(coords);
                         PhotoViewer.PlaceProviderObject object = new PhotoViewer.PlaceProviderObject();
                         object.viewX = coords[0];
-                        object.viewY = coords[1] - Utilities.statusBarHeight;
+                        object.viewY = coords[1] - AndroidUtilities.statusBarHeight;
                         object.parentView = listView;
                         object.imageReceiver = avatarImage.imageReceiver;
                         object.user_id = UserConfig.getClientUserId();
@@ -515,7 +539,9 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                         if (datacentersBytes != null) {
                             SerializedData data = new SerializedData(datacentersBytes);
                             supportUser = (TLRPC.User)TLClassStore.Instance().TLdeserialize(data, data.readInt32());
-
+                            if (supportUser != null && supportUser.id == 333000) {
+                                supportUser = null;
+                            }
                         }
                     } catch (Exception e) {
                         FileLog.e("tmessages", e);
@@ -570,7 +596,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                         });
                     }
                 }
-            }, null, true, RPCRequest.RPCRequestClassGeneric);
+            });
         } else {
             MessagesController.getInstance().users.putIfAbsent(supportUser.id, supportUser);
             Bundle args = new Bundle();
@@ -656,7 +682,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
 
         @Override
         public boolean isEnabled(int i) {
-            return i == textSizeRow || i == enableAnimationsRow || i == blockedRow || i == notificationRow || i == themeRow || i == backgroundRow ||
+            return i == textSizeRow || i == enableAnimationsRow || i == blockedRow || i == notificationRow || i == themeRow || i == pwdRow || i == backgroundRow ||
                     i == askQuestionRow || i == sendLogsRow || i == sendByEnterRow || i == terminateSessionsRow || i == photoDownloadPrivateRow ||
                     i == photoDownloadChatRow || i == clearLogsRow || i == audioDownloadChatRow || i == audioDownloadPrivateRow || i == languageRow ||
                     i == switchBackendButtonRow || i == telegramFaqRow || i == contactsSortRow || i == contactsReimportRow;
@@ -731,6 +757,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                                     if (i == 0 && full) {
                                         TLRPC.User user = MessagesController.getInstance().users.get(UserConfig.getClientUserId());
                                         if (user != null && user.photo != null && user.photo.photo_big != null) {
+                                            PhotoViewer.getInstance().setParentActivity(getParentActivity());
                                             PhotoViewer.getInstance().openPhoto(user.photo.photo_big, SettingsActivity.this);
                                         }
                                     } else if (i == 0 && !full || i == 1 && full) {
@@ -781,7 +808,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                                                     });
                                                 }
                                             }
-                                        }, null, true, RPCRequest.RPCRequestClassGeneric);
+                                        });
                                     }
                                 }
                             });
@@ -793,7 +820,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                 textView.setText(LocaleController.getString("Online", R.string.Online));
 
                 textView = (TextView)view.findViewById(R.id.settings_name);
-                Typeface typeface = Utilities.getTypeface("fonts/rmedium.ttf");
+                Typeface typeface = AndroidUtilities.getTypeface("fonts/rmedium.ttf");
                 textView.setTypeface(typeface);
                 TLRPC.User user = MessagesController.getInstance().users.get(UserConfig.getClientUserId());
                 if (user == null) {
@@ -857,6 +884,9 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                     divider.setVisibility(backgroundRow != 0 ? View.VISIBLE : View.INVISIBLE);
                 } else if (i == themeRow){
                     textView.setText(R.string.themeChooser);
+                    divider.setVisibility(View.VISIBLE);
+                } else if (i == pwdRow){
+                    textView.setText(R.string.pwd_request_title);
                     divider.setVisibility(View.VISIBLE);
                 } else if (i == backgroundRow) {
                     textView.setText(LocaleController.getString("ChatBackground", R.string.ChatBackground));
@@ -935,17 +965,21 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                                 return;
                             }
                             AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
-                            builder.setMessage(LocaleController.getString("AreYouSure", R.string.AreYouSure));
+                            builder.setMessage(LocaleController.getString("AreYouSureLogout", R.string.AreYouSureLogout));
                             builder.setTitle(LocaleController.getString("AppName", R.string.AppName));
                             builder.setPositiveButton(LocaleController.getString("OK", R.string.OK), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                    SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = preferences.edit();
+                                    editor.clear().commit();
                                     NotificationCenter.getInstance().postNotificationName(1234);
                                     MessagesController.getInstance().unregistedPush();
                                     MessagesController.getInstance().logOut();
                                     UserConfig.clearConfig();
                                     MessagesStorage.getInstance().cleanUp();
                                     MessagesController.getInstance().cleanUp();
+                                    ContactsController.getInstance().deleteAllAppAccounts();
                                 }
                             });
                             builder.setNegativeButton(LocaleController.getString("Cancel", R.string.Cancel), null);
@@ -1096,3 +1130,4 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
         }
     }
 }
+

@@ -9,10 +9,10 @@
 package org.telepatch.messenger;
 
 public class BuildVars {
-    public static boolean DEBUG_VERSION = false;
+    public static boolean DEBUG_VERSION = true;
     public static int APP_ID = 18739;
     public static String APP_HASH = "09ae56ae034b0320c7187f8aeef74ca0";
     public static String HOCKEY_APP_HASH = "your-hockeyapp-api-key-here";
-    public static String GCM_SENDER_ID = "";
+    public static String GCM_SENDER_ID = "760348033672";
     public static String SEND_LOGS_EMAIL = "florenti.alex@gmail.com";
 }

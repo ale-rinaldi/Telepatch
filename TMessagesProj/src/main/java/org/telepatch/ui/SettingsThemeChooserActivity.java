@@ -2,15 +2,11 @@ package org.telepatch.ui;
 
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.net.Uri;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -21,19 +17,10 @@ import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.telepatch.messenger.ConnectionsManager;
 import org.telepatch.messenger.FileLog;
-import org.telepatch.messenger.LocaleController;
-import org.telepatch.messenger.MessagesController;
-import org.telepatch.messenger.NotificationCenter;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.R;
-import org.telepatch.messenger.RPCRequest;
-import org.telepatch.messenger.TLObject;
-import org.telepatch.messenger.TLRPC;
-import org.telepatch.messenger.UserConfig;
-import org.telepatch.messenger.Utilities;
 import org.telepatch.ui.Adapters.BaseFragmentAdapter;
 import org.telepatch.ui.Views.ActionBar.ActionBarLayer;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
@@ -59,38 +46,6 @@ class LinkMovementMethodMy extends LinkMovementMethod {
 
     public class SettingsThemeChooserActivity extends BaseFragment {
 
-        private int profileRow;
-        private int numberSectionRow;
-        private int numberRow;
-        private int settingsSectionRow;
-        private int textSizeRow;
-        private int enableAnimationsRow;
-        private int notificationRow;
-        private int blockedRow;
-        private int backgroundRow;
-        private int supportSectionRow;
-        private int askQuestionRow;
-        private int logoutRow;
-        private int sendLogsRow;
-        private int clearLogsRow;
-        private int switchBackendButtonRow;
-        private int messagesSectionRow;
-        private int sendByEnterRow;
-        private int terminateSessionsRow;
-        private int photoDownloadSection;
-        private int photoDownloadChatRow;
-        private int photoDownloadPrivateRow;
-        private int audioDownloadSection;
-        private int audioDownloadChatRow;
-        private int audioDownloadPrivateRow;
-        private int telegramFaqRow;
-        private int languageRow;
-        private int versionRow;
-        private int contactsSectionRow;
-        private int contactsReimportRow;
-        private int contactsSortRow;
-        private int rowCount;
-        public int clickCount = 0;
         private int themeRow;
         private ListView listView;
         private ListAdapter listAdapter;
@@ -103,9 +58,11 @@ class LinkMovementMethodMy extends LinkMovementMethod {
         private int themeGreenRow;
         private int themeYellowRow;
         private int themeFucsiaRow;
-        private int themePurpleRow;
         private int themeVioletRow;
-        private int themeDarkBlueRow;
+        private int themeBlueRow;
+        private int themePurpleRow;
+        private int themeMaterialGreenRow;
+
 
         @Override
         public View createView(final LayoutInflater inflater, final ViewGroup container) {
@@ -136,48 +93,39 @@ class LinkMovementMethodMy extends LinkMovementMethod {
                         if (i == themeDefaultRow) {
                             editor.putInt("theme", 0);
                             editor.commit();
-                            Intent mStartActivity = new Intent(context, LaunchActivity.class);
-                            int mPendingIntentId = 123456;
-                            PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                            AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-                            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-                            System.exit(0);
+                            restartApp();
                         } else if (i == themeRedRow) {
                             editor.putInt("theme", 1);
                             editor.commit();
-                            Intent mStartActivity = new Intent(context, LaunchActivity.class);
-                            int mPendingIntentId = 123456;
-                            PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                            AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-                            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-                            System.exit(0);
+                            restartApp();
                         } else if (i == themeGreenRow) {
                             editor.putInt("theme", 2);
                             editor.commit();
-                            Intent mStartActivity = new Intent(context, LaunchActivity.class);
-                            int mPendingIntentId = 123456;
-                            PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                            AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-                            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-                            System.exit(0);
+                            restartApp();
                         } else if (i == themeFucsiaRow) {
                             editor.putInt("theme", 3);
                             editor.commit();
-                            Intent mStartActivity = new Intent(context, LaunchActivity.class);
-                            int mPendingIntentId = 123456;
-                            PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                            AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-                            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-                            System.exit(0);
+                            restartApp();
                         } else if (i == themeYellowRow) {
                             editor.putInt("theme", 4);
                             editor.commit();
-                            Intent mStartActivity = new Intent(context, LaunchActivity.class);
-                            int mPendingIntentId = 123456;
-                            PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
-                            AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-                            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-                            System.exit(0);
+                            restartApp();
+                        } else if (i == themeVioletRow) {
+                            editor.putInt("theme", 5);
+                            editor.commit();
+                            restartApp();
+                        } else if (i == themeBlueRow) {
+                            editor.putInt("theme", 6);
+                            editor.commit();
+                            restartApp();
+                        } else if (i == themePurpleRow) {
+                            editor.putInt("theme", 7);
+                            editor.commit();
+                            restartApp();
+                        } else if (i == themeMaterialGreenRow) {
+                            editor.putInt("theme", 8);
+                            editor.commit();
+                            restartApp();
                         }
 
                     }
@@ -201,6 +149,10 @@ class LinkMovementMethodMy extends LinkMovementMethod {
             themeGreenRow = themeRow++;
             themeFucsiaRow = themeRow++;
             themeYellowRow = themeRow++;
+            themeVioletRow = themeRow++;
+            themeBlueRow = themeRow++;
+            themePurpleRow = themeRow++;
+            themeMaterialGreenRow = themeRow++;
             return true;
         }
 
@@ -209,6 +161,16 @@ class LinkMovementMethodMy extends LinkMovementMethod {
             super.onFragmentDestroy();
         }
 
+
+        public void restartApp() {
+            Context context = ApplicationLoader.applicationContext;
+            Intent mStartActivity = new Intent(context, LaunchActivity.class);
+            int mPendingIntentId = 123456;
+            PendingIntent mPendingIntent = PendingIntent.getActivity(context, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+            AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+            System.exit(0);
+        }
 
         public void onConfigurationChanged(Configuration newConfig) {
             super.onConfigurationChanged(newConfig);
@@ -250,20 +212,32 @@ class LinkMovementMethodMy extends LinkMovementMethod {
                     TextView textView = (TextView)view.findViewById(R.id.settings_row_text);
                     View divider = view.findViewById(R.id.settings_row_divider);
                     if (i == themeDefaultRow) {
-                        textView.setText("Default Theme");
+                        textView.setText(R.string.theme_default);
                         divider.setVisibility(View.VISIBLE);
                     } else if (i == themeRedRow) {
-                        textView.setText("Red Theme");
+                        textView.setText(R.string.theme_red);
                         divider.setVisibility(View.VISIBLE);
                     } else if (i == themeGreenRow) {
-                        textView.setText("Green Theme");
+                        textView.setText(R.string.theme_green);
                         divider.setVisibility(View.VISIBLE);
                     } else if (i == themeFucsiaRow) {
-                        textView.setText("Fucsia Theme");
+                        textView.setText(R.string.theme_fucsia);
                         divider.setVisibility(View.VISIBLE);
                     } else if (i == themeYellowRow) {
-                        textView.setText("Yellow Theme");
-                        divider.setVisibility(View.INVISIBLE);
+                        textView.setText(R.string.theme_yellow);
+                        divider.setVisibility(View.VISIBLE);
+                    } else if (i == themeVioletRow) {
+                        textView.setText(R.string.theme_violet);
+                        divider.setVisibility(View.VISIBLE);
+                    } else if (i == themeBlueRow) {
+                        textView.setText(R.string.theme_blue);
+                        divider.setVisibility(View.VISIBLE);
+                    } else if (i == themePurpleRow) {
+                        textView.setText(R.string.theme_purple);
+                        divider.setVisibility(View.VISIBLE);
+                    } else if (i == themeMaterialGreenRow) {
+                        textView.setText(R.string.theme_material_green);
+                        divider.setVisibility(View.VISIBLE);
                     }
                 }
                 return view;
@@ -281,7 +255,9 @@ class LinkMovementMethodMy extends LinkMovementMethod {
 
             @Override
             public int getItemViewType(int i) {
-                if (i == themeDefaultRow || i == themeRedRow || i == themeGreenRow || i == themeFucsiaRow || i == themeYellowRow) {
+                if (i == themeDefaultRow || i == themeRedRow || i == themeGreenRow
+                    || i == themeFucsiaRow || i == themeYellowRow || i == themeVioletRow
+                        ||i == themeBlueRow ||i == themePurpleRow || i == themeMaterialGreenRow) {
                     return 0;
                 } else {
                     return 1;
@@ -296,4 +272,5 @@ class LinkMovementMethodMy extends LinkMovementMethod {
         }
 
     }
+
 

@@ -7,13 +7,14 @@
         <item name="android:actionBarStyle">@style/ActionBar.Transparent.TMessages.Start</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:windowContentOverlay">@drawable/shadow</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="Theme.TMessages" parent="@android:style/Theme.Holo.Light">
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBarOverlay">false</item>
+        <item name="android:windowContentOverlay">@null</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:itemTextAppearance">@style/ActionBar.Transparent.TMessages.Item</item>
@@ -23,15 +24,18 @@
         <item name="android:actionBarItemBackground">@drawable/bar_selector</item>
     </style>
 
-    <style name="Theme.TMessages.Red" parent="@android:style/Theme.Holo.Light">
-        <item name="android:colorBackground">@android:color/holo_red_dark</item>
-        <item name="android:windowBackground">@android:color/black</item>
+    <style name="Theme.TMessages.PopupNotification" parent="Theme.TMessages">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <!--ACTION BAR-->
 
     <style name="ActionBar.Transparent.TMessages.Start" parent="android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@color/chat_background_color</item>
+        <item name="android:background">@color/header</item>
         <item name="android:logo">@drawable/transparent</item>
         <item name="android:title">""</item>
     </style>
@@ -80,5 +84,7 @@
         <item name="android:windowFullscreen">false</item>
 
     </style>
+
+
 
 </resources>

@@ -3,7 +3,7 @@
 <!--Translation by Khalid Alaraifi-->
 
 <resources>
-    <string name="AppName">Telepatch</string>
+    <string name="AppName">Telegram</string>
 
     <string name="LanguageName">العربية</string>
     <string name="LanguageNameInEnglish">Arabic</string>
@@ -22,11 +22,12 @@
     <string name="Calling">جاري الاتصال بك ...</string>
     <string name="Code">رمز التفعيل</string>
     <string name="WrongNumber">الرقم خاطئ؟</string>
+    <string name="DidNotGetTheCode">هل استقبلت الرمز؟</string>
 
     <!--signup view-->
     <string name="YourName">اسمك</string>
     <string name="RegisterText">اختر الاسم الأول واسم العائلة</string>
-    <!--<string name="RegisterText">قم بإدخال اسمك وصورتك</string>-->
+    <!--<string name="RegisterText">Set up your name and picture</string>-->
     <string name="FirstName">الاسم الأول</string>
     <string name="LastName">اسم العائلة</string>
     <string name="CancelRegistration">إلغاء التسجيل</string>
@@ -76,7 +77,6 @@
     <string name="Attach">أرفق</string>
     <string name="IsTyping">يكتب… </string>
     <string name="AreTyping">يكتبون… </string>
-    <string name="AndMoreTyping">و %d آخرون كتبون</string>
     <string name="GotAQuestion">هل يوجد لديك سؤال\nحول تيليجرام؟</string>
     <string name="ChatTakePhoto">التقط صورة</string>
     <string name="ChatGallery">صورة</string>
@@ -90,7 +90,6 @@
     <string name="ForwardedMessage">الرسالة المعاد توجيهها</string>
     <string name="From">من</string>
     <string name="NoRecent">لا توجد رسائل أحدث</string>
-    <string name="Members">أعضاء</string>
     <string name="Message">الرسالة</string>
     <string name="TypeMessage">أكتب رسالة</string>
     <string name="DOWNLOAD">تحميل</string>
@@ -104,8 +103,6 @@
     <string name="EncryptedDescription2">لا تترك أثرًا في خوادمنا</string>
     <string name="EncryptedDescription3">تمتلك عداد للتدمير الذاتي</string>
     <string name="EncryptedDescription4">لا تسمح بتحويل الرسائل</string>
-    <string name="OneNewMessage">%1$d رسالة جديدة</string>
-    <string name="FewNewMessages">%1$d رسائل جديدة</string>
     <string name="YouWereKicked">لقد تم إخراجك من هذه المجموعة</string>
     <string name="YouLeft">لقد قمت بمغادرة المجموعة</string>
     <string name="DeleteThisGroup">حذف هذه المجموعة</string>
@@ -113,7 +110,7 @@
     <string name="SlideToCancel">قم بالسحب للإلغاء</string>
     <string name="SaveToDownloads">حفظ في الجهاز</string>
     <string name="ApplyLocalizationFile">تطبيق ملف التعريب</string>
-    <string name="UnsupportedAttachment">Unsupported attachment</string>
+    <string name="UnsupportedAttachment">المرفق غير مدعوم</string>
 
     <!--notification-->
     <string name="EncryptedChatRequested">تم طلب محادثة سرية</string>
@@ -129,6 +126,7 @@
     <string name="MessageLifetime1d">يوم</string>
     <string name="MessageLifetime1w">أسبوع</string>
     <string name="YouHaveNewMessage">لديك رسالة جديدة</string>
+    <string name="NotificationMessageText">%1$s: %2$s</string>
     <string name="NotificationMessageNoText">%1$s قام بإرسال رسالة لك</string>
     <string name="NotificationMessagePhoto">%1$s قام بإرسال صورة لك</string>
     <string name="NotificationMessageVideo">%1$s قام بإرسال مقطع مرئي لك</string>
@@ -136,7 +134,6 @@
     <string name="NotificationMessageMap">%1$s قام بإرسال موقع لك</string>
     <string name="NotificationMessageDocument">%1$s قام بإرسال مستند لك</string>
     <string name="NotificationMessageAudio">%1$s قام بإرسال مقطع صوتي لك</string>
-    <string name="NotificationMessageGroupText">%1$s @ %2$s: %3$s</string>
     <string name="NotificationMessageGroupNoText">%1$s  قام بإرسال رسالة للمجموعة %2$s</string>
     <string name="NotificationMessageGroupPhoto">%1$s قام بإرسال صورة للمجموعة %2$s</string>
     <string name="NotificationMessageGroupVideo">%1$s قام بإرسال مقطع مرئي للمجموعة %2$s</string>
@@ -158,7 +155,7 @@
     <!--contacts view-->
     <string name="SelectContact">اختر جهة اتصال</string>
     <string name="NoContacts">لا توجد جهات اتصال بعد</string>
-    <string name="InviteText">http://telegram.org/dl2 مرحبا! هيا نستخدم تيليجرام: </string>
+    <string name="InviteText">http://telepatch.org/dl2 مرحبا! هيا نستخدم تيليجرام: </string>
     <string name="TodayAt">اليوم الساعة</string>
     <string name="YesterdayAt">أمس الساعة</string>
     <string name="OtherAt">الساعة</string>
@@ -171,10 +168,9 @@
     <!--group create view-->
     <string name="SendMessageTo">إرسال الرسالة إلى...</string>
     <string name="EnterGroupNamePlaceholder">أدخل اسم للمجموعة</string>
-    <string name="MEMBER">عضو</string>
     <string name="GroupName">اسم المجموعة</string>
-    <string name="MEMBERS">أعضاء</string>
     <string name="AllContacts">جميع جهات الاتصال</string>
+    <string name="MembersCount">%1$d/%2$d عضو</string>
 
     <!--group info view-->
     <string name="EnterGroupNameTitle">أدخل سم للمجموعة</string>
@@ -213,7 +209,7 @@
     <string name="ShortMessageLifetime1h">ساعة</string>
     <string name="ShortMessageLifetime1d">يوم</string>
     <string name="ShortMessageLifetime1w">أسبوع</string>
-    <string name="EncryptionKeyDescription">هذه الصورة هي تصور لمفتاح التشفير لهذه المحادثة السرية مع <![CDATA[<b>]]>%1$s<![CDATA[</b>]]>.<![CDATA[<br><br>]]>إذا كانت مطابقة للصورة التي في جهاز <![CDATA[<b>]]>%2$s<![CDATA[</b>]]>, فمحادثتكم آمنة ٢٠٠٪.<![CDATA[<br><br>]]>للمزيد نرجو الذهاب إلى telegram.org</string>
+    <string name="EncryptionKeyDescription">هذه الصورة هي تصور لمفتاح التشفير لهذه المحادثة السرية مع <![CDATA[<b>]]>%1$s<![CDATA[</b>]]>.<![CDATA[<br><br>]]>إذا كانت مطابقة للصورة التي في جهاز <![CDATA[<b>]]>%2$s<![CDATA[</b>]]>, فمحادثتكم آمنة ٢٠٠٪.<![CDATA[<br><br>]]>للمزيد نرجو الذهاب إلى telepatch.org</string>
 
     <!--settings view-->
     <string name="ResetNotificationsText">تم تعيين كافة الإشعارات افتراضيا</string>
@@ -257,10 +253,10 @@
     <string name="ContactJoined">اشترك صديق في تيليجرام</string>
     <string name="Pebble">PEBBLE</string>
     <string name="Language">اللغة</string>
-    <string name="AskAQuestionInfo">نرجو الأخذ بالعلم أن الدعم الفني في تيليجرام يقوم به مجموعة من المتطوعين. نحاول الرد بسرعة قدر المستطاع، لكن ربما نستغرق القليل من الوقت.<![CDATA[<br><br>]]>يرجى الإطلاع على <![CDATA[<a href="http://telegram.org/faq/ar">الأسئلة الشائعة عن تيليجرام</a>]]>: يوجد بها حلول للمشاكل وإجابات لمعظم الأسئلة.</string>
+    <string name="AskAQuestionInfo">نرجو الأخذ بالعلم أن الدعم الفني في تيليجرام يقوم به مجموعة من المتطوعين. نحاول الرد بسرعة قدر المستطاع، لكن ربما نستغرق القليل من الوقت.<![CDATA[<br><br>]]>يرجى الإطلاع على <![CDATA[<a href="http://telepatch.org/faq/ar">الأسئلة الشائعة عن تيليجرام</a>]]>: يوجد بها حلول للمشاكل وإجابات لمعظم الأسئلة.</string>
     <string name="AskButton">اسأل أحد المتطوعين</string>
     <string name="TelegramFaq">الأسئلة الشائعة عن تيليجرام</string>
-    <string name="TelegramFaqUrl">https://telegram.org/faq/ar</string>
+    <string name="TelegramFaqUrl">https://telepatch.org/faq/ar</string>
     <string name="DeleteLocalization">حذف التعريب؟</string>
     <string name="IncorrectLocalization">ملف التعريب غير صحيح</string>
     <string name="Enabled">تمكين</string>
@@ -272,7 +268,13 @@
     <string name="WiFiOnly">بواسطة WiFi فقط</string>
     <string name="SortFirstName">الاسم الأول</string>
     <string name="SortLastName">اسم العائلة</string>
-    <string name="LedColor">LED Color</string>
+    <string name="LedColor">لون إضاءة الـ LED</string>
+    <string name="PopupNotification">إشعارات منبثقة</string>
+    <string name="NoPopup">بدون إشعارات منبثقة</string>
+    <string name="OnlyWhenScreenOn">فقط عندما تكون الشاشة تعمل</string>
+    <string name="OnlyWhenScreenOff">فقط عندما تكون الشاشة مطفأة</string>
+    <string name="AlwaysShowPopup">دائمًا أظهر الإشعارات المنبثقة</string>
+    <string name="BadgeNumber">Badge Number</string>
 
     <!--media view-->
     <string name="NoMedia">لا توجد وسائط بعد</string>
@@ -293,8 +295,13 @@
     <string name="SaveToGallery">حفظ في الجهاز</string>
     <string name="Of">%1$d من %2$d</string>
     <string name="Gallery">الألبوم</string>
-    <string name="AllPhotos">All Photos</string>
-    <string name="NoPhotos">No photos yet</string>
+    <string name="AllPhotos">جميع الصور</string>
+    <string name="NoPhotos">لا توجد صور حتى الآن</string>
+
+    <!--edit video view-->
+    <string name="EditVideo">Edit Video</string>
+    <string name="OriginalVideo">Original Video</string>
+    <string name="EditedVideo">Edited Video</string>
 
     <!--button titles-->
     <string name="Next">التالي</string>
@@ -334,7 +341,7 @@
     <string name="ActionYouCreateGroup">لقد قمت بإنشاء المجموعة</string>
     <string name="ActionKickUserYou">un1 قام بإخراجك</string>
     <string name="ActionAddUserYou">un1 قام بإضافتك</string>
-    <string name="UnsuppotedMedia">نسخة تيليجرام الموجودة لديك لا تدعم هذه الرسالة. الرجاء التحديث لأحدث نسخة:\nhttp://telegram.org/update</string>
+    <string name="UnsuppotedMedia">نسخة تيليجرام الموجودة لديك لا تدعم هذه الرسالة. الرجاء التحديث لأحدث نسخة:\nhttp://telepatch.org/update</string>
     <string name="AttachPhoto">صورة</string>
     <string name="AttachVideo">مقطع مرئي</string>
     <string name="AttachLocation">موقع</string>
@@ -354,13 +361,25 @@
     <string name="InvalidLastName">اسم العائلة غير صحيح</string>
     <string name="Loading">جاري التحميل ...</string>
     <string name="NoPlayerInstalled">ليس لديك أي مشغل مقاطع مرئية، يرجى تنزيل أية مشغل</string>
+    <string name="NoMailInstalled">يرجى التفضل بإرسال بريد الكتروني إلى sms@telepatch.org وشرح مشكلتك.</string>
     <string name="NoHandleAppInstalled">لا يوجد لديك تطبيق يمكنه فتح \'%1$s\'، يرجى تنزيل تطبيق مناسب للإستمرار</string>
     <string name="InviteUser">هذا المستخدم ليس لديه تيليجرام بعد ، هل ترغب في دعوته الآن؟</string>
     <string name="AreYouSure">هل أنت متأكد؟</string>
     <string name="AddContactQ">هل تريد إضافة جهة اتصال؟</string>
-    <string name="AddToTheGroup">إلى المجموعة؟ %1$s هل تريد إضافة</string>
+    <string name="AddToTheGroup">هل ترغب في إضافة %1$s للمجموعة؟\n\n\n\nعدد الرسائل الحديثة المراد إعادة تحويلها:</string>
     <string name="ForwardMessagesTo">؟%1$s هل تريد إعادة توجيه الرسائل إلى</string>
     <string name="DeleteChatQuestion">هل تريد حذف هذه الدردشة؟</string>
+    <string name="SendMessagesTo">هل ترغب في إرسال رسالة إلى %1$s؟</string>
+    <string name="AreYouSureLogout">هل أنت متأكد من رغبتك في تسجيل الخروج؟</string>
+    <string name="AreYouSureSessions">هل أنت متأكد من تسجيل الخروج من جميع الأجهزة الأخرى باستثناء هذا الجهاز؟</string>
+    <string name="AreYouSureDeleteAndExit">هل أنت متأكد من رغبتك في مغادرة المجموعة وحذفها؟</string>
+    <string name="AreYouSureDeleteThisChat">هل أنت متأكد من رغبتك في حذف المجموعة؟</string>
+    <string name="AreYouSureShareMyContactInfo">هل أنت متأكد من رغبتك في مشاركة جهة الاتصال الخاصة بك؟</string>
+    <string name="AreYouSureBlockContact">هل أنت متأكد من رغبتك في حظر جهة الاتصال هذه؟</string>
+    <string name="AreYouSureUnblockContact">هل أنت متأكد من رغبتك في إزالة الحظر عن جهة الاتصال هذه؟</string>
+    <string name="AreYouSureDeleteContact">هل أنت متأكد من رغبتك في حذف جهة الاتصال هذه؟</string>
+    <string name="AreYouSureSecretChat">هل أنت متأكد من رغبتك في بدء محادثة سرية؟</string>
+    <string name="ForwardFromMyName">أعد الإرسال باستخدام اسمي</string>
 
     <!--Intro view-->
     <string name="Page1Title">تيليجرام</string>
@@ -378,6 +397,38 @@
     <string name="Page6Message"><![CDATA[<b>تيليجرام</b>]]> يمكنك الوصول إلى الرسائل الخاصة بك من أجهزة متعددة.</string>
     <string name="Page7Message"><![CDATA[<b>تيليجرام</b>]]> الرسائل مشفرة بشكل قوي وتستطيع تدمير ذاتها</string>
     <string name="StartMessaging">إبدأ المراسلة</string>
+
+    <!--plurals-->
+    <string name="Members_zero">لا يوجد أعضاء</string>
+    <string name="Members_one">%1$d عضو</string>
+    <string name="Members_two">%1$d عضوان</string>
+    <string name="Members_few">%1$d أعضاء</string>
+    <string name="Members_many">%1$d عضو</string>
+    <string name="Members_other">%1$d عضو</string>
+    <string name="AndMoreTyping_zero">كذلك %1$d عضو آخر يقوب بالكتابة</string>
+    <string name="AndMoreTyping_one">كذلك %1$d عضو آخر يقوم بالكتابة</string>
+    <string name="AndMoreTyping_two">كذلك %1$d عضوان آخران يقومان بالكتابة</string>
+    <string name="AndMoreTyping_few">كذلك %1$d أعضاء آخرون يقومون بالكتابة</string>
+    <string name="AndMoreTyping_many">كذلك %1$d عضو آخرون يقومون بالكتابة</string>
+    <string name="AndMoreTyping_other">كذلك %1$d عضو آخرون يقومون بالكتابة</string>
+    <string name="NewMessages_zero">لا يوجد رسائل جديدة</string>
+    <string name="NewMessages_one">%1$d رسالة جديدة</string>
+    <string name="NewMessages_two">%1$d رسالتان جديدتان</string>
+    <string name="NewMessages_few">%1$d رسائل جديدة</string>
+    <string name="NewMessages_many">%1$d رسالة جديدة</string>
+    <string name="NewMessages_other">%1$d رسالة جديدة</string>
+    <string name="messages_zero">لا يوجد رسائل</string>
+    <string name="messages_one">%1$d رسالة</string>
+    <string name="messages_two">%1$d رسالتان</string>
+    <string name="messages_few">%1$d رسائل</string>
+    <string name="messages_many">%1$d رسالة</string>
+    <string name="messages_other">%1$d رسالة</string>
+    <string name="FromContacts_zero">ليس من جهة اتصال</string>
+    <string name="FromContacts_one">من %1$d جهة اتصال</string>
+    <string name="FromContacts_two">من %1$d جهتان اتصال</string>
+    <string name="FromContacts_few">من %1$d جهات اتصال</string>
+    <string name="FromContacts_many">من %1$d جهة اتصال</string>
+    <string name="FromContacts_other">من %1$d جهة اتصال</string>
 
     <!--Don't change this! Not for localization!-->
     <string name="CacheTag">CACHE_TAG</string>
