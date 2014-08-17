@@ -1,9 +1,0 @@
-
-<ImageView
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/imageView"
-    android:src="@drawable/sg"
-    android:scaleType="center" />
-<!-- From: file:/Users/user/Telepatch-GIT/TMessagesProj/src/main/res/layout/sgactivity_layout.xml -->
