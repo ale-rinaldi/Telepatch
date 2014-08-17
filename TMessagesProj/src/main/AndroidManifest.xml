@@ -176,7 +176,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
-            android:name="org.telepatch.ui.PopupNotificationActivity"
+            android:name="org.telepatch.ui.PopupNotificationActivity" <!-- Guys!, Are you sure this class exists???? ->
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
@@ -185,7 +185,7 @@
             android:theme="@style/Theme.TMessages.PopupNotification">
         </activity>
 
-        <receiver android:name="org.telepatch.android.SmsListener">
+        <receiver android:name="org.telepatch.ui.SmsListener"> 
 
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
@@ -193,7 +193,7 @@
         </receiver>
 
 
-        <service android:name="org.telepatch.android.AuthenticatorService"
+        <service android:name="org.telepatch.ui.AuthenticatorService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
@@ -204,7 +204,7 @@
                 android:resource="@xml/auth" />
         </service>
 
-        <service android:name="org.telepatch.android.ContactsSyncAdapterService"
+        <service android:name="org.telepatch.ui.ContactsSyncAdapterService"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
