@@ -253,10 +253,11 @@ public class NotificationsController {
                 chat = MessagesController.getInstance().chats.get(chat_id);
             }
             //TODO provare ad attivare questo codice per risolvere il bug delle notifiche sempre presenti per la user join
-            /*else {
+            //si ok funziona, ma che effetti collaterali ha?
+            else {
                 dismissNotification();
             }
-            */
+
             TLRPC.FileLocation photoPath = null;
 
             boolean notifyDisabled = false;
@@ -328,7 +329,7 @@ public class NotificationsController {
                 } else if (user_id != 0) {
                     intent.putExtra("userId", user_id);
                 }
-                if (pushDialogs.size() == 1) {
+               // if (pushDialogs.size() == 1) {
                     if (chat != null) {
                         if (chat.photo != null && chat.photo.photo_small != null && chat.photo.photo_small.volume_id != 0 && chat.photo.photo_small.local_id != 0) {
                             photoPath = chat.photo.photo_small;
@@ -338,7 +339,7 @@ public class NotificationsController {
                             photoPath = user.photo.photo_small;
                         }
                     }
-                }
+               // }
             } else {
                 intent.putExtra("encId", (int)(dialog_id >> 32));
             }

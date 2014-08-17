@@ -1,11 +1,7 @@
 package org.telepatch.ui;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Point;
-import android.os.Bundle;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -58,9 +54,10 @@ public class PopupMainActivity extends LaunchActivity {
             PhotoViewer.getInstance().closePhoto(true);
         } else {
             overridePendingTransition(android.R.anim.bounce_interpolator, 0);
-            finish();
+            super.onBackPressed();
             overridePendingTransition(android.R.anim.decelerate_interpolator, 0);
         }
+
     }
 
 

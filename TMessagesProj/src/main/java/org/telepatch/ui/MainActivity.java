@@ -49,8 +49,8 @@ public class MainActivity extends Activity {
             }
 
             prepareExtras(getIntent(), start);
-            startActivity(start);
             finish();
+            startActivity(start);
         } else {
             Intent i = new Intent(this, PasswordRequestActivity.class);
             i.putExtra("isFromMain", true);

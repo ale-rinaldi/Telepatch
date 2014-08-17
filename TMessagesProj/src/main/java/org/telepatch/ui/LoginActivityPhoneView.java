@@ -21,9 +21,10 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.telepatch.android.AndroidUtilities;
 import org.telepatch.PhoneFormat.PhoneFormat;
 import org.telepatch.messenger.BuildVars;
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.TLObject;
 import org.telepatch.messenger.TLRPC;
 import org.telepatch.messenger.ConnectionsManager;
@@ -250,10 +251,10 @@ public class LoginActivityPhoneView extends SlideView implements AdapterView.OnI
         }
 
         if (codeField.length() != 0) {
-            Utilities.showKeyboard(phoneField);
+            AndroidUtilities.showKeyboard(phoneField);
             phoneField.requestFocus();
         } else {
-            Utilities.showKeyboard(codeField);
+            AndroidUtilities.showKeyboard(codeField);
             codeField.requestFocus();
         }
         phoneField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -389,7 +390,7 @@ public class LoginActivityPhoneView extends SlideView implements AdapterView.OnI
                     }
                 });
             }
-        }, null, true, RPCRequest.RPCRequestClassGeneric | RPCRequest.RPCRequestClassFailOnServerErrors | RPCRequest.RPCRequestClassWithoutLogin);
+        }, true, RPCRequest.RPCRequestClassGeneric | RPCRequest.RPCRequestClassFailOnServerErrors | RPCRequest.RPCRequestClassWithoutLogin | RPCRequest.RPCRequestClassTryDifferentDc | RPCRequest.RPCRequestClassEnableUnauthorized);
     }
 
     @Override

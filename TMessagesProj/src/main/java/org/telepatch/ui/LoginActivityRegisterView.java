@@ -17,13 +17,13 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.TLObject;
 import org.telepatch.messenger.TLRPC;
 import org.telepatch.messenger.ConnectionsManager;
-import org.telepatch.messenger.ContactsController;
-import org.telepatch.messenger.MessagesController;
-import org.telepatch.messenger.MessagesStorage;
+import org.telepatch.android.ContactsController;
+import org.telepatch.android.MessagesController;
+import org.telepatch.android.MessagesStorage;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.RPCRequest;
 import org.telepatch.messenger.UserConfig;
@@ -184,7 +184,7 @@ public class LoginActivityRegisterView extends SlideView {
                     }
                 });
             }
-        }, null, true, RPCRequest.RPCRequestClassGeneric | RPCRequest.RPCRequestClassWithoutLogin);
+        }, true, RPCRequest.RPCRequestClassGeneric | RPCRequest.RPCRequestClassWithoutLogin);
     }
 
     @Override

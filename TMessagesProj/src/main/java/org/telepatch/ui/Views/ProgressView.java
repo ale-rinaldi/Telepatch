@@ -11,7 +11,7 @@ package org.telepatch.ui.Views;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import org.telepatch.messenger.Utilities;
+import org.telepatch.android.AndroidUtilities;
 
 public class ProgressView {
     private Paint innerPaint;
@@ -20,7 +20,7 @@ public class ProgressView {
     public float currentProgress = 0;
     public int width;
     public int height;
-    public float progressHeight = Utilities.dpf(2.0f);
+    public float progressHeight = AndroidUtilities.dpf(2.0f);
 
     public ProgressView() {
         innerPaint = new Paint();

@@ -20,8 +20,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.telepatch.android.AndroidUtilities;
 import org.telepatch.messenger.FileLog;
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.Utilities;
 import org.telepatch.ui.Adapters.BaseFragmentAdapter;
@@ -86,7 +87,7 @@ public class LanguageSelectActivity extends BaseFragment {
                     if (text.length() != 0) {
                         searchWas = true;
                         if (listView != null) {
-                            listView.setPadding(Utilities.dp(16), listView.getPaddingTop(), Utilities.dp(16), listView.getPaddingBottom());
+                            listView.setPadding(AndroidUtilities.dp(16), listView.getPaddingTop(), AndroidUtilities.dp(16), listView.getPaddingBottom());
                             listView.setAdapter(searchListViewAdapter);
                             if(android.os.Build.VERSION.SDK_INT >= 11) {
                                 listView.setFastScrollAlwaysVisible(false);
@@ -99,6 +100,7 @@ public class LanguageSelectActivity extends BaseFragment {
                         }
                     }
                 }
+
             });
 
             fragmentView = inflater.inflate(R.layout.language_select_layout, container, false);
@@ -176,7 +178,7 @@ public class LanguageSelectActivity extends BaseFragment {
                 @Override
                 public void onScrollStateChanged(AbsListView absListView, int i) {
                     if (i == SCROLL_STATE_TOUCH_SCROLL && searching && searchWas) {
-                        Utilities.hideKeyboard(getParentActivity().getCurrentFocus());
+                        AndroidUtilities.hideKeyboard(getParentActivity().getCurrentFocus());
                     }
                 }
 

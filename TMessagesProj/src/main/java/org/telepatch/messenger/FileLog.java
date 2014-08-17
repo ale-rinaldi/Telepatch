@@ -11,6 +11,7 @@ package org.telepatch.messenger;
 import android.net.Uri;
 import android.util.Log;
 
+import org.telepatch.android.FastDateFormat;
 import org.telepatch.ui.ApplicationLoader;
 
 import java.io.File;

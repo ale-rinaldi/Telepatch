@@ -22,11 +22,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.telepatch.messenger.ConnectionsManager;
-import org.telepatch.messenger.LocaleController;
-import org.telepatch.messenger.MessagesStorage;
+import org.telepatch.android.LocaleController;
+import org.telepatch.android.MessagesStorage;
 import org.telepatch.messenger.TLRPC;
 import org.telepatch.messenger.FileLog;
-import org.telepatch.messenger.MessagesController;
+import org.telepatch.android.MessagesController;
 import org.telepatch.messenger.NotificationCenter;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.Utilities;
@@ -407,11 +407,7 @@ public class GroupCreateFinalActivity extends BaseFragment implements Notificati
                 convertView.setBackgroundColor(0xffffffff);
             }
             TextView textView = (TextView)convertView.findViewById(R.id.settings_section_text);
-            if (selectedContacts.size() == 1) {
-                textView.setText(selectedContacts.size() + " " + LocaleController.getString("MEMBER", R.string.MEMBER));
-            } else {
-                textView.setText(selectedContacts.size() + " " + LocaleController.getString("MEMBERS", R.string.MEMBERS));
-            }
+            textView.setText(LocaleController.formatPluralString("Members", selectedContacts.size()).toUpperCase());
             return convertView;
         }
     }

@@ -14,10 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.TLRPC;
-import org.telepatch.messenger.ContactsController;
-import org.telepatch.messenger.MessagesController;
+import org.telepatch.android.ContactsController;
+import org.telepatch.android.MessagesController;
 import org.telepatch.messenger.R;
 import org.telepatch.ui.Cells.ChatOrUserCell;
 import org.telepatch.ui.Views.SectionedBaseAdapter;

@@ -12,12 +12,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
+import org.telepatch.android.MessagesStorage;
 import org.telepatch.ui.ApplicationLoader;
 
 import java.io.File;
 
 public class UserConfig {
-    protected static TLRPC.User currentUser;
+    private static TLRPC.User currentUser;
     public static boolean registeredForPush = false;
     public static boolean registeredForInternalPush = false;
     public static String pushString = "";
@@ -197,6 +198,5 @@ public class UserConfig {
         contactsVersion = 1;
         saveIncomingPhotos = false;
         saveConfig(true);
-        MessagesController.getInstance().deleteAllAppAccounts();
     }
 }

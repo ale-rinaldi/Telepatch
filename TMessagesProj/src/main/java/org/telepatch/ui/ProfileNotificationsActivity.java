@@ -1,4 +1,4 @@
-/*org.telepatch
+/*
  * This is the source code of Telegram for Android v. 1.4.x.
  * It is licensed under GNU GPL v. 2 or later.
  * You should have received a copy of the license in this archive (see LICENSE).
@@ -26,15 +26,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.telepatch.android.MessagesController;
+import org.telepatch.messenger.ConnectionsManager;
 import org.telepatch.messenger.FileLog;
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.LocaleController;
+import org.telepatch.messenger.NotificationCenter;
 import org.telepatch.messenger.R;
+import org.telepatch.messenger.RPCRequest;
+import org.telepatch.messenger.TLObject;
+import org.telepatch.messenger.TLRPC;
 import org.telepatch.ui.Adapters.BaseFragmentAdapter;
 import org.telepatch.ui.Views.ActionBar.ActionBarLayer;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
 import org.telepatch.ui.Views.ColorPickerView;
 
-public class ProfileNotificationsActivity extends BaseFragment {
+public class ProfileNotificationsActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private ListView listView;
     private long dialog_id;
@@ -51,17 +57,19 @@ public class ProfileNotificationsActivity extends BaseFragment {
     }
 
     @Override
-    public void onFragmentDestroy() {
-        super.onFragmentDestroy();
-    }
-
-    @Override
     public boolean onFragmentCreate() {
         settingsNotificationsRow = rowCount++;
         settingsVibrateRow = rowCount++;
         settingsLedRow = rowCount++;
         settingsSoundRow = rowCount++;
+        NotificationCenter.getInstance().addObserver(this, MessagesController.notificationsSettingsUpdated);
         return super.onFragmentCreate();
+    }
+
+    @Override
+    public void onFragmentDestroy() {
+        super.onFragmentDestroy();
+        NotificationCenter.getInstance().removeObserver(this, MessagesController.notificationsSettingsUpdated);
     }
 
     @Override
@@ -111,6 +119,9 @@ public class ProfileNotificationsActivity extends BaseFragment {
                                 editor.commit();
                                 if (listView != null) {
                                     listView.invalidateViews();
+                                }
+                                if (i == settingsNotificationsRow) {
+                                    updateServerNotificationsSettings();
                                 }
                             }
                         });
@@ -211,6 +222,45 @@ public class ProfileNotificationsActivity extends BaseFragment {
         return fragmentView;
     }
 
+    public void updateServerNotificationsSettings() {
+        if ((int)dialog_id == 0) {
+            return;
+        }
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+        TLRPC.TL_account_updateNotifySettings req = new TLRPC.TL_account_updateNotifySettings();
+        req.settings = new TLRPC.TL_inputPeerNotifySettings();
+        req.settings.sound = "default";
+        req.settings.events_mask = 0;
+        req.settings.mute_until = preferences.getInt("notify2_" + dialog_id, 0) != 2 ? 0 : Integer.MAX_VALUE;
+        req.settings.show_previews = preferences.getBoolean("preview_" + dialog_id, true);
+
+        req.peer = new TLRPC.TL_inputNotifyPeer();
+
+        if ((int)dialog_id < 0) {
+            ((TLRPC.TL_inputNotifyPeer)req.peer).peer = new TLRPC.TL_inputPeerChat();
+            ((TLRPC.TL_inputNotifyPeer)req.peer).peer.chat_id = -(int)dialog_id;
+        } else {
+            TLRPC.User user = MessagesController.getInstance().users.get((int)dialog_id);
+            if (user == null) {
+                return;
+            }
+            if (user instanceof TLRPC.TL_userForeign || user instanceof TLRPC.TL_userRequest) {
+                ((TLRPC.TL_inputNotifyPeer)req.peer).peer = new TLRPC.TL_inputPeerForeign();
+                ((TLRPC.TL_inputNotifyPeer)req.peer).peer.access_hash = user.access_hash;
+            } else {
+                ((TLRPC.TL_inputNotifyPeer)req.peer).peer = new TLRPC.TL_inputPeerContact();
+            }
+            ((TLRPC.TL_inputNotifyPeer)req.peer).peer.user_id = (int)dialog_id;
+        }
+
+        ConnectionsManager.getInstance().performRpc(req, new RPCRequest.RPCRequestDelegate() {
+            @Override
+            public void run(TLObject response, TLRPC.TL_error error) {
+
+            }
+        });
+    }
+
     @Override
     public void onActivityResultFragment(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
@@ -244,6 +294,13 @@ public class ProfileNotificationsActivity extends BaseFragment {
                 }
             }
             editor.commit();
+            listView.invalidateViews();
+        }
+    }
+
+    @Override
+    public void didReceivedNotification(int id, Object... args) {
+        if (id == MessagesController.notificationsSettingsUpdated) {
             listView.invalidateViews();
         }
     }

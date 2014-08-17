@@ -19,16 +19,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.AndroidUtilities;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.TLObject;
 import org.telepatch.messenger.TLRPC;
 import org.telepatch.messenger.ConnectionsManager;
-import org.telepatch.messenger.MessagesController;
+import org.telepatch.android.MessagesController;
 import org.telepatch.messenger.NotificationCenter;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.RPCRequest;
 import org.telepatch.messenger.UserConfig;
-import org.telepatch.messenger.Utilities;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
 
 public class SettingsChangeNameActivity extends BaseFragment {
@@ -120,7 +120,7 @@ public class SettingsChangeNameActivity extends BaseFragment {
         boolean animations = preferences.getBoolean("view_animations", true);
         if (!animations) {
             firstNameField.requestFocus();
-            Utilities.showKeyboard(firstNameField);
+            AndroidUtilities.showKeyboard(firstNameField);
         }
     }
 
@@ -143,12 +143,12 @@ public class SettingsChangeNameActivity extends BaseFragment {
             public void run(TLObject response, TLRPC.TL_error error) {
 
             }
-        }, null, true, RPCRequest.RPCRequestClassGeneric);
+        });
     }
 
     @Override
     public void onOpenAnimationEnd() {
         firstNameField.requestFocus();
-        Utilities.showKeyboard(firstNameField);
+        AndroidUtilities.showKeyboard(firstNameField);
     }
 }

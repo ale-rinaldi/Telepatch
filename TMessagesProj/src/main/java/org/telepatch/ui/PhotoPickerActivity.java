@@ -23,14 +23,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import org.telepatch.messenger.LocaleController;
-import org.telepatch.messenger.MediaController;
-import org.telepatch.messenger.MessagesController;
+import org.telepatch.android.AndroidUtilities;
+import org.telepatch.android.LocaleController;
+import org.telepatch.android.MediaController;
+import org.telepatch.android.MessagesController;
 import org.telepatch.messenger.NotificationCenter;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.TLRPC;
-import org.telepatch.messenger.Utilities;
 import org.telepatch.objects.MessageObject;
 import org.telepatch.ui.Adapters.BaseFragmentAdapter;
 import org.telepatch.ui.Views.ActionBar.ActionBarLayer;
@@ -160,6 +159,7 @@ public class PhotoPickerActivity extends BaseFragment implements NotificationCen
                         if (i < 0 || i >= selectedAlbum.photos.size()) {
                             return;
                         }
+                        PhotoViewer.getInstance().setParentActivity(getParentActivity());
                         PhotoViewer.getInstance().openPhotoForSelect(selectedAlbum.photos, i, PhotoPickerActivity.this);
                     }
                 }
@@ -253,7 +253,7 @@ public class PhotoPickerActivity extends BaseFragment implements NotificationCen
                     imageView.getLocationInWindow(coords);
                     PhotoViewer.PlaceProviderObject object = new PhotoViewer.PlaceProviderObject();
                     object.viewX = coords[0];
-                    object.viewY = coords[1] - Utilities.statusBarHeight;
+                    object.viewY = coords[1] - AndroidUtilities.statusBarHeight;
                     object.parentView = listView;
                     object.imageReceiver = imageView.imageReceiver;
                     object.thumb = object.imageReceiver.getBitmap();
@@ -406,7 +406,7 @@ public class PhotoPickerActivity extends BaseFragment implements NotificationCen
             }
         }
         listView.setNumColumns(columnsCount);
-        itemWidth = (getParentActivity().getResources().getDisplayMetrics().widthPixels - ((columnsCount + 1) * Utilities.dp(4))) / columnsCount;
+        itemWidth = (getParentActivity().getResources().getDisplayMetrics().widthPixels - ((columnsCount + 1) * AndroidUtilities.dp(4))) / columnsCount;
         listView.setColumnWidth(itemWidth);
 
         listAdapter.notifyDataSetChanged();

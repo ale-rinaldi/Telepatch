@@ -20,11 +20,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.AndroidUtilities;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.TLRPC;
-import org.telepatch.messenger.MessagesController;
+import org.telepatch.android.MessagesController;
 import org.telepatch.messenger.R;
-import org.telepatch.messenger.Utilities;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
 
 public class ChatProfileChangeNameActivity extends BaseFragment {
@@ -108,14 +108,14 @@ public class ChatProfileChangeNameActivity extends BaseFragment {
         boolean animations = preferences.getBoolean("view_animations", true);
         if (!animations) {
             firstNameField.requestFocus();
-            Utilities.showKeyboard(firstNameField);
+            AndroidUtilities.showKeyboard(firstNameField);
         }
     }
 
     @Override
     public void onOpenAnimationEnd() {
         firstNameField.requestFocus();
-        Utilities.showKeyboard(firstNameField);
+        AndroidUtilities.showKeyboard(firstNameField);
     }
 
     private void saveName() {

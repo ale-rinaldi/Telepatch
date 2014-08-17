@@ -19,5 +19,4 @@
         android:divider="@null"
         android:scrollbars="none"
         android:paddingBottom="16dp"/>
-
 </RelativeLayout>

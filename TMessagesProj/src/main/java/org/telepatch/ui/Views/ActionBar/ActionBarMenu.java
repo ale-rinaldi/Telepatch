@@ -16,7 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import org.telepatch.messenger.Utilities;
+import org.telepatch.android.AndroidUtilities;
 
 public class ActionBarMenu extends LinearLayout {
 
@@ -68,7 +68,7 @@ public class ActionBarMenu extends LinearLayout {
         addView(menuItem);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams)menuItem.getLayoutParams();
         layoutParams.height = FrameLayout.LayoutParams.MATCH_PARENT;
-        layoutParams.width = Utilities.dp(56);
+        layoutParams.width = AndroidUtilities.dp(56);
         menuItem.setLayoutParams(layoutParams);
         menuItem.setOnClickListener(new OnClickListener() {
             @Override

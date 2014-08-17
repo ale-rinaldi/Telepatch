@@ -24,7 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.telepatch.messenger.FileLog;
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.Utilities;
 import org.telepatch.ui.Adapters.BaseFragmentAdapter;

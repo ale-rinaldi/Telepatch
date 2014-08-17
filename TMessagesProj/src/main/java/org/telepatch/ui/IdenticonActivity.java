@@ -20,11 +20,11 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.AndroidUtilities;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.TLRPC;
-import org.telepatch.messenger.MessagesController;
+import org.telepatch.android.MessagesController;
 import org.telepatch.messenger.R;
-import org.telepatch.messenger.Utilities;
 import org.telepatch.ui.Views.ActionBar.ActionBarLayer;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
 import org.telepatch.ui.Views.IdenticonView;
@@ -48,7 +48,7 @@ public class IdenticonActivity extends BaseFragment {
             actionBarLayer.setDisplayHomeAsUpEnabled(true, R.drawable.ic_ab_back);
             actionBarLayer.setBackOverlay(R.layout.updating_state_layout);
             actionBarLayer.setTitle(LocaleController.getString("EncryptionKey", R.string.EncryptionKey));
-            actionBarLayer.setTitleIcon(R.drawable.ic_lock_white, Utilities.dp(4));
+            actionBarLayer.setTitleIcon(R.drawable.ic_lock_white, AndroidUtilities.dp(4));
 
             actionBarLayer.setActionBarMenuOnItemClick(new ActionBarLayer.ActionBarMenuOnItemClick() {
                 @Override

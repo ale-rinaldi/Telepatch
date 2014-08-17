@@ -26,10 +26,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.telepatch.messenger.FileLog;
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.TLRPC;
 import org.telepatch.objects.MessageObject;
-import org.telepatch.messenger.MessagesController;
+import org.telepatch.android.MessagesController;
 import org.telepatch.messenger.NotificationCenter;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.Utilities;
@@ -133,6 +133,9 @@ public class LocationActivity extends BaseFragment implements NotificationCenter
             }
 
             avatarImageView = (BackupImageView)fragmentView.findViewById(R.id.location_avatar_view);
+            if (avatarImageView != null) {
+                avatarImageView.processDetach = false;
+            }
             nameTextView = (TextView)fragmentView.findViewById(R.id.location_name_label);
             distanceTextView = (TextView)fragmentView.findViewById(R.id.location_distance_label);
             View bottomView = fragmentView.findViewById(R.id.location_bottom_view);

@@ -18,8 +18,9 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.telepatch.android.AndroidUtilities;
 import org.telepatch.messenger.FileLog;
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.Utilities;
 import org.telepatch.ui.Adapters.BaseFragmentAdapter;
@@ -147,9 +148,9 @@ public class CountrySelectActivity extends BaseFragment {
                     ViewGroup group = (ViewGroup) listView.getParent();
                     listView.setAdapter(listViewAdapter);
                     if (!LocaleController.isRTL) {
-                        listView.setPadding(Utilities.dp(16), listView.getPaddingTop(), Utilities.dp(30), listView.getPaddingBottom());
+                        listView.setPadding(AndroidUtilities.dp(16), listView.getPaddingTop(), AndroidUtilities.dp(30), listView.getPaddingBottom());
                     } else {
-                        listView.setPadding(Utilities.dp(30), listView.getPaddingTop(), Utilities.dp(16), listView.getPaddingBottom());
+                        listView.setPadding(AndroidUtilities.dp(30), listView.getPaddingTop(), AndroidUtilities.dp(16), listView.getPaddingBottom());
                     }
                     if (android.os.Build.VERSION.SDK_INT >= 11) {
                         listView.setFastScrollAlwaysVisible(true);
@@ -167,7 +168,7 @@ public class CountrySelectActivity extends BaseFragment {
                     if (text.length() != 0) {
                         searchWas = true;
                         if (listView != null) {
-                            listView.setPadding(Utilities.dp(16), listView.getPaddingTop(), Utilities.dp(16), listView.getPaddingBottom());
+                            listView.setPadding(AndroidUtilities.dp(16), listView.getPaddingTop(), AndroidUtilities.dp(16), listView.getPaddingBottom());
                             listView.setAdapter(searchListViewAdapter);
                             if(android.os.Build.VERSION.SDK_INT >= 11) {
                                 listView.setFastScrollAlwaysVisible(false);
@@ -180,6 +181,8 @@ public class CountrySelectActivity extends BaseFragment {
                         }
                     }
                 }
+
+
             });
 
             searching = false;
@@ -228,7 +231,7 @@ public class CountrySelectActivity extends BaseFragment {
                 @Override
                 public void onScrollStateChanged(AbsListView absListView, int i) {
                     if (i == SCROLL_STATE_TOUCH_SCROLL && searching && searchWas) {
-                        Utilities.hideKeyboard(getParentActivity().getCurrentFocus());
+                        AndroidUtilities.hideKeyboard(getParentActivity().getCurrentFocus());
                     }
                 }
 

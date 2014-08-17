@@ -29,8 +29,10 @@ import android.provider.MediaStore;
 import android.support.v4.app.NotificationManagerCompat;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -42,17 +44,18 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import org.apache.http.HttpEntity;
 import org.telepatch.PhoneFormat.PhoneFormat;
 import org.telepatch.android.AndroidUtilities;
+import org.telepatch.android.FutureSearch;
 import org.telepatch.android.LocaleController;
 import org.telepatch.android.MediaController;
 import org.telepatch.android.MessagesStorage;
@@ -80,7 +83,6 @@ import org.telepatch.ui.Views.ActionBar.ActionBarMenuItem;
 import org.telepatch.ui.Views.ActionBar.BaseFragment;
 import org.telepatch.ui.Views.BackupImageView;
 import org.telepatch.ui.Views.ChatActivityEnterView;
-import org.telepatch.ui.Views.EmojiView;
 import org.telepatch.ui.Views.ImageReceiver;
 import org.telepatch.ui.Views.LayoutListView;
 import org.telepatch.ui.Views.MessageActionLayout;
@@ -91,7 +93,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.Semaphore;
+
 
 public class ChatActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, MessagesActivity.MessagesActivityDelegate,
         DocumentSelectActivity.DocumentSelectActivityDelegate, PhotoViewer.PhotoViewerProvider, PhotoPickerActivity.PhotoPickerActivityDelegate,
@@ -106,15 +111,6 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
     private TLRPC.User currentUser;
     private TLRPC.EncryptedChat currentEncryptedChat;
     private ChatAdapter chatAdapter;
-    private EditText messageEditText;
-    private ImageButton sendButton;
-    private PopupWindow emojiPopup;
-    private ImageView emojiButton;
-    private EmojiView emojiView;
-    private View slideText;
-    private boolean keyboardVisible;
-    private int keyboardHeight = 0;
-    private int keyboardHeightLand = 0;
     private View topPanel;
     private View secretChatPlaceholder;
     private View progressView;
@@ -191,17 +187,24 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
     private final static int attach_location = 10;
     private final static int chat_menu_avatar = 11;
     //TODO implemento i controlli di ricerca
-    private boolean searching;
+    private final static int chat_menu_search = 12;
+    private static boolean searching;
+    private ActionBarMenuItem item_search;
+    public static final int dialogsNeedReload = 4;
 
     public ChatActivity(Bundle args) {
         super(args);
     }
+
+
+
 
     @Override
     public boolean onFragmentCreate() {
         final int chatId = arguments.getInt("chat_id", 0);
         final int userId = arguments.getInt("user_id", 0);
         final int encId = arguments.getInt("enc_id", 0);
+
         scrollToTopOnResume = arguments.getBoolean("scrollToTopOnResume", false);
 
         if (chatId != 0) {
@@ -302,6 +305,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
         } else {
             return false;
         }
+
         //TODO qui elimino la notifica una volta entrato nella chat
         NotificationManagerCompat nmc = NotificationManagerCompat.from(ApplicationLoader.applicationContext);
         nmc.cancel((int)dialog_id);
@@ -401,18 +405,25 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
         MediaController.getInstance().stopAudio();
     }
 
-    /*
-    public void searchDialogs(final int id, final String query) {
+    public void searchMessages(final long id, final String query, final FutureSearch future) {
 
         if (query == null) {
             return;
         }
         String tQuery = query.trim().toLowerCase();
-        MessagesController.getInstance().searchMessage(tQuery, dialog_id);
+        MessagesController.getInstance().searchMessage(tQuery, id, future);
 
 
     }
-    */
+
+    public static boolean isSearching() {
+        return searching;
+    }
+
+    public static Context getContext() {
+        return getContext();
+    }
+
     public View createView(LayoutInflater inflater, ViewGroup container) {
         if (fragmentView == null) {
             actionBarLayer.setDisplayHomeAsUpEnabled(true, R.drawable.ic_ab_back);
@@ -572,25 +583,55 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
 
             ActionBarMenuItem item = menu.addItem(chat_menu_attach, R.drawable.ic_ab_attach);
             //TODO aggiungo il pulsante di ricerca
-            /*ActionBarMenuItem item_search = menu.addItem(R.menu.options_menu_inchat, R.drawable.ic_ab_search);
+            item_search = menu.addItem(chat_menu_search, R.drawable.ic_ab_search);
             item_search.setIsSearchField(true).setActionBarMenuItemSearchListener(new ActionBarMenuItem.ActionBarMenuItemSearchListener() {
                 @Override
                 public void onSearchExpand() {
                     searching = true;
-
                 }
 
                 @Override
                 public void onSearchCollapse() {
                     searching = false;
+                    //MessagesController.getInstance().loadMessages(dialog_id, 0, 20, maxMessageId, !cacheEndReaced, minDate, classGuid, false, false);
+                    //NotificationCenter.getInstance().postNotificationName(dialogsNeedReload);
+
                 }
 
                 @Override
-                public void onTextChanged(EditText editText) {
-                        searchDialogs((int)dialog_id, editText.getText().toString());
+                public void onTextChanged(final EditText editText) {
+                    editText.requestFocus();
+                    editText.setOnKeyListener(new View.OnKeyListener() {
+
+                        public boolean onKey(View v, int keyCode, KeyEvent event) {
+                            boolean result = false;
+                            // se l'evento e' un "tasto premuto" sul tasto enter
+                            if ((event.getAction() == KeyEvent.ACTION_DOWN)
+                                    && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+                                //fai azione
+                                if (!editText.getText().toString().equals("")) {
+                                    searchMessages(dialog_id, editText.getText().toString(), new FutureSearch());
+                                    try {
+                                        presentFragment(new SearchResultsActivity(doSearchAndBlock(dialog_id, editText.getText().toString()), getArguments()));
+                                    } catch (ExecutionException e) {
+                                        e.printStackTrace();
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    } catch (NullPointerException e) {
+                                        Log.e("xela92", "NullPointerException. Forse la connessione di rete e' assente? La ricerca è stata annullata. ");
+                                        e.printStackTrace();
+                                    }
+                                }
+                                result = true;
+                            }
+                            return result;
+                        }
+                    });
                 }
+
             });
-            */
+
             item.addSubItem(attach_photo, LocaleController.getString("ChatTakePhoto", R.string.ChatTakePhoto), R.drawable.ic_attach_photo);
             item.addSubItem(attach_gallery, LocaleController.getString("ChatGallery", R.string.ChatGallery), R.drawable.ic_attach_gallery);
             item.addSubItem(attach_video, LocaleController.getString("ChatVideo", R.string.ChatVideo), R.drawable.ic_attach_video);
@@ -803,15 +844,6 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                 }
             });
 
-            //TODO se non funziona nulla decommenta qui. (aggiornamento source telegram)
-/*
-            messageEditText = (EditText)fragmentView.findViewById(R.id.chat_text_edit);
-            messageEditText.setHint(LocaleController.getString("TypeMessage", R.string.TypeMessage));
-            slideText = fragmentView.findViewById(R.id.slideText);
-            TextView textView = (TextView)fragmentView.findViewById(R.id.slideToCancelTextView);
-            textView.setText(LocaleController.getString("SlideToCancel", R.string.SlideToCancel));
-            textView = (TextView)fragmentView.findViewById(R.id.bottom_overlay_chat_text);
-*/
             TextView textView = (TextView)fragmentView.findViewById(R.id.bottom_overlay_chat_text);
             if (currentUser == null) {
                 textView.setText(LocaleController.getString("DeleteThisGroup", R.string.DeleteThisGroup));
@@ -841,126 +873,6 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                 }
             }
 
-//TODO  se non funziona nulla decommenta qui. (aggiornamento source telegram)
-/*
-            emojiButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (emojiPopup == null) {
-                        showEmojiPopup(true);
-                    } else {
-                        showEmojiPopup(!emojiPopup.isShowing());
-                    }
-                }
-            });
-
-            messageEditText.setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                    if (i == 4 && !keyboardVisible && emojiPopup != null && emojiPopup.isShowing()) {
-                        if (keyEvent.getAction() == 1) {
-                            showEmojiPopup(false);
-                        }
-                        return true;
-                    } else if (i == KeyEvent.KEYCODE_ENTER && sendByEnter && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                        sendMessage();
-                        return true;
-                    }
-                    return false;
-                }
-            });
-
-            messageEditText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (emojiPopup != null && emojiPopup.isShowing()) {
-                        showEmojiPopup(false);
-                    }
-                }
-            });
-
-            messageEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                    if (i == EditorInfo.IME_ACTION_SEND) {
-                        sendMessage();
-                        return true;
-                    } else if (sendByEnter) {
-                        if (keyEvent != null && i == EditorInfo.IME_NULL && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                            sendMessage();
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-            });
-
-            sendButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sendMessage();
-                }
-            });
-
-            audioSendButton.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                        startedDraggingX = -1;
-                        MediaController.getInstance().startRecording(dialog_id);
-                        updateAudioRecordIntefrace();
-                    } else if (motionEvent.getAction() == MotionEvent.ACTION_UP || motionEvent.getAction() == MotionEvent.ACTION_CANCEL) {
-                        startedDraggingX = -1;
-                        MediaController.getInstance().stopRecording(true);
-                        recordingAudio = false;
-                        updateAudioRecordIntefrace();
-                    } else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE && recordingAudio) {
-                        float x = motionEvent.getX();
-                        if (x < -distCanMove) {
-                            MediaController.getInstance().stopRecording(false);
-                            recordingAudio = false;
-                            updateAudioRecordIntefrace();
-                        }
-                        if (android.os.Build.VERSION.SDK_INT > 13) {
-                            x = x + audioSendButton.getX();
-                            FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) slideText.getLayoutParams();
-                            if (startedDraggingX != -1) {
-                                float dist = (x - startedDraggingX);
-                                params.leftMargin = Utilities.dp(30) + (int) dist;
-                                slideText.setLayoutParams(params);
-                                float alpha = 1.0f + dist / distCanMove;
-                                if (alpha > 1) {
-                                    alpha = 1;
-                                } else if (alpha < 0) {
-                                    alpha = 0;
-                                }
-                                slideText.setAlpha(alpha);
-                            }
-                            if (x <= slideText.getX() + slideText.getWidth() + Utilities.dp(30)) {
-                                if (startedDraggingX == -1) {
-                                    startedDraggingX = x;
-                                    distCanMove = (recordPanel.getMeasuredWidth() - slideText.getMeasuredWidth() - Utilities.dp(48)) / 2.0f;
-                                    if (distCanMove <= 0) {
-                                        distCanMove = Utilities.dp(80);
-                                    } else if (distCanMove > Utilities.dp(80)) {
-                                        distCanMove = Utilities.dp(80);
-                                    }
-                                }
-                            }
-                            if (params.leftMargin > Utilities.dp(30)) {
-                                params.leftMargin = Utilities.dp(30);
-                                slideText.setLayoutParams(params);
-                                slideText.setAlpha(1);
-                                startedDraggingX = -1;
-                            }
-                        }
-                    }
-                    view.onTouchEvent(motionEvent);
-                    return true;
-                }
-            });
-
-*/
             pagedownButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -968,52 +880,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                 }
             });
 
-// TODO  se non funziona nulla decommenta qui. (aggiornamento source telegram)
-/*
-            checkSendButton();
 
-            messageEditText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                    String message = getTrimmedString(charSequence.toString());
-                    sendButton.setEnabled(message.length() != 0);
-                    checkSendButton();
-
-                    if (message.length() != 0 && lastTypingTimeSend < System.currentTimeMillis() - 5000 && !ignoreTextChange) {
-                        int currentTime = ConnectionsManager.getInstance().getCurrentTime();
-                        if (currentUser != null && currentUser.status != null && currentUser.status.expires < currentTime) {
-                            return;
-                        }
-                        lastTypingTimeSend = System.currentTimeMillis();
-                        MessagesController.getInstance().sendTyping(dialog_id, classGuid);
-                    }
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    if (sendByEnter && editable.length() > 0 && editable.charAt(editable.length() - 1) == '\n') {
-                        sendMessage();
-                    }
-                    int i = 0;
-                    ImageSpan[] arrayOfImageSpan = editable.getSpans(0, editable.length(), ImageSpan.class);
-                    int j = arrayOfImageSpan.length;
-                    while (true) {
-                        if (i >= j) {
-                            Emoji.replaceEmoji(editable, messageEditText.getPaint().getFontMetricsInt(), Utilities.dp(20));
-                            return;
-                        }
-                        editable.removeSpan(arrayOfImageSpan[i]);
-                        i++;
-                    }
-                }
-            });
-
-*/
             bottomOverlayChat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -1091,6 +958,15 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             loading = true;
             chatAdapter.notifyDataSetChanged();
         }
+    }
+    private Future<TLRPC.messages_Messages> doSearch(long id, String query) {
+        FutureSearch future = new FutureSearch();
+        searchMessages(id, query, future);
+        return future;
+    }
+
+    public TLRPC.messages_Messages doSearchAndBlock(long id, String query) throws ExecutionException, InterruptedException {
+        return doSearch(id, query).get();
     }
 
     private void showPagedownButton(boolean show, boolean animated) {
@@ -3226,6 +3102,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             chatActivityEnterView.hideEmojiPopup();
             return false;
         }
+
         return true;
     }
 
@@ -3437,6 +3314,10 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
 
     @Override
     public int getSelectedCount() { return 0; }
+
+
+
+
 
     private class ChatAdapter extends BaseFragmentAdapter {
 

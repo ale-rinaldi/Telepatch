@@ -3,7 +3,7 @@
 //  texmaker
 //
 //  Created by Nikolay Kudashov on 16.04.14.
-//  Copyright (c) 2014 telegram. All rights reserved.
+//  Copyright (c) 2014 telepatch. All rights reserved.
 //
 
 #import "AppDelegate.h"

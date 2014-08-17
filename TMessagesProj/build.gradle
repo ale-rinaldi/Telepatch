@@ -3,10 +3,10 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.11.+'
+        classpath 'com.android.tools.build:gradle:0.12.+'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 repositories {
     mavenCentral()
@@ -17,15 +17,20 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.0.+'
-    compile 'com.google.android.gms:play-services:4.1.+'
+    // You must install or update the Support Repository through the SDK manager to use this dependency.
+    compile 'com.android.support:support-v4:20.0.+'
+    //compile 'com.google.android.gms:play-services:4.2.42'
+    //compile 'com.google.android.support:wearable:+'
+    compile 'com.google.android.gms:play-services-wearable:+'
     compile 'net.hockeyapp.android:HockeySDK:3.0.1'
     compile 'com.android.support:appcompat-v7:19.+'
+    compile 'com.googlecode.mp4parser:isoparser:1.0.+'
 }
 
 android {
     compileSdkVersion 19
     buildToolsVersion '19.1.0'
+
     aaptOptions.useAaptPngCruncher = true
     lintOptions {
         checkReleaseBuilds false
@@ -33,17 +38,24 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
+
+    useAaptPngCruncher = true
+    useOldManifestMerger true
+
     signingConfigs {
         debug {
             keyAlias 'xela92'
-            storePassword 'floxel'
-            keyPassword 'floxel'
+            storePassword 'YOURPASS'
+            keyPassword 'YOURPASS'
             storeFile file('/Users/user/xela92.keystore')
+        }
+        foss{
+
         }
         release {
             keyAlias 'xela92'
-            storePassword 'floxel'
-            keyPassword 'floxel'
+            storePassword 'YOURPASSHERE'
+            keyPassword 'YOURPASSHERE'
             storeFile file('/Users/user/xela92.keystore')
         }
     }
@@ -80,11 +92,11 @@ android {
         }
     }
     defaultConfig {
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 19
-        //VERSIONE IN LAVORAZIONE: 1.6.9
-        versionCode 264
-        versionName '1.6.8'
+        //VERSIONE IN LAVORAZIONE: 1.8.1
+        versionCode 273
+        versionName '1.8.1'
     }
     productFlavors {
     }

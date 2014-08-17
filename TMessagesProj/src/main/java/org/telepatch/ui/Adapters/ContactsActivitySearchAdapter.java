@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.telepatch.messenger.TLRPC;
-import org.telepatch.messenger.ContactsController;
+import org.telepatch.android.ContactsController;
 import org.telepatch.messenger.FileLog;
-import org.telepatch.messenger.MessagesController;
+import org.telepatch.android.MessagesController;
 import org.telepatch.messenger.UserConfig;
 import org.telepatch.messenger.Utilities;
 import org.telepatch.ui.Cells.ChatOrUserCell;

@@ -10,8 +10,8 @@ package org.telepatch.ui.Views;
 
 import android.widget.FrameLayout;
 
+import org.telepatch.android.AndroidUtilities;
 import org.telepatch.messenger.R;
-import org.telepatch.messenger.Utilities;
 
 public class MessageActionLayout extends FrameLayout {
     public TightTextView messageTextView;
@@ -31,7 +31,7 @@ public class MessageActionLayout extends FrameLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        setMeasuredDimension(messageTextView.linesMaxWidth + Utilities.dp(14), getMeasuredHeight());
+        setMeasuredDimension(messageTextView.linesMaxWidth + AndroidUtilities.dp(14), getMeasuredHeight());
     }
 
     @Override

@@ -32,13 +32,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.telepatch.android.AndroidUtilities;
 import org.telepatch.PhoneFormat.PhoneFormat;
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.TLRPC;
 import org.telepatch.messenger.ConnectionsManager;
-import org.telepatch.messenger.ContactsController;
+import org.telepatch.android.ContactsController;
 import org.telepatch.messenger.FileLog;
-import org.telepatch.messenger.MessagesController;
+import org.telepatch.android.MessagesController;
 import org.telepatch.messenger.NotificationCenter;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.UserConfig;
@@ -72,7 +73,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
 
             int sz = super.getSize(paint, text, start, end, fm);
 
-            int offset = Utilities.dp(6);
+            int offset = AndroidUtilities.dp(6);
             int w = (fm.bottom - fm.top) / 2;
             fm.top = -w - offset;
             fm.bottom = w - offset;
@@ -126,7 +127,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
             actionBarLayer.setDisplayHomeAsUpEnabled(true, R.drawable.ic_ab_back);
             actionBarLayer.setBackOverlay(R.layout.updating_state_layout);
             actionBarLayer.setTitle(LocaleController.getString("NewGroup", R.string.NewGroup));
-            actionBarLayer.setSubtitle(String.format("%d/200 %s", selectedContacts.size(), LocaleController.getString("Members", R.string.Members)));
+            actionBarLayer.setSubtitle(LocaleController.formatString("MembersCount", R.string.MembersCount, selectedContacts.size(), 200));
 
             actionBarLayer.setActionBarMenuOnItemClick(new ActionBarLayer.ActionBarMenuOnItemClick() {
                 @Override
@@ -200,7 +201,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
                                         selectedContacts.remove(sp.uid);
                                     }
                                 }
-                                actionBarLayer.setSubtitle(String.format("%d/200 %s", selectedContacts.size(), LocaleController.getString("Members", R.string.Members)));
+                                actionBarLayer.setSubtitle(LocaleController.formatString("MembersCount", R.string.MembersCount, selectedContacts.size(), 200));
                                 listView.invalidateViews();
                             } else {
                                 search = true;
@@ -266,7 +267,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
                         span.uid = user.id;
                         ignoreChange = false;
                     }
-                    actionBarLayer.setSubtitle(String.format("%d/200 %s", selectedContacts.size(), LocaleController.getString("Members", R.string.Members)));
+                    actionBarLayer.setSubtitle(LocaleController.formatString("MembersCount", R.string.MembersCount, selectedContacts.size(), 200));
                     if (searching || searchWas) {
                         searching = false;
                         searchWas = false;
@@ -293,7 +294,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
                 @Override
                 public void onScrollStateChanged(AbsListView absListView, int i) {
                     if (i == SCROLL_STATE_TOUCH_SCROLL) {
-                        Utilities.hideKeyboard(userSelectEditText);
+                        AndroidUtilities.hideKeyboard(userSelectEditText);
                     }
                 }
 

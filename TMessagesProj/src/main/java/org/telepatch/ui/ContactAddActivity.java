@@ -21,11 +21,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.telepatch.android.AndroidUtilities;
 import org.telepatch.PhoneFormat.PhoneFormat;
-import org.telepatch.messenger.ContactsController;
-import org.telepatch.messenger.LocaleController;
+import org.telepatch.android.ContactsController;
+import org.telepatch.android.LocaleController;
 import org.telepatch.messenger.TLRPC;
-import org.telepatch.messenger.MessagesController;
+import org.telepatch.android.MessagesController;
 import org.telepatch.messenger.NotificationCenter;
 import org.telepatch.messenger.R;
 import org.telepatch.messenger.Utilities;
@@ -104,7 +105,7 @@ public class ContactAddActivity extends BaseFragment implements NotificationCent
             avatarImage = (BackupImageView)fragmentView.findViewById(R.id.settings_avatar_image);
             avatarImage.processDetach = false;
             phoneText = (TextView)fragmentView.findViewById(R.id.settings_name);
-            Typeface typeface = Utilities.getTypeface("fonts/rmedium.ttf");
+            Typeface typeface = AndroidUtilities.getTypeface("fonts/rmedium.ttf");
             phoneText.setTypeface(typeface);
 
             firstNameField = (EditText)fragmentView.findViewById(R.id.first_name_field);
@@ -183,13 +184,13 @@ public class ContactAddActivity extends BaseFragment implements NotificationCent
         boolean animations = preferences.getBoolean("view_animations", true);
         if (!animations) {
             firstNameField.requestFocus();
-            Utilities.showKeyboard(firstNameField);
+            AndroidUtilities.showKeyboard(firstNameField);
         }
     }
 
     @Override
     public void onOpenAnimationEnd() {
         firstNameField.requestFocus();
-        Utilities.showKeyboard(firstNameField);
+        AndroidUtilities.showKeyboard(firstNameField);
     }
 }
