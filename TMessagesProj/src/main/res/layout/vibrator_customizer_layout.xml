@@ -1,0 +1,72 @@
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="top"
+    android:background="#fafafa"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:text="@string/press_vibrate_long"
+        android:background="@drawable/circle_shape"
+        android:id="@+id/vibrate_circle_big"
+        android:layout_alignParentLeft="true" />
+
+
+    <Button
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:text="@string/press_vibrate_short"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/circle_shape"
+        android:id="@+id/vibrate_circle_little"
+        android:layout_marginLeft="30dp"
+        android:layout_alignBaseline="@id/vibrate_circle_big"
+        android:layout_toRightOf="@id/vibrate_circle_big"
+         />
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="145dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/vibrate_circle_pause"
+        android:text="@string/vibrate_pause"
+        android:background="@drawable/circle_shape"
+        android:layout_below="@id/vibrate_circle_big" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/vibrate_circle_pause"
+        android:layout_marginTop="20dp"
+        android:textSize="24dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/vibration_pattern_tv"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:text="@string/vibration_pattern_save"
+        android:id="@+id/save_button"
+        android:layout_below="@+id/vibration_pattern_tv"
+        android:layout_toLeftOf="@+id/cancel_button"
+        android:layout_toStartOf="@+id/cancel_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/vibration_pattern_cancel"
+        android:id="@+id/cancel_button"
+        android:layout_marginRight="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/save_button"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

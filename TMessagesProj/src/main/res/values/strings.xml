@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--Translated by Telegram Team, corrected by Florian Keller-->
+<!--Translated by telepatch Team, corrected by Florian Keller-->
 
 <resources>
-    <string name="AppName">Telegram</string>
+    <string name="AppName">telepatch</string>
     <string name="LanguageName">English</string>
     <string name="LanguageNameInEnglish">English</string>
     <string name="LanguageCode">en</string>
@@ -52,7 +52,7 @@
     <string name="HiddenName">Hidden Name</string>
     <string name="SelectChat">Select Chat</string>
     <string name="PhotoTip">Tap and hold to view</string>
-    <string name="CompatibilityChat">%1$s is using an older version of Telegram, so secret photos will be shown in compatibility mode.\n\nOnce %2$s updates Telegram, photos with timers for 1 minute or less will start working in \'Tap and hold to view\' mode, and you will be notified whenever the other party takes a screenshot.</string>
+    <string name="CompatibilityChat">%1$s is using an older version of telepatch, so secret photos will be shown in compatibility mode.\n\nOnce %2$s updates telepatch, photos with timers for 1 minute or less will start working in \'Tap and hold to view\' mode, and you will be notified whenever the other party takes a screenshot.</string>
     <!--broadcasts-->
     <string name="BroadcastList">Broadcast List</string>
     <string name="NewBroadcastList">New Broadcast List</string>
@@ -79,7 +79,7 @@
     <string name="Attach">Attach</string>
     <string name="IsTyping">is typing...</string>
     <string name="AreTyping">are typing...</string>
-    <string name="GotAQuestion">Got a question\nabout Telegram?</string>
+    <string name="GotAQuestion">Got a question\nabout telepatch?</string>
     <string name="ChatTakePhoto">Take photo</string>
     <string name="ChatGallery">Gallery</string>
     <string name="ChatLocation">Location</string>
@@ -121,6 +121,7 @@
     <string name="MessageLifetimeRemoved">%1$s disabled the self-destruct timer</string>
     <string name="MessageLifetimeYouRemoved">You disabled the self-destruct timer</string>
     <string name="YouHaveNewMessage">You have a new message</string>
+    <!-- TODO modifica brutale da %1$s -->
     <string name="NotificationMessageText">%1$s: %2$s</string>
     <string name="NotificationMessageNoText">%1$s sent you a message</string>
     <string name="NotificationMessagePhoto">%1$s sent you a photo</string>
@@ -144,8 +145,8 @@
     <string name="NotificationGroupKickMember">%1$s removed %3$s from the group %2$s</string>
     <string name="NotificationGroupKickYou">%1$s removed you from the group %2$s</string>
     <string name="NotificationGroupLeftMember">%1$s has left the group %2$s</string>
-    <string name="NotificationContactJoined">%1$s joined Telegram!</string>
-    <string name="NotificationUnrecognizedDevice">%1$s,\nWe detected a login into your account from a new device on %2$s\n\nDevice: %3$s\nLocation: %4$s\n\nIf this wasn\'t you, you can go to Settings - Terminate all sessions.\n\nSincerely,\nThe Telegram Team</string>
+    <string name="NotificationContactJoined">%1$s joined telepatch!</string>
+    <string name="NotificationUnrecognizedDevice">%1$s,\nWe detected a login into your account from a new device on %2$s\n\nDevice: %3$s\nLocation: %4$s\n\nIf this wasn\'t you, you can go to Settings - Terminate all sessions.\n\nSincerely,\nThe telepatch Team</string>
     <string name="NotificationContactNewPhoto">%1$s updated profile photo</string>
     <string name="Reply">Reply</string>
     <string name="ReplyToGroup">Reply to %1$s</string>
@@ -154,7 +155,7 @@
     <!--contacts view-->
     <string name="SelectContact">Select Contact</string>
     <string name="NoContacts">No contacts yet</string>
-    <string name="InviteText">Hey, let\'s switch to Telegram: http://telegram.org/dl2</string>
+    <string name="InviteText">Hey, let\'s switch to telepatch: http://telepatch.org/dl2</string>
     <string name="TodayAt">today at</string>
     <string name="YesterdayAt">yesterday at</string>
     <string name="Online">online</string>
@@ -198,7 +199,7 @@
     <string name="EncryptionKey">Encryption Key</string>
     <string name="MessageLifetime">Self-Destruct Timer</string>
     <string name="ShortMessageLifetimeForever">Off</string>
-    <string name="EncryptionKeyDescription">This image is a visualization of the encryption key for this secret chat with <![CDATA[<b>]]>%1$s<![CDATA[</b>]]>.<![CDATA[<br><br>]]>If this image looks the same on <![CDATA[<b>]]>%2$s\'s<![CDATA[</b>]]> phone, your chat is 200%% secure.<![CDATA[<br><br>]]>Learn more at telegram.org</string>
+    <string name="EncryptionKeyDescription">This image is a visualization of the encryption key for this secret chat with <![CDATA[<b>]]>%1$s<![CDATA[</b>]]>.<![CDATA[<br><br>]]>If this image looks the same on <![CDATA[<b>]]>%2$s\'s<![CDATA[</b>]]> phone, your chat is 200%% secure.<![CDATA[<br><br>]]>Learn more at telepatch.org</string>
     <string name="NumberUnknown">Unknown</string>
     <string name="Info">INFO</string>
     <string name="Phone">Phone</string>
@@ -210,7 +211,7 @@
     <string name="UsernameInvalidShort">A username must have at least 5 characters.</string>
     <string name="UsernameInvalidLong">The username must not exceed 32 characters.</string>
     <string name="UsernameInvalidStartNumber">Sorry, a username can\'t start with a number.</string>
-    <string name="UsernameHelp">You can choose a username on <![CDATA[<b>]]>Telegram<![CDATA[</b>]]>. If you do, other people will be able to find you by this username and contact you without knowing your phone number.<![CDATA[<br><br>]]>You can use <![CDATA[<b>]]>a–z<![CDATA[</b>]]>, <![CDATA[<b>]]>0–9<![CDATA[</b>]]> and underscores. Minimum length is <![CDATA[<b>]]>5<![CDATA[</b>]]> characters.</string>
+    <string name="UsernameHelp">You can choose a username on <![CDATA[<b>]]>telepatch<![CDATA[</b>]]>. If you do, other people will be able to find you by this username and contact you without knowing your phone number.<![CDATA[<br><br>]]>You can use <![CDATA[<b>]]>a–z<![CDATA[</b>]]>, <![CDATA[<b>]]>0–9<![CDATA[</b>]]> and underscores. Minimum length is <![CDATA[<b>]]>5<![CDATA[</b>]]> characters.</string>
     <string name="UsernameChecking">Checking username...</string>
     <string name="UsernameAvailable">%1$s is available.</string>
     <string name="UsernameEmpty">None</string>
@@ -249,13 +250,13 @@
     <string name="SendByEnter">Send by Enter</string>
     <string name="TerminateAllSessions">Terminate All Other Sessions</string>
     <string name="Events">EVENTS</string>
-    <string name="ContactJoined">Contact joined Telegram</string>
+    <string name="ContactJoined">Contact joined telepatch</string>
     <string name="Pebble">PEBBLE</string>
     <string name="Language">Language</string>
-    <string name="AskAQuestionInfo">Please note that Telegram Support is done by volunteers. We try to respond as quickly as possible, but it may take a while.<![CDATA[<br><br>]]>Please take a look at the <![CDATA[<a href=\"http://telegram.org/faq#general\">Telegram FAQ</a>]]>: it has answers to most questions and important tips for <![CDATA[<a href=\"http://telegram.org/faq#troubleshooting\">troubleshooting</a>]]>.</string>
+    <string name="AskAQuestionInfo">Please note that telepatch Support is done by volunteers. We try to respond as quickly as possible, but it may take a while.<![CDATA[<br><br>]]>Please take a look at the <![CDATA[<a href=\"http://telepatch.org/faq#general\">telepatch FAQ</a>]]>: it has answers to most questions and important tips for <![CDATA[<a href=\"http://telepatch.org/faq#troubleshooting\">troubleshooting</a>]]>.</string>
     <string name="AskButton">Ask a volunteer</string>
-    <string name="TelegramFaq">Telegram FAQ</string>
-    <string name="TelegramFaqUrl">https://telegram.org/faq</string>
+    <string name="telepatchFaq">telepatch FAQ</string>
+    <string name="telepatchFaqUrl">https://telepatch.org/faq</string>
     <string name="DeleteLocalization">Delete localization?</string>
     <string name="IncorrectLocalization">Incorrect localization file</string>
     <string name="Enabled">Enabled</string>
@@ -346,7 +347,7 @@
     <string name="ActionYouCreateGroup">You created the group</string>
     <string name="ActionKickUserYou">un1 removed you</string>
     <string name="ActionAddUserYou">un1 added you</string>
-    <string name="UnsuppotedMedia">This message is not supported on your version of Telegram. Update the app to view: http://telegram.org/update</string>
+    <string name="UnsuppotedMedia">This message is not supported on your version of telepatch. Update the app to view: http://telepatch.org/update</string>
     <string name="AttachPhoto">Photo</string>
     <string name="AttachVideo">Video</string>
     <string name="AttachLocation">Location</string>
@@ -365,9 +366,9 @@
     <string name="InvalidLastName">Invalid last name</string>
     <string name="Loading">Loading...</string>
     <string name="NoPlayerInstalled">You don\'t have a video player, please install one to continue</string>
-    <string name="NoMailInstalled">Please send an email to sms@telegram.org and tell us about your problem.</string>
+    <string name="NoMailInstalled">Please send an email to sms@telepatch.org and tell us about your problem.</string>
     <string name="NoHandleAppInstalled">You don\'t have applications that can handle the file type \'%1$s\', please install one to continue</string>
-    <string name="InviteUser">This user does not have Telegram yet, send an invitation?</string>
+    <string name="InviteUser">This user does not have telepatch yet, send an invitation?</string>
     <string name="AreYouSure">Are you sure?</string>
     <string name="AddContactQ">Add contact?</string>
     <string name="AddToTheGroup">Add %1$s to the group?\n\nNumber of last messages to forward:</string>
@@ -388,7 +389,7 @@
     <string name="ForwardMessagesToGroup">Forward messages to %1$s?</string>
     <string name="FeatureUnavailable">Sorry, this feature is currently not available in your country.</string>
     <!--Intro view-->
-    <string name="Page1Title">Telegram</string>
+    <string name="Page1Title">telepatch</string>
     <string name="Page2Title">Fast</string>
     <string name="Page3Title">Free</string>
     <string name="Page4Title">Secure</string>
@@ -396,12 +397,12 @@
     <string name="Page6Title">Cloud-Based</string>
     <string name="Page7Title">Private</string>
     <string name="Page1Message">The world\'s <![CDATA[<b>fastest</b>]]> messaging app.<![CDATA[<br/>]]>It is <![CDATA[<b>free</b>]]> and <![CDATA[<b>secure</b>]]>.</string>
-    <string name="Page2Message"><![CDATA[<b>Telegram</b>]]> delivers messages faster than<![CDATA[<br/>]]>any other application.</string>
-    <string name="Page3Message"><![CDATA[<b>Telegram</b>]]> is free forever. No ads.<![CDATA[<br/>]]>No subscription fees.</string>
-    <string name="Page4Message"><![CDATA[<b>Telegram</b>]]> keeps your messages safe<![CDATA[<br/>]]>from hacker attacks.</string>
-    <string name="Page5Message"><![CDATA[<b>Telegram</b>]]> has no limits on the size of<![CDATA[<br/>]]>your media and chats.</string>
-    <string name="Page6Message"><![CDATA[<b>Telegram</b>]]> lets you access your messages<![CDATA[<br/>]]>from multiple devices.</string>
-    <string name="Page7Message"><![CDATA[<b>Telegram</b>]]> messages are heavily encrypted<![CDATA[<br/>]]>and can self-destruct.</string>
+    <string name="Page2Message"><![CDATA[<b>telepatch</b>]]> delivers messages faster than<![CDATA[<br/>]]>any other application.</string>
+    <string name="Page3Message"><![CDATA[<b>telepatch</b>]]> is free forever. No ads.<![CDATA[<br/>]]>No subscription fees.</string>
+    <string name="Page4Message"><![CDATA[<b>telepatch</b>]]> keeps your messages safe<![CDATA[<br/>]]>from hacker attacks.</string>
+    <string name="Page5Message"><![CDATA[<b>telepatch</b>]]> has no limits on the size of<![CDATA[<br/>]]>your media and chats.</string>
+    <string name="Page6Message"><![CDATA[<b>telepatch</b>]]> lets you access your messages<![CDATA[<br/>]]>from multiple devices.</string>
+    <string name="Page7Message"><![CDATA[<b>telepatch</b>]]> messages are heavily encrypted<![CDATA[<br/>]]>and can self-destruct.</string>
     <string name="StartMessaging">Start Messaging</string>
     <!--plural-->
     <string name="Online_zero">%1$d online</string>
@@ -480,4 +481,61 @@
     <string name="formatterDay24H">HH:mm</string>
     <string name="formatterDay12H">h:mm a</string>
     <string name="formatDateAtTime">%1$s at %2$s</string>
+
+    <!-- TELEPATCH ONLY -->
+
+    <!-- Password Request view and settings -->
+    <string name="pwd_request_title">Password Request</string>
+    <string name="pwd_set_title">Set Password</string>
+    <string name="pwd_hint">Enter Password</string>
+    <string name="pwd_check_hint">Re-enter Password</string>
+    <string name="pwd_ok_button">Set</string>
+    <string name="pwd_set_error_title">Password mismatch!</string>
+    <string name="pwd_set_error">The passwords are different. Please insert them again.</string>
+    <string name="pwd_empty_title">Password empty</string>
+    <string name="pwd_empty">Password camp must be filled.</string>
+    <string name="pwd_settings_title">Password Protection</string>
+    <string name="set_pwd">Set password</string>
+    <string name="del_pwd">Remove password</string>
+    <string name="pwd_del_button">I\'m sure, please disable password request</string>
+
+
+    <string name="MessagesDeleteAlert">You\'re deleting one or more messages. Are you sure?</string>
+    <string name="reply">Reply</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- theme settings -->
+    <string name="themeChooser">Theme</string>
+    <string name="theme_default">Default Theme</string>
+    <string name="theme_red">Red Theme</string>
+    <string name="theme_green">Green Theme</string>
+    <string name="theme_yellow">Yellow Theme</string>
+    <string name="theme_fucsia">Fucsia Theme</string>
+    <string name="theme_violet">Violet Theme</string>
+    <string name="theme_blue">Dark Blue Theme</string>
+    <string name="theme_purple">Purple Theme</string>
+    <string name="theme_material_green">Material Green Theme</string>
+
+    <string name="telepatchAddOns">Others (Telepatch Add-ons)</string>
+
+    <string name="QuickReplyLabel">Quick Reply from notification</string>
+    <string name="multiple_notify">Multiple Notifications for different contacts messages</string>
+
+
+    <string name="search_title">Find</string>
+    <string name="search_results">Results</string>
+
+
+    <string name="press_vibrate_long">Long vibration</string>
+    <string name="press_vibrate_short">Short vibration</string>
+    <string name="vibration_pattern_save">Save</string>
+    <string name="longpress">Long</string>
+    <string name="shortpress">Short</string>
+    <string name="vibrate_customizer_title">Custom Vibrator Settings</string>
+    <string name="vibration_pattern_cancel">Cancel</string>
+    <string name="vibrate_pause">Pause</string>
+    <string name="mic_hack">Voice message without keep pressed</string>
+
+
 </resources>

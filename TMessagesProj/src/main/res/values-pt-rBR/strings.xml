@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--https://www.transifex.com/projects/p/telegram/language/pt_BR/members/-->
+<!--https://www.transifex.com/projects/p/telepatch/language/pt_BR/members/-->
 
 <resources>
-    <string name="AppName">Telegram</string>
+    <string name="AppName">telepatch</string>
     <string name="LanguageName">Português (Brasil)</string>
     <string name="LanguageNameInEnglish">Portuguese (Brazil)</string>
     <string name="LanguageCode">pt_BR</string>
@@ -52,7 +52,7 @@
     <string name="HiddenName">Nome oculto</string>
     <string name="SelectChat">Selecione uma Conversa</string>
     <string name="PhotoTip">Toque e segure para ver</string>
-    <string name="CompatibilityChat">%1$s está usando uma versão mais antiga do Telegram, por isso fotos secretas serão mostradas em modo de compatibilidade.\n\nAssim que %2$s atualize o Telegram, fotos com timers de 1 minuto ou menos passarão a funcionar no modo ‘Toque e segure para ver’, e você será notificado caso a outra pessoa salve a tela.</string>
+    <string name="CompatibilityChat">%1$s está usando uma versão mais antiga do telepatch, por isso fotos secretas serão mostradas em modo de compatibilidade.\n\nAssim que %2$s atualize o telepatch, fotos com timers de 1 minuto ou menos passarão a funcionar no modo ‘Toque e segure para ver’, e você será notificado caso a outra pessoa salve a tela.</string>
     <!--broadcasts-->
     <string name="BroadcastList">Lista de Broadcast</string>
     <string name="NewBroadcastList">Nova Lista de Broadcast</string>
@@ -79,7 +79,7 @@
     <string name="Attach">Anexar</string>
     <string name="IsTyping">está escrevendo...</string>
     <string name="AreTyping">estão escrevendo...</string>
-    <string name="GotAQuestion">Tem alguma dúvida\nsobre o Telegram?</string>
+    <string name="GotAQuestion">Tem alguma dúvida\nsobre o telepatch?</string>
     <string name="ChatTakePhoto">Tirar foto</string>
     <string name="ChatGallery">Galeria</string>
     <string name="ChatLocation">Localização</string>
@@ -144,8 +144,8 @@
     <string name="NotificationGroupKickMember">%1$s removeu %3$s do grupo %2$s</string>
     <string name="NotificationGroupKickYou">%1$s removeu você do grupo %2$s</string>
     <string name="NotificationGroupLeftMember">%1$s saiu do grupo %2$s</string>
-    <string name="NotificationContactJoined">%1$s entrou para o Telegram!</string>
-    <string name="NotificationUnrecognizedDevice">%1$s,\nNós detectamos um login na sua conta de um novo dispositivo %2$s\n\nDispositivo: %3$s\nLocalização: %4$s\nSe não foi você, você pode ir em Configurações - Terminar todas as sessões.\n\nAtenciosamente,\nTime do Telegram</string>
+    <string name="NotificationContactJoined">%1$s entrou para o telepatch!</string>
+    <string name="NotificationUnrecognizedDevice">%1$s,\nNós detectamos um login na sua conta de um novo dispositivo %2$s\n\nDispositivo: %3$s\nLocalização: %4$s\nSe não foi você, você pode ir em Configurações - Terminar todas as sessões.\n\nAtenciosamente,\nTime do telepatch</string>
     <string name="NotificationContactNewPhoto">%1$s atualizou a foto do perfil</string>
     <string name="Reply">Responder</string>
     <string name="ReplyToGroup">Responder para %1$s</string>
@@ -154,7 +154,7 @@
     <!--contacts view-->
     <string name="SelectContact">Selecionar Contato</string>
     <string name="NoContacts">Ainda não há contatos</string>
-    <string name="InviteText">Ei, vamos mudar para o Telegram: http://telegram.org/dl2</string>
+    <string name="InviteText">Ei, vamos mudar para o telepatch: http://telepatch.org/dl2</string>
     <string name="TodayAt">hoje às</string>
     <string name="YesterdayAt">ontem às</string>
     <string name="Online">online</string>
@@ -198,7 +198,7 @@
     <string name="EncryptionKey">Chave criptográfica</string>
     <string name="MessageLifetime">Tempo de autodestruição</string>
     <string name="ShortMessageLifetimeForever">Desativado</string>
-    <string name="EncryptionKeyDescription">Esta imagem é uma visualização da chave criptográfica para esta conversa secreta com <![CDATA[<b>]]>%1$s<![CDATA[</b>]]>.<![CDATA[<br><br>]]>Se esta imagem aparecer da mesma forma no telefone de <![CDATA[<b>]]>%2$s\'s<![CDATA[</b>]]>, sua conversa é 200%% segura.<![CDATA[<br><br>]]>Saiba mais em telegram.org</string>
+    <string name="EncryptionKeyDescription">Esta imagem é uma visualização da chave criptográfica para esta conversa secreta com <![CDATA[<b>]]>%1$s<![CDATA[</b>]]>.<![CDATA[<br><br>]]>Se esta imagem aparecer da mesma forma no telefone de <![CDATA[<b>]]>%2$s\'s<![CDATA[</b>]]>, sua conversa é 200%% segura.<![CDATA[<br><br>]]>Saiba mais em telepatch.org</string>
     <string name="NumberUnknown">Desconhecido</string>
     <string name="Info">INFO</string>
     <string name="Phone">Telefone</string>
@@ -210,7 +210,7 @@
     <string name="UsernameInvalidShort">O nome de usuário deve ter pelo menos 5 caracteres.</string>
     <string name="UsernameInvalidLong">O nome de usuário não pode exceder 32 caracteres.</string>
     <string name="UsernameInvalidStartNumber">Desculpe, o nome de usuário não pode começar com um número.</string>
-    <string name="UsernameHelp">Você pode escolher um nome de usuário no <![CDATA[<b>]]>Telegram<![CDATA[</b>]]>. Assim, outras pessoas poderão te encontrar pelo nome de usuário e entrar em contato sem precisar saber seu telefone. <![CDATA[<br><br>]]>Você pode usar <![CDATA[<b>]]>a–z<![CDATA[</b>]]>, <![CDATA[<b>]]>0–9<![CDATA[</b>]]> e underline. O tamanho mínimo é <![CDATA[<b>]]>5<![CDATA[</b>]]> caracteres.</string>
+    <string name="UsernameHelp">Você pode escolher um nome de usuário no <![CDATA[<b>]]>telepatch<![CDATA[</b>]]>. Assim, outras pessoas poderão te encontrar pelo nome de usuário e entrar em contato sem precisar saber seu telefone. <![CDATA[<br><br>]]>Você pode usar <![CDATA[<b>]]>a–z<![CDATA[</b>]]>, <![CDATA[<b>]]>0–9<![CDATA[</b>]]> e underline. O tamanho mínimo é <![CDATA[<b>]]>5<![CDATA[</b>]]> caracteres.</string>
     <string name="UsernameChecking">Verificando nome de usuário...</string>
     <string name="UsernameAvailable">%1$s está disponível.</string>
     <string name="UsernameEmpty">Nenhum</string>
@@ -249,13 +249,13 @@
     <string name="SendByEnter">Enviar usando \'Enter\'</string>
     <string name="TerminateAllSessions">Terminar todas as outras sessões</string>
     <string name="Events">EVENTOS</string>
-    <string name="ContactJoined">Contato entrou para o Telegram</string>
+    <string name="ContactJoined">Contato entrou para o telepatch</string>
     <string name="Pebble">PEBBLE</string>
     <string name="Language">Idioma</string>
-    <string name="AskAQuestionInfo">Por favor compreenda que o Suporte do Telegram é feito por voluntários. Tentamos responder o mais rápido possível, mas pode demorar um pouco. <![CDATA[<br><br>]]>Por favor acesse o <![CDATA[<a href=\"http://telegram.org/faq#general\">FAQ do Telegram</a>]]>: temos respostas para algumas questões, assim como dicas importantes à <![CDATA[<a href=\"http://telegram.org/faq#troubleshooting\">resolução de problemas</a>]]>.</string>
+    <string name="AskAQuestionInfo">Por favor compreenda que o Suporte do telepatch é feito por voluntários. Tentamos responder o mais rápido possível, mas pode demorar um pouco. <![CDATA[<br><br>]]>Por favor acesse o <![CDATA[<a href=\"http://telepatch.org/faq#general\">FAQ do telepatch</a>]]>: temos respostas para algumas questões, assim como dicas importantes à <![CDATA[<a href=\"http://telepatch.org/faq#troubleshooting\">resolução de problemas</a>]]>.</string>
     <string name="AskButton">Pergunte a um voluntário</string>
-    <string name="TelegramFaq">FAQ do Telegram</string>
-    <string name="TelegramFaqUrl">https://telegram.org/faq</string>
+    <string name="telepatchFaq">FAQ do telepatch</string>
+    <string name="telepatchFaqUrl">https://telepatch.org/faq</string>
     <string name="DeleteLocalization">Apagar localização?</string>
     <string name="IncorrectLocalization">Arquivo de localização incorreto</string>
     <string name="Enabled">Ativado</string>
@@ -346,7 +346,7 @@
     <string name="ActionYouCreateGroup">Você criou o grupo</string>
     <string name="ActionKickUserYou">un1 removeu você</string>
     <string name="ActionAddUserYou">un1 adicionou você</string>
-    <string name="UnsuppotedMedia">Esta mensagem não é suportada na sua versão do Telegram. Para visualiza-la atualize seu aplicativo em http://telegram.org/update</string>
+    <string name="UnsuppotedMedia">Esta mensagem não é suportada na sua versão do telepatch. Para visualiza-la atualize seu aplicativo em http://telepatch.org/update</string>
     <string name="AttachPhoto">Foto</string>
     <string name="AttachVideo">Vídeo</string>
     <string name="AttachLocation">Localização</string>
@@ -365,9 +365,9 @@
     <string name="InvalidLastName">Sobrenome inválido</string>
     <string name="Loading">Carregando...</string>
     <string name="NoPlayerInstalled">Você não possui um reprodutor de vídeo, instale um para continuar</string>
-    <string name="NoMailInstalled">Por favor, envie um email para sms@telegram.org e conte-nos sobre seu problema.</string>
+    <string name="NoMailInstalled">Por favor, envie um email para sms@telepatch.org e conte-nos sobre seu problema.</string>
     <string name="NoHandleAppInstalled">Você não possui um aplicativo que suporte o tipo de arquivo \'%1$s\', por favor instale um para continuar</string>
-    <string name="InviteUser">Este usuário ainda não possui Telegram, deseja enviar um convite?</string>
+    <string name="InviteUser">Este usuário ainda não possui telepatch, deseja enviar um convite?</string>
     <string name="AreYouSure">Você tem certeza?</string>
     <string name="AddContactQ">Adicionar contato?</string>
     <string name="AddToTheGroup">Adicionar %1$s para o grupo?\n\nNúmero de últimas mensagens para encaminhar:</string>
@@ -388,7 +388,7 @@
     <string name="ForwardMessagesToGroup">Encaminhar mensagem para %1$s?</string>
     <string name="FeatureUnavailable">Sorry, this feature is currently not available in your country.</string>
     <!--Intro view-->
-    <string name="Page1Title">Telegram</string>
+    <string name="Page1Title">telepatch</string>
     <string name="Page2Title">Rápido</string>
     <string name="Page3Title">Gratuito</string>
     <string name="Page4Title">Seguro</string>
@@ -396,12 +396,12 @@
     <string name="Page6Title">Baseado na nuvem</string>
     <string name="Page7Title">Privado</string>
     <string name="Page1Message">O mais <![CDATA[<b>rápido</b>]]> aplicativo de mensagem do<![CDATA[<br/>]]>mundo. É <![CDATA[<b>gratuito</b>]]> e <![CDATA[<b>seguro</b>]]>.</string>
-    <string name="Page2Message"><![CDATA[<b>Telegram</b>]]> envia mensagens mais rápido que<![CDATA[<br/>]]>qualquer outro aplicativo.</string>
-    <string name="Page3Message"><![CDATA[<b>Telegram</b>]]> é grátis para sempre. <![CDATA[<br/>]]>Sem propagandas. Sem taxas.</string>
-    <string name="Page4Message"><![CDATA[<b>Telegram</b>]]> mantém suas mensagens seguras<![CDATA[<br/>]]>contra ataques de hackers.</string>
-    <string name="Page5Message"><![CDATA[<b>Telegram</b>]]> não possui limites no tamanho<![CDATA[<br/>]]>de seus arquivos e conversas.</string>
-    <string name="Page6Message"><![CDATA[<b>Telegram</b>]]> permite você acessar suas<![CDATA[<br/>]]> mensagens de múltiplos dispositivos.</string>
-    <string name="Page7Message"><![CDATA[<b>Telegram</b>]]> possui mensagens fortemente<![CDATA[<br/>]]>encriptadas e podem se auto-destruir.</string>
+    <string name="Page2Message"><![CDATA[<b>telepatch</b>]]> envia mensagens mais rápido que<![CDATA[<br/>]]>qualquer outro aplicativo.</string>
+    <string name="Page3Message"><![CDATA[<b>telepatch</b>]]> é grátis para sempre. <![CDATA[<br/>]]>Sem propagandas. Sem taxas.</string>
+    <string name="Page4Message"><![CDATA[<b>telepatch</b>]]> mantém suas mensagens seguras<![CDATA[<br/>]]>contra ataques de hackers.</string>
+    <string name="Page5Message"><![CDATA[<b>telepatch</b>]]> não possui limites no tamanho<![CDATA[<br/>]]>de seus arquivos e conversas.</string>
+    <string name="Page6Message"><![CDATA[<b>telepatch</b>]]> permite você acessar suas<![CDATA[<br/>]]> mensagens de múltiplos dispositivos.</string>
+    <string name="Page7Message"><![CDATA[<b>telepatch</b>]]> possui mensagens fortemente<![CDATA[<br/>]]>encriptadas e podem se auto-destruir.</string>
     <string name="StartMessaging">Comece a conversar</string>
     <!--plural-->
     <string name="Online_zero">%1$d online</string>

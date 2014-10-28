@@ -3,7 +3,7 @@
 <!--Translation by Borja Campina, Edited by Victor Espinoza and Francisco Vila-->
 
 <resources>
-    <string name="AppName">Telegram</string>
+    <string name="AppName">telepatch</string>
     <string name="LanguageName">Español</string>
     <string name="LanguageNameInEnglish">Spanish</string>
     <string name="LanguageCode">es</string>
@@ -52,7 +52,7 @@
     <string name="HiddenName">Nombre oculto</string>
     <string name="SelectChat">Elige el chat</string>
     <string name="PhotoTip">Mantén pulsado para ver</string>
-    <string name="CompatibilityChat">%1$s usa una versión antigua de Telegram, así que las fotos secretas serán mostradas en un modo de compatibilidad.\n\nCuando %2$s actualice Telegram, las fotos con autodestrucción de 1 minuto o menos funcionarán con el modo \'Mantén pulsado para ver\', y te notificaremos siempre que la otra parte haga una captura de pantalla.</string>
+    <string name="CompatibilityChat">%1$s usa una versión antigua de telepatch, así que las fotos secretas serán mostradas en un modo de compatibilidad.\n\nCuando %2$s actualice telepatch, las fotos con autodestrucción de 1 minuto o menos funcionarán con el modo \'Mantén pulsado para ver\', y te notificaremos siempre que la otra parte haga una captura de pantalla.</string>
     <!--broadcasts-->
     <string name="BroadcastList">Lista de difusión</string>
     <string name="NewBroadcastList">Nueva difusión</string>
@@ -79,7 +79,7 @@
     <string name="Attach">Adjuntar</string>
     <string name="IsTyping">está escribiendo...</string>
     <string name="AreTyping">están escribiendo...</string>
-    <string name="GotAQuestion">¿Tienes preguntas\nsobre Telegram?</string>
+    <string name="GotAQuestion">¿Tienes preguntas\nsobre telepatch?</string>
     <string name="ChatTakePhoto">Hacer foto</string>
     <string name="ChatGallery">Galería</string>
     <string name="ChatLocation">Ubicación</string>
@@ -144,8 +144,8 @@
     <string name="NotificationGroupKickMember">%1$s expulsó a %3$s del grupo %2$s</string>
     <string name="NotificationGroupKickYou">%1$s te expulsó del grupo %2$s</string>
     <string name="NotificationGroupLeftMember">%1$s dejó el grupo %2$s</string>
-    <string name="NotificationContactJoined">¡%1$s se unió a Telegram!</string>
-    <string name="NotificationUnrecognizedDevice">%1$s,\nDetectamos un inicio de sesión en tu cuenta desde un nuevo dispositivo, el %2$s\n\nDispositivo: %3$s\nUbicación: %4$s\n\nSi no eras tú, puedes ir a Ajustes - Cerrar todas las otras sesiones.\n\nAtentamente,\nEl equipo de Telegram</string>
+    <string name="NotificationContactJoined">¡%1$s se unió a telepatch!</string>
+    <string name="NotificationUnrecognizedDevice">%1$s,\nDetectamos un inicio de sesión en tu cuenta desde un nuevo dispositivo, el %2$s\n\nDispositivo: %3$s\nUbicación: %4$s\n\nSi no eras tú, puedes ir a Ajustes - Cerrar todas las otras sesiones.\n\nAtentamente,\nEl equipo de telepatch</string>
     <string name="NotificationContactNewPhoto">%1$s actualizó su foto de perfil</string>
     <string name="Reply">Responder</string>
     <string name="ReplyToGroup">Responder a %1$s</string>
@@ -154,7 +154,7 @@
     <!--contacts view-->
     <string name="SelectContact">Elegir contacto</string>
     <string name="NoContacts">Aún sin contactos</string>
-    <string name="InviteText">Oye, cambiémonos a Telegram: http://telegram.org/dl2</string>
+    <string name="InviteText">Oye, cambiémonos a telepatch: http://telepatch.org/dl2</string>
     <string name="TodayAt">hoy a las</string>
     <string name="YesterdayAt">ayer a las</string>
     <string name="Online">en línea</string>
@@ -198,7 +198,7 @@
     <string name="EncryptionKey">Clave de cifrado</string>
     <string name="MessageLifetime">Autodestrucción</string>
     <string name="ShortMessageLifetimeForever">Apagada</string>
-    <string name="EncryptionKeyDescription">Esta imagen es una visualización de la clave de cifrado para el chat secreto con <![CDATA[<b>]]>%1$s<![CDATA[</b>]]>.<![CDATA[<br><br>]]>Si esta imagen se ve igual en el teléfono de <![CDATA[<b>]]>%2$s<![CDATA[</b>]]>, tu chat es seguro en un 200%%.<![CDATA[<br><br>]]>Aprende más en telegram.org</string>
+    <string name="EncryptionKeyDescription">Esta imagen es una visualización de la clave de cifrado para el chat secreto con <![CDATA[<b>]]>%1$s<![CDATA[</b>]]>.<![CDATA[<br><br>]]>Si esta imagen se ve igual en el teléfono de <![CDATA[<b>]]>%2$s<![CDATA[</b>]]>, tu chat es seguro en un 200%%.<![CDATA[<br><br>]]>Aprende más en telepatch.org</string>
     <string name="NumberUnknown">Desconocido</string>
     <string name="Info">INFORMACIÓN</string>
     <string name="Phone">Teléfono</string>
@@ -210,7 +210,7 @@
     <string name="UsernameInvalidShort">Un apodo debe tener al menos 5 caracteres.</string>
     <string name="UsernameInvalidLong">El apodo no debe exceder los 32 caracteres.</string>
     <string name="UsernameInvalidStartNumber">Lo siento, un apodo no puede comenzar con un número.</string>
-    <string name="UsernameHelp">Puedes elegir un apodo en <![CDATA[<b>]]>Telegram<![CDATA[</b>]]>. Si lo haces, otras personas te podrán encontrar por ese apodo y contactarte sin saber tu número de teléfono.<![CDATA[<br><br>]]>Puedes usar <![CDATA[<b>]]>a–z<![CDATA[</b>]]>, <![CDATA[<b>]]>0–9<![CDATA[</b>]]> y guiones bajos. La longitud mínima es de <![CDATA[<b>]]>5<![CDATA[</b>]]> caracteres.</string>
+    <string name="UsernameHelp">Puedes elegir un apodo en <![CDATA[<b>]]>telepatch<![CDATA[</b>]]>. Si lo haces, otras personas te podrán encontrar por ese apodo y contactarte sin saber tu número de teléfono.<![CDATA[<br><br>]]>Puedes usar <![CDATA[<b>]]>a–z<![CDATA[</b>]]>, <![CDATA[<b>]]>0–9<![CDATA[</b>]]> y guiones bajos. La longitud mínima es de <![CDATA[<b>]]>5<![CDATA[</b>]]> caracteres.</string>
     <string name="UsernameChecking">Verificando apodo...</string>
     <string name="UsernameAvailable">%1$s está disponible.</string>
     <string name="UsernameEmpty">Ninguno</string>
@@ -249,13 +249,13 @@
     <string name="SendByEnter">Enviar con \'Intro\'</string>
     <string name="TerminateAllSessions">Cerrar todas las otras sesiones</string>
     <string name="Events">EVENTOS</string>
-    <string name="ContactJoined">Un contacto se unió a Telegram</string>
+    <string name="ContactJoined">Un contacto se unió a telepatch</string>
     <string name="Pebble">PEBBLE</string>
     <string name="Language">Idioma</string>
-    <string name="AskAQuestionInfo">Por favor, considera que el soporte de Telegram está hecho por voluntarios. Respondemos lo antes posible, pero puede tomar tiempo.<![CDATA[<br><br>]]>Si quieres, mira las <![CDATA[<a href=“http://telegram.org/faq/es”>preguntas frecuentes de Telegram</a>]]>: tienen <![CDATA[<a href=“http://telegram.org/faq/es#solucin-de-problemas”>soluciones a problemas</a>]]>, y respuestas para la mayoría de las preguntas.</string>
+    <string name="AskAQuestionInfo">Por favor, considera que el soporte de telepatch está hecho por voluntarios. Respondemos lo antes posible, pero puede tomar tiempo.<![CDATA[<br><br>]]>Si quieres, mira las <![CDATA[<a href=“http://telepatch.org/faq/es”>preguntas frecuentes de telepatch</a>]]>: tienen <![CDATA[<a href=“http://telepatch.org/faq/es#solucin-de-problemas”>soluciones a problemas</a>]]>, y respuestas para la mayoría de las preguntas.</string>
     <string name="AskButton">Preguntar</string>
-    <string name="TelegramFaq">Preguntas frecuentes</string>
-    <string name="TelegramFaqUrl">https://telegram.org/faq/es</string>
+    <string name="telepatchFaq">Preguntas frecuentes</string>
+    <string name="telepatchFaqUrl">https://telepatch.org/faq/es</string>
     <string name="DeleteLocalization">¿Eliminar traducción?</string>
     <string name="IncorrectLocalization">Archivo de traducción incorrecto</string>
     <string name="Enabled">Activadas</string>
@@ -277,7 +277,7 @@
     <string name="Short">Corto</string>
     <string name="Long">Largo</string>
     <string name="SystemDefault">Según el sistema</string>
-    <string name="SettingsDefault">Según Telegram</string>
+    <string name="SettingsDefault">Según telepatch</string>
     <string name="AutomaticMediaDownload">DESCARGA AUTOMÁTICA DE MULTIMEDIA</string>
     <string name="WhenUsingMobileData">Con uso de datos móviles</string>
     <string name="WhenConnectedOnWiFi">Con conexión a Wi-Fi</string>
@@ -346,7 +346,7 @@
     <string name="ActionYouCreateGroup">Creaste el grupo</string>
     <string name="ActionKickUserYou">un1 te expulsó</string>
     <string name="ActionAddUserYou">un1 te añadió</string>
-    <string name="UnsuppotedMedia">Este mensaje no lo admite tu versión de Telegram. Actualiza la app para verlo: http://telegram.org/update</string>
+    <string name="UnsuppotedMedia">Este mensaje no lo admite tu versión de telepatch. Actualiza la app para verlo: http://telepatch.org/update</string>
     <string name="AttachPhoto">Foto</string>
     <string name="AttachVideo">Vídeo</string>
     <string name="AttachLocation">Ubicación</string>
@@ -365,9 +365,9 @@
     <string name="InvalidLastName">Apellidos inválidos</string>
     <string name="Loading">Cargando...</string>
     <string name="NoPlayerInstalled">No tienes reproductor de vídeo. Por favor, instala uno para continuar.</string>
-    <string name="NoMailInstalled">Por favor, envíanos un correo electrónico a sms@telegram.org y cuéntanos tu problema.</string>
+    <string name="NoMailInstalled">Por favor, envíanos un correo electrónico a sms@telepatch.org y cuéntanos tu problema.</string>
     <string name="NoHandleAppInstalled">No tienes aplicaciones que puedan manejar el tipo de archivo \'%1$s\'. Por favor, instala una para continuar.</string>
-    <string name="InviteUser">Este usuario no tiene Telegram aún. ¿Enviarle una invitación?</string>
+    <string name="InviteUser">Este usuario no tiene telepatch aún. ¿Enviarle una invitación?</string>
     <string name="AreYouSure">¿Quieres hacerlo?</string>
     <string name="AddContactQ">¿Añadir contacto?</string>
     <string name="AddToTheGroup">¿Añadir a %1$s al grupo?\n\nNúmero de los últimos mensajes para reenviar:</string>
@@ -388,7 +388,7 @@
     <string name="ForwardMessagesToGroup">¿Reenviar mensajes a %1$s?</string>
     <string name="FeatureUnavailable">Sorry, this feature is currently not available in your country.</string>
     <!--Intro view-->
-    <string name="Page1Title">Telegram</string>
+    <string name="Page1Title">telepatch</string>
     <string name="Page2Title">Rápida</string>
     <string name="Page3Title">Gratis</string>
     <string name="Page4Title">Segura</string>
@@ -396,12 +396,12 @@
     <string name="Page6Title">Basada en la nube</string>
     <string name="Page7Title">Privada</string>
     <string name="Page1Message">La aplicación de mensajería más<![CDATA[<br/><b>veloz</b>]]> del mundo. Es <![CDATA[<b>gratis</b>]]> y <![CDATA[<b>segura</b>]]>.</string>
-    <string name="Page2Message"><![CDATA[<b>Telegram</b>]]> entrega mensajes más<![CDATA[<br/>]]>rápido que cualquier otra aplicación.</string>
-    <string name="Page3Message"><![CDATA[<b>Telegram</b>]]> es gratis para siempre.<![CDATA[<br/>]]>Sin publicidad ni suscripciones.</string>
-    <string name="Page4Message"><![CDATA[<b>Telegram</b>]]> mantiene tus mensajes<![CDATA[<br/>]]>a salvo del ataque de hackers.</string>
-    <string name="Page5Message"><![CDATA[<b>Telegram</b>]]> no tiene límites en<![CDATA[<br/>]]>el tamaño de tus chats y archivos.</string>
-    <string name="Page6Message"><![CDATA[<b>Telegram</b>]]> te permite acceder a tus<![CDATA[<br/>]]>mensajes desde múltiples dispositivos.</string>
-    <string name="Page7Message"><![CDATA[<b>Telegram</b>]]> posee mensajes fuertemente<![CDATA[<br/>]]>cifrados y se pueden autodestruir.</string>
+    <string name="Page2Message"><![CDATA[<b>telepatch</b>]]> entrega mensajes más<![CDATA[<br/>]]>rápido que cualquier otra aplicación.</string>
+    <string name="Page3Message"><![CDATA[<b>telepatch</b>]]> es gratis para siempre.<![CDATA[<br/>]]>Sin publicidad ni suscripciones.</string>
+    <string name="Page4Message"><![CDATA[<b>telepatch</b>]]> mantiene tus mensajes<![CDATA[<br/>]]>a salvo del ataque de hackers.</string>
+    <string name="Page5Message"><![CDATA[<b>telepatch</b>]]> no tiene límites en<![CDATA[<br/>]]>el tamaño de tus chats y archivos.</string>
+    <string name="Page6Message"><![CDATA[<b>telepatch</b>]]> te permite acceder a tus<![CDATA[<br/>]]>mensajes desde múltiples dispositivos.</string>
+    <string name="Page7Message"><![CDATA[<b>telepatch</b>]]> posee mensajes fuertemente<![CDATA[<br/>]]>cifrados y se pueden autodestruir.</string>
     <string name="StartMessaging">Empieza a conversar</string>
     <!--plural-->
     <string name="Online_zero">%1$d en línea</string>

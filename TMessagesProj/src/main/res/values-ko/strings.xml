@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--https://www.transifex.com/projects/p/telegram/language/ko/members/-->
+<!--https://www.transifex.com/projects/p/telepatch/language/ko/members/-->
 
 <resources>
     <string name="AppName">텔레그램</string>
@@ -154,7 +154,7 @@
     <!--contacts view-->
     <string name="SelectContact">대화상대 선택</string>
     <string name="NoContacts">대화상대가 없습니다</string>
-    <string name="InviteText">텔레그램으로 초대합니다! http://telegram.org/dl2</string>
+    <string name="InviteText">텔레그램으로 초대합니다! http://telepatch.org/dl2</string>
     <string name="TodayAt">오늘</string>
     <string name="YesterdayAt">어제</string>
     <string name="Online">온라인</string>
@@ -198,7 +198,7 @@
     <string name="EncryptionKey">암호화 키</string>
     <string name="MessageLifetime">자동삭제 타이머</string>
     <string name="ShortMessageLifetimeForever">해제</string>
-    <string name="EncryptionKeyDescription">이 이미지는 <![CDATA[<b>]]>%1$s<![CDATA[</b>]]>님과의 비밀대화에 사용 중인 암호화 키의 모습입니다.<![CDATA[<br><br>]]>이 이미지가 <![CDATA[<b>]]>%2$s<![CDATA[</b>]]>님의 암호화 키와 똑같다면 대화는 200%% 안전합니다.<![CDATA[<br><br>]]>더 자세한 사항은 telegram.org 를 참고해 주세요.</string>
+    <string name="EncryptionKeyDescription">이 이미지는 <![CDATA[<b>]]>%1$s<![CDATA[</b>]]>님과의 비밀대화에 사용 중인 암호화 키의 모습입니다.<![CDATA[<br><br>]]>이 이미지가 <![CDATA[<b>]]>%2$s<![CDATA[</b>]]>님의 암호화 키와 똑같다면 대화는 200%% 안전합니다.<![CDATA[<br><br>]]>더 자세한 사항은 telepatch.org 를 참고해 주세요.</string>
     <string name="NumberUnknown">알 수 없음</string>
     <string name="Info">정보</string>
     <string name="Phone">전화번호</string>
@@ -252,10 +252,10 @@
     <string name="ContactJoined">친구의 텔레그램 가입 알림</string>
     <string name="Pebble">PEBBLE 스마트워치 지원</string>
     <string name="Language">언어</string>
-    <string name="AskAQuestionInfo">텔레그램에 관한 질문은 자원봉사자들이 답변해 드립니다. 신속한 답변을 위해 노력하지만 답변이 다소 늦을 수 있습니다.<![CDATA[<br><br>]]>일반적인 문제와 <![CDATA[<a href=\"http://telegram.org/faq/ko#g\">해결방법</a>]]>에 대해서는 \'<![CDATA[<a href=\"http://telegram.org/faq/ko#a\">자주 묻는 질문</a>]]>\'을 확인해 보세요.</string>
+    <string name="AskAQuestionInfo">텔레그램에 관한 질문은 자원봉사자들이 답변해 드립니다. 신속한 답변을 위해 노력하지만 답변이 다소 늦을 수 있습니다.<![CDATA[<br><br>]]>일반적인 문제와 <![CDATA[<a href=\"http://telepatch.org/faq/ko#g\">해결방법</a>]]>에 대해서는 \'<![CDATA[<a href=\"http://telepatch.org/faq/ko#a\">자주 묻는 질문</a>]]>\'을 확인해 보세요.</string>
     <string name="AskButton">질문하기</string>
-    <string name="TelegramFaq">자주 묻는 질문</string>
-    <string name="TelegramFaqUrl">https://telegram.org/faq/ko</string>
+    <string name="telepatchFaq">자주 묻는 질문</string>
+    <string name="telepatchFaqUrl">https://telepatch.org/faq/ko</string>
     <string name="DeleteLocalization">언어를 삭제할까요?</string>
     <string name="IncorrectLocalization">언어 파일이 올바르지 않습니다.</string>
     <string name="Enabled">켜기</string>
@@ -346,7 +346,7 @@
     <string name="ActionYouCreateGroup">그룹을 만들었습니다</string>
     <string name="ActionKickUserYou">un1님이 추방했습니다</string>
     <string name="ActionAddUserYou">un1님이 그룹에 초대했습니다</string>
-    <string name="UnsuppotedMedia">이 메시지는 사용 중인 텔레그램의 버전이 낮아 지원하지 않습니다. 앱을 업데이트 하세요: http://telegram.org/update</string>
+    <string name="UnsuppotedMedia">이 메시지는 사용 중인 텔레그램의 버전이 낮아 지원하지 않습니다. 앱을 업데이트 하세요: http://telepatch.org/update</string>
     <string name="AttachPhoto">사진</string>
     <string name="AttachVideo">동영상</string>
     <string name="AttachLocation">위치</string>
@@ -365,7 +365,7 @@
     <string name="InvalidLastName">올바른 성을 입력해 주세요</string>
     <string name="Loading">불러오는 중...</string>
     <string name="NoPlayerInstalled">동영상 재생 앱이 없습니다. 계속하려면 앱을 설치해 주세요.</string>
-    <string name="NoMailInstalled">sms@telegram.org 이메일 주소로 이 문제를 보내주세요.</string>
+    <string name="NoMailInstalled">sms@telepatch.org 이메일 주소로 이 문제를 보내주세요.</string>
     <string name="NoHandleAppInstalled">\'%1$s\' 파일 형식을 처리할 앱이 없습니다. 계속하려면 앱을 설치해 주세요.</string>
     <string name="InviteUser">친구가 아직 텔레그램을 사용하지 않네요. 초대해 보세요!</string>
     <string name="AreYouSure">확실합니까?</string>
