@@ -1,7 +1,9 @@
-## Telegram messenger for Android
+## Telepatch messenger for Android
 
 [Telegram](http://telegram.org) is a messaging app with a focus on speed and security. It’s superfast, simple and free.
 This repo contains the official source code for [Telegram App for Android](https://play.google.com/store/apps/details?id=org.telegram.messenger).
+
+We forked it to create a brand new app, Telepatch, to have some exclusive feature and usability tweak.
 
 ##Creating your Telegram Application
 
