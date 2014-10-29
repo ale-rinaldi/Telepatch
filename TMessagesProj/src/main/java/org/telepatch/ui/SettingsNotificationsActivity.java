@@ -78,13 +78,16 @@ public class SettingsNotificationsActivity extends BaseFragment implements Notif
 
     //TODO mie rows
 
-    private int messageQuickReply;
-    private int messageMultipleNotification;
+    private int messageQuickReplyRow;
+    private int messageMultipleNotificationRow;
 
     @Override
     public boolean onFragmentCreate() {
         notificationsServiceRow = rowCount++;
         messageSectionRow = rowCount++;
+        //TODO Mie rows
+        messageMultipleNotificationRow = rowCount++;
+        messageQuickReplyRow = rowCount++;
         messageAlertRow = rowCount++;
         messagePreviewRow = rowCount++;
         messageVibrateRow = rowCount++;
@@ -172,7 +175,7 @@ public class SettingsNotificationsActivity extends BaseFragment implements Notif
                         listView.invalidateViews();
                         updateServerNotificationsSettings(i == groupPreviewRow);
                         //TODO qui metto il toggle delle notifiche multiple
-                    } else if (i == messageMultipleNotification) {
+                    } else if (i == messageMultipleNotificationRow) {
                         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         boolean enabled;
@@ -181,11 +184,10 @@ public class SettingsNotificationsActivity extends BaseFragment implements Notif
                         editor.commit();
                         listView.invalidateViews();
                         //TODO qui metto il toggle della quickReply
-                    } else if (i == messageQuickReply) {
+                    } else if (i == messageQuickReplyRow) {
                         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
-                        boolean enabled;
-                        enabled = preferences.getBoolean("QuickReplyEnabled", true);
+                        boolean enabled = preferences.getBoolean("QuickReplyEnabled", true);
                         editor.putBoolean("QuickReplyEnabled", !enabled);
                         editor.commit();
                         listView.invalidateViews();
@@ -602,15 +604,13 @@ public class SettingsNotificationsActivity extends BaseFragment implements Notif
                     }
                     textView.setText(LocaleController.getString("Alert", R.string.Alert));
                     divider.setVisibility(View.VISIBLE);
-                    //TODO qui metto le multiple notifications nell'adapter
-                } else if (i == messageMultipleNotification) {
+                } else if (i == messageMultipleNotificationRow) {
                     enabled = preferences.getBoolean("multiple_notify", true);
-                    textView.setText(R.string.multiple_notify);
+                    textView.setText(LocaleController.getString("Multiple Notifications", R.string.multiple_notify));
                     divider.setVisibility(View.VISIBLE);
-                    //TODO qui metto le quickReply nell'adapter
-                } else if (i == messageQuickReply) {
+                } else if (i == messageQuickReplyRow) {
                     enabled = preferences.getBoolean("QuickReplyEnabled", true);
-                    textView.setText(R.string.QuickReplyLabel);
+                    textView.setText(LocaleController.getString("Quick Reply", R.string.QuickReplyLabel));
                     divider.setVisibility(View.VISIBLE);
                 } else if (i == messagePreviewRow || i == groupPreviewRow) {
                     if (i == messagePreviewRow) {
@@ -758,7 +758,10 @@ public class SettingsNotificationsActivity extends BaseFragment implements Notif
                     i == groupAlertRow || i == groupPreviewRow ||
                     i == inappSoundRow || i == inappVibrateRow || i == inappPreviewRow ||
                     i == contactJoinedRow ||
-                    i == pebbleAlertRow || i == notificationsServiceRow || i == badgeNumberRow) {
+                    i == pebbleAlertRow || i == notificationsServiceRow || i == badgeNumberRow
+                    //mie row
+                   || i == messageMultipleNotificationRow || i == messageQuickReplyRow
+                     ) {
                 return 1;
             } else if (i == messageLedRow || i == groupLedRow) {
                 return 3;

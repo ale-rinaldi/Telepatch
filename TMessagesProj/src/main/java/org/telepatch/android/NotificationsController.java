@@ -8,6 +8,7 @@
 
 package org.telepatch.android;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -60,7 +61,7 @@ public class NotificationsController {
 
     //TODO miei campi
 
-    private SharedPreferences preferences;
+    private SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
 
 
     private static volatile NotificationsController Instance = null;
@@ -91,7 +92,7 @@ public class NotificationsController {
         popupMessages.clear();
         wearNoticationsIds.clear();
         notifyCheck = false;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Context.MODE_PRIVATE);
+        //TODO rimosso ovunque inizializzazione preferences, lo faccio una volta sola
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.commit();
@@ -134,7 +135,6 @@ public class NotificationsController {
         String msg = null;
         if ((int)dialog_id != 0) {
             if (chat_id == 0 && user_id != 0) {
-                SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Context.MODE_PRIVATE);
                 if (preferences.getBoolean("EnablePreviewAll", true)) {
                     if (messageObject.messageOwner instanceof TLRPC.TL_messageService) {
                         if (messageObject.messageOwner.action instanceof TLRPC.TL_messageActionUserJoined) {
@@ -174,7 +174,6 @@ public class NotificationsController {
                     msg = LocaleController.formatString("NotificationMessageNoText", R.string.NotificationMessageNoText, ContactsController.formatName(user.first_name, user.last_name));
                 }
             } else if (chat_id != 0) {
-                SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Context.MODE_PRIVATE);
                 if (preferences.getBoolean("EnablePreviewGroup", true)) {
                     if (messageObject.messageOwner instanceof TLRPC.TL_messageService) {
                         if (messageObject.messageOwner.action instanceof TLRPC.TL_messageActionChatAddUser) {
@@ -210,7 +209,7 @@ public class NotificationsController {
                         if (messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaEmpty) {
                             if (!shortMessage && messageObject.messageOwner.message != null && messageObject.messageOwner.message.length() != 0) {
                                 //TODO ho modificato il comportamento, voglio che sia nel titolo "tizio @ gruppo", non nel testo
-                                msg = LocaleController.formatString("NotificationMessageGroupText", R.string.NotificationMessageText, ContactsController.formatName(user.first_name, ""), chat.title, messageObject.messageOwner.message);
+                                msg = LocaleController.formatString("NotificationMessageGroupText", R.string.NotificationMessageGroupText, ContactsController.formatName(user.first_name, ""), chat.title, messageObject.messageOwner.message);
 
                                 //msg = LocaleController.formatString("NotificationMessageGroupText", R.string.NotificationMessageGroupText, ContactsController.formatName(user.first_name, user.last_name), chat.title, messageObject.messageOwner.message);
                             } else {
@@ -307,7 +306,6 @@ public class NotificationsController {
             boolean inAppPreview = false;
             int vibrate_override = 0;
 
-            SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Context.MODE_PRIVATE);
             int notify_override = preferences.getInt("notify2_" + dialog_id, 0);
             if (!notifyAboutLast || notify_override == 2 || (!preferences.getBoolean("EnableAll", true) || chat_id != 0 && !preferences.getBoolean("EnableGroup", true)) && notify_override == 0) {
                 notifyDisabled = true;
@@ -725,7 +723,6 @@ public class NotificationsController {
 
         int oldCount = popupMessages.size();
         HashMap<Long, Boolean> settingsCache = new HashMap<Long, Boolean>();
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Context.MODE_PRIVATE);
         int popup = 0;
 
         for (MessageObject messageObject : messageObjects) {
@@ -777,7 +774,6 @@ public class NotificationsController {
 
     public void processDialogsUpdateRead(final HashMap<Long, Integer> dialogsToUpdate) {
         int old_unread_count = total_unread_count;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Context.MODE_PRIVATE);
         for (HashMap.Entry<Long, Integer> entry : dialogsToUpdate.entrySet()) {
             long dialog_id = entry.getKey();
 
@@ -835,7 +831,6 @@ public class NotificationsController {
         pushMessagesDict.clear();
         total_unread_count = 0;
         personal_count = 0;
-        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Context.MODE_PRIVATE);
         HashMap<Long, Boolean> settingsCache = new HashMap<Long, Boolean>();
 
         for (HashMap.Entry<Long, Integer> entry : dialogs.entrySet()) {
