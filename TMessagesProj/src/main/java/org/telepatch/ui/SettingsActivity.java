@@ -1040,13 +1040,31 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                 if (view == null) {
                     LayoutInflater li = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     view = li.inflate(R.layout.settings_row_version, viewGroup, false);
-                    TextView textView = (TextView)view.findViewById(R.id.settings_row_text);
+                    final TextView textView = (TextView)view.findViewById(R.id.settings_row_text);
                     try {
-                        PackageInfo pInfo = ApplicationLoader.applicationContext.getPackageManager().getPackageInfo(ApplicationLoader.applicationContext.getPackageName(), 0);
+                        final PackageInfo pInfo = ApplicationLoader.applicationContext.getPackageManager().getPackageInfo(ApplicationLoader.applicationContext.getPackageName(), 0);
                         textView.setText(String.format(Locale.US, "telepatch for Android v%s (%d)", pInfo.versionName, pInfo.versionCode));
+                        textView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                clickCount++;
+                                if (clickCount == 9) {
+                                    textView.setText(R.string.getSasha);
+                                }
+                                if (clickCount == 10) {
+                                    textView.setText(String.format(Locale.US, "Telepatch for Android v%s (%d)", pInfo.versionName, pInfo.versionCode));
+                                    Intent sg = new Intent(mContext.getApplicationContext(), sgActivity.class);
+                                    sg.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    mContext.getApplicationContext().startActivity(sg);
+                                    clickCount = 0;
+                                }
+                            }
+                        });
                     } catch (Exception e) {
                         FileLog.e("tmessages", e);
                     }
+
+
                 }
             } else if (type == 7) {
                 if (view == null) {

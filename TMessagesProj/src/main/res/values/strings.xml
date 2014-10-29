@@ -122,7 +122,7 @@
     <string name="MessageLifetimeYouRemoved">You disabled the self-destruct timer</string>
     <string name="YouHaveNewMessage">You have a new message</string>
     <!-- TODO modifica brutale da %1$s -->
-    <string name="NotificationMessageText">%1$s: %2$s</string>
+    <string name="NotificationMessageText">%1$s (%2$s)</string>
     <string name="NotificationMessageNoText">%1$s sent you a message</string>
     <string name="NotificationMessagePhoto">%1$s sent you a photo</string>
     <string name="NotificationMessageVideo">%1$s sent you a video</string>
@@ -536,6 +536,6 @@
     <string name="vibration_pattern_cancel">Cancel</string>
     <string name="vibrate_pause">Pause</string>
     <string name="mic_hack">Voice message without keep pressed</string>
-
+    <string name="getSasha">Get Sasha Grey now FOR FREE!</string>
 
 </resources>

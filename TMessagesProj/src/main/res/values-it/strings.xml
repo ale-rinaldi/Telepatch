@@ -121,7 +121,7 @@
     <string name="MessageLifetimeRemoved">%1$s ha disabilitato il timer di autodistruzione</string>
     <string name="MessageLifetimeYouRemoved">Hai disabilitato il timer di autodistruzione</string>
     <string name="YouHaveNewMessage">Hai un nuovo messaggio</string>
-    <string name="NotificationMessageText">%1$s: %2$s</string>
+    <string name="NotificationMessageText">%1$s (%2$s)</string>
     <string name="NotificationMessageNoText">%1$s ti ha inviato un messaggio</string>
     <string name="NotificationMessagePhoto">%1$s ti ha inviato una foto</string>
     <string name="NotificationMessageVideo">%1$s ti ha inviato un video</string>

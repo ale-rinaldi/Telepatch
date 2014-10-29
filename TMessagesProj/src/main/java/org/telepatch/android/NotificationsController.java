@@ -210,7 +210,7 @@ public class NotificationsController {
                         if (messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaEmpty) {
                             if (!shortMessage && messageObject.messageOwner.message != null && messageObject.messageOwner.message.length() != 0) {
                                 //TODO ho modificato il comportamento, voglio che sia nel titolo "tizio @ gruppo", non nel testo
-                                msg = LocaleController.formatString("NotificationMessageGroupText", R.string.NotificationMessageText, ContactsController.formatName(user.first_name, user.last_name), chat.title, messageObject.messageOwner.message);
+                                msg = LocaleController.formatString("NotificationMessageGroupText", R.string.NotificationMessageText, ContactsController.formatName(user.first_name, ""), chat.title, messageObject.messageOwner.message);
 
                                 //msg = LocaleController.formatString("NotificationMessageGroupText", R.string.NotificationMessageGroupText, ContactsController.formatName(user.first_name, user.last_name), chat.title, messageObject.messageOwner.message);
                             } else {
@@ -257,7 +257,11 @@ public class NotificationsController {
     protected void repeatNotificationMaybe() {
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         if (hour >= 11 && hour <= 22) {
-            notificationManager.cancel(1);
+            if (preferences.getBoolean("multiple_notify", true)) {
+                notificationManager.cancel((int) openned_dialog_id);
+            } else {
+               notificationManager.cancel(1);
+            }
             showOrUpdateNotification(true);
         } else {
             scheduleNotificationRepeat();
@@ -407,6 +411,7 @@ public class NotificationsController {
                     .setNumber(total_unread_count)
                     .setContentIntent(contentIntent)
                     .setGroup("messages")
+
                     .setGroupSummary(true);
 
             String lastMessage = null;

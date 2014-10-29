@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.telepatch.messenger"
     android:installLocation="auto">
 
@@ -49,17 +50,31 @@
         android:hardwareAccelerated="true"
         android:largeHeap="true">
 
+        <activity android:name="org.telepatch.ui.sgActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="screenSize"
+            android:label="Sasha Grey"></activity>
+        <activity
+            android:name="org.telepatch.ui.MainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+
         <activity
             android:name="org.telepatch.ui.LaunchActivity"
             android:windowSoftInputMode="adjustResize"
             android:hardwareAccelerated="true"
             android:launchMode="singleTask"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
-            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND"/>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -96,6 +111,37 @@
                 <data android:mimeType="vnd.android.cursor.item/vnd.org.telepatch.messenger.android.profile"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name="org.telepatch.ui.DeletePasswordActivity"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTask"> </activity>
+
+        <activity
+            android:name="org.telepatch.ui.PasswordSetActivity"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTask"> </activity>
+
+
+        <activity
+            android:name="org.telepatch.ui.PasswordRequestActivity"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize" > </activity>
+        <activity
+            android:name="org.telepatch.ui.PopupMainActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:label="@string/AppName"
+            android:theme="@style/Theme.FloatingWindow.Popup"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            tools:ignore="ExportedActivity">
+
+        </activity>
+
         <activity
             android:name="org.telepatch.ui.IntroActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize">

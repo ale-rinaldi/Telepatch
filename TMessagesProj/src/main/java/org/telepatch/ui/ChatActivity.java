@@ -194,7 +194,9 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
     private final static int chat_menu_search = 12;
     private static boolean searching;
     private ActionBarMenuItem item_search;
-    public static final int dialogsNeedReload = 4;
+    private NotificationManagerCompat nm = NotificationManagerCompat.from(ApplicationLoader.applicationContext);
+    private SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("Notifications", Activity.MODE_PRIVATE);
+
 
     AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
@@ -344,8 +346,11 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
         }
 
         //TODO qui elimino la notifica una volta entrato nella chat
-        NotificationManagerCompat nmc = NotificationManagerCompat.from(ApplicationLoader.applicationContext);
-        nmc.cancel((int)dialog_id);
+        if (preferences.getBoolean("multiple_notify", true)) {
+            nm.cancel((int) dialog_id);
+        } else {
+            nm.cancel(1);
+        }
 
         chatActivityEnterView = new ChatActivityEnterView();
         chatActivityEnterView.setDialogId(dialog_id);
